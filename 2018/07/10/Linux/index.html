@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Linux,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="小白君的博客" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="学习基础的Liunx命令">
+<meta name="keywords" content="Linux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Liunx">
+<meta property="og:url" content="http://yoursite.com/2018/07/10/Linux/index.html">
+<meta property="og:site_name" content="小白君的博客">
+<meta property="og:description" content="学习基础的Liunx命令">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2018/07/10/Linux/images/timg.jpg">
+<meta property="og:updated_time" content="2019-08-11T05:25:14.655Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Liunx">
+<meta name="twitter:description" content="学习基础的Liunx命令">
+<meta name="twitter:image" content="http://yoursite.com/2018/07/10/Linux/images/timg.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/07/10/Linux/">
+
+
+
+
+
+  <title>Liunx | 小白君的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+	<a href="https://github.com/flymecode/flymecode.github.io" class="github-corner" aria-label="View source on Github"><svg width="80" height="80" viewbox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">小白君的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">凡事必先骑上虎背</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/10/Linux/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ma Xu">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小白君的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Liunx</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-10T16:04:49+08:00">
+                2018-07-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+              <div class="post-description">
+                  学习基础的Liunx命令
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="命令学习"><a href="#命令学习" class="headerlink" title="命令学习"></a>命令学习</h1><ul>
+<li>返回上一次所在的目录：cd - </li>
+<li>查看环境变量：echo $PATH</li>
+<li>设置环境变量：PATH=””</li>
+<li>设置可执行权限：chmod +x 文件名称</li>
+<li>查看文件自身信息：ls -d</li>
+<li>递归产看文件信息：ls -R</li>
+<li>复制 cp[选项] /path1/文件夹1 /path2/文件夹2<br>如果不存在这个文件夹2或者不存在,则把/path1/文件夹1拷贝到文件path2下并且重命名为文件夹2</li>
+<li>cp -a -r -f -u -p -d</li>
+<li>-a 可以拷贝文件夹</li>
+<li>-f 强制</li>
+<li>-r 递归</li>
+<li>-d 拷贝链接</li>
+<li>-p 文件信息</li>
+<li>剪切：mv<br>有重命名的作用 mv a b 将a重命名为b</li>
+<li>basename 得到文件名</li>
+<li>dirname 得到文件所在的路径名</li>
+<li>产看文档的内容 cat tac head nl tail more less 只能查看文本文件</li>
+<li>cat：只适合查看一些小文件<br>-n 加上文档的行数</li>
+<li>tac: 倒置显示文件</li>
+<li>nl：跟cat -n 作用相同，不现实空白行<br>-b：显示空白行</li>
+<li>more：分屏查看文件内容，只能往后翻不能往前翻</li>
+<li>less:查看文件</li>
+<li>head：可以查看文件的前几行<br>hand  行数 文件名</li>
+<li>tail:查看文件的尾几行</li>
+<li>tail -f 可以时时监控文件的变化。</li>
+<li>od -t c ：查看二进制文件</li>
+<li>touch 文件名称 ：如果文件不存在则创建一个文件，如果文件存在则跟新文件创建的时间为当前时间。<br>-文件默认权限：umask<br>当创建目录的时候，权限就是减去默认umask的值<br>当创建文件的时候，权限不等于直接减去umask的值</li>
+<li>查看隐藏权限：lsattr</li>
+<li>添加隐藏文件：chattr<br>+a 只能添加，不能删除<br>+i 无法修改</li>
+<li>修改文件所有者 chown 用户 文件名称</li>
+<li>修改文件所在的组  chgrp 组名 文件名称</li>
+<li>查找命令所在的路径：whereis -b -m 命令</li>
+</ul>
+<h1 id="文件-磁盘管理"><a href="#文件-磁盘管理" class="headerlink" title="文件-磁盘管理"></a>文件-磁盘管理</h1><h2 id="简单命令"><a href="#简单命令" class="headerlink" title="简单命令"></a>简单命令</h2><p>  shutdown -h 10 十分钟后关闭计算机<br>  sync 将缓存的东西写入硬盘当中去<br>  init 切换运行级别<br>  runlevel 查看当前运行级别<br>  reboot -f 立即重启</p>
+<h2 id="创建目录-mkdir"><a href="#创建目录-mkdir" class="headerlink" title="创建目录: mkdir"></a>创建目录: mkdir</h2><p>通过mkdir命令可以创建⼀个新的⽬录。参数-p可递归创建目录。需要注意的是新建目录的名称不能与当前目录中已有的目录或文件同名，并且目录创建者必须对当前目录具有写权限。</p>
+<h2 id="显示文件目录-tree"><a href="#显示文件目录-tree" class="headerlink" title="显示文件目录 tree"></a>显示文件目录 tree</h2><p>按照树状结构显示文件目录</p>
+<h2 id="删除目录-rmdir"><a href="#删除目录-rmdir" class="headerlink" title="删除目录: rmdir"></a>删除目录: rmdir</h2><p>可以使用rmdir删除文件目录，但是你必须要离开当前目录，并且目录为空。否则删除失败。</p>
+<h2 id="删除文件-rm"><a href="#删除文件-rm" class="headerlink" title="删除文件: rm"></a>删除文件: rm</h2><p>可通过rm删除⽂件或⽬录。使用rm命令要小心，因为文件删除后不能恢复。为了防止文<br>件误删，可以在rm后使用-i参数以逐个确认要删除的文件。</p>
+<h2 id="建立链接文件-in"><a href="#建立链接文件-in" class="headerlink" title="建立链接文件: in"></a>建立链接文件: in</h2><p>Linux链接文件类似于Windows下的快捷方式。<br>链接文件分为软链接和硬链接。<br>软链接：软链接不占用磁盘空间，源文件删除则软链接失效。<br>硬链接：硬链接只能链接普通文件，不能链接目录。</p>
+<p>使用格式:<br>    ln 源文件 链接文件<br>    ln -s 源文件 链接文件<br>如果 没有-s 选项代表建立一个硬链接文件，两个文件占用相同存储的硬盘空间，即使删除<br>了源文件，链接文件还是存在，所以-s选项是更常的的形式。<br>注意：如果软链接文件和源文件不在同一个目录，源文件要使用绝对路径，不能使用相对路径。</p>
+<h2 id="输出文件内容或者合并文件内容-cat"><a href="#输出文件内容或者合并文件内容-cat" class="headerlink" title="输出文件内容或者合并文件内容 cat"></a>输出文件内容或者合并文件内容 cat</h2><p>cat test.txt 查看当前路径下的文件内容<br>cat test.txt test1.txt &gt; heihei.text 将两个文件的内容重定向到heihei.text</p>
+<blockquote>
+<p>先清空后添加 &gt;&gt; 不会覆盖，直接在尾部添加</p>
+</blockquote>
+<h2 id="cp-拷贝文件"><a href="#cp-拷贝文件" class="headerlink" title="cp: 拷贝文件"></a>cp: 拷贝文件</h2><p>cp test/haha test3 -ivr 将目录haha复制到test3文件中</p>
+<h2 id="移动文件-mv"><a href="#移动文件-mv" class="headerlink" title="移动文件: mv"></a>移动文件: mv</h2><p>  用户可以使用mv命令来移动文件或目录，也可以给文件或目录重命名。</p>
+<h2 id="归档管理-tar"><a href="#归档管理-tar" class="headerlink" title="归档管理: tar"></a>归档管理: tar</h2><p>计算机中的数据经常需要备份，tar是Unix/Linux中最常用的备份工具，此命令可以把一系<br>列文件归档到一个大文件中，也可以把档案文件解开以恢复数据。<br>tar使用格式 tar [参数] 打包文件名 文件</p>
+<h2 id="文件压缩解压-gizp"><a href="#文件压缩解压-gizp" class="headerlink" title="文件压缩解压: gizp"></a>文件压缩解压: gizp</h2><p>tar与gzip命令结合使用实现文件打包、压缩。 tar只负责打包文件，但不压缩，用gzip压<br>缩tar打包后的文件，其扩展名一般用xxxx.tar.gz。<br>gzip [选项] 被压缩文件<br>-d 解压<br>-r 压缩所有子目录</p>
+<hr>
+<p>如果要使用tar来压缩文件可以增加参数z来实现<br>tar -cvzf test.tar.gz * 当前路径下所有的文件以及文件夹打包并压缩到test.tar.gz文件中<br>解压用法： tar zxvf 压缩包包名<br>tar zxvf test.tar.gz 解压到当前路径下<br>tar zxvf test.tar.gz -C dongge/ 解压到指定路径下</p>
+<h2 id="查看命令位置-which"><a href="#查看命令位置-which" class="headerlink" title="查看命令位置: which"></a>查看命令位置: which</h2><p>which ls</p>
+<h1 id="Linux命令-用户、权限管理"><a href="#Linux命令-用户、权限管理" class="headerlink" title="Linux命令-用户、权限管理"></a>Linux命令-用户、权限管理</h1><h2 id="查看当前用户-whoami"><a href="#查看当前用户-whoami" class="headerlink" title="查看当前用户: whoami"></a>查看当前用户: whoami</h2><h2 id="who"><a href="#who" class="headerlink" title="who"></a>who</h2><p>who命令用于查看当前所有登录系统的用户信息。</p>
+<h2 id="设置文件权限-chmod"><a href="#设置文件权限-chmod" class="headerlink" title="设置文件权限: chmod"></a>设置文件权限: chmod</h2><p>字母法：chmod u/g/o/a +/-/= rwx 文件<br>数字法：chmod 777 文件<br>w = 2<br>r = 4<br>x = 1<br>- = 0</p>
+<h2 id="修改文件所有者-chown"><a href="#修改文件所有者-chown" class="headerlink" title="修改文件所有者: chown"></a>修改文件所有者: chown</h2><p>sudo chown 用户 文件</p>
+<h2 id="修改文件所属组：chgrp"><a href="#修改文件所属组：chgrp" class="headerlink" title="修改文件所属组：chgrp"></a>修改文件所属组：chgrp</h2><p>sudo chgrp 组名 文件</p>
+<h1 id="Linux系统管理"><a href="#Linux系统管理" class="headerlink" title="Linux系统管理"></a>Linux系统管理</h1><h2 id="查看进程信息：ps"><a href="#查看进程信息：ps" class="headerlink" title="查看进程信息：ps"></a>查看进程信息：ps</h2><h2 id="杀死进程kill"><a href="#杀死进程kill" class="headerlink" title="杀死进程kill"></a>杀死进程kill</h2><p>需要配合ps使用 如果要强制结束可以使用参数-9</p>
+<p>ubuntu如何切换到root用户</p>
+<p>默认安装完成之后并不知道root用户的密码，那么如何应用root权限呢？<br>(1)sudo 命令<br>这样输入当前管理员用户密码就可以得到超级用户的权限。但默认的情况下5分钟root权限就失效了。<br>(2)sudo -i<br>通过这种方法输入当前管理员用户的密码就可以进到root用户。<br>(3)如果想一直使用root权限，要通过su切换到root用户。<br>那我们首先要重设置root用户的密码：<br>sudo passwd root<br>这样就可以设置root用户的密码了。</p>
+<p>su “用户名” 或者 exit回到用户权限</p>
+<p>之后就可以自由的切换到root用户了<br>su<br>输入root用户的密码即可。</p>
+<h2 id="关于挂载点的理解"><a href="#关于挂载点的理解" class="headerlink" title="关于挂载点的理解"></a>关于挂载点的理解</h2><p>Linux是树型目录结构，与windows的C,D,E盘完全不同，Linux只有一个根目录’/‘，其余各个目录都是基于这个根目录发散，就是树形结构。因此Linux分区跟Windows的C,D,E盘分区完全不同，而是将某个分区挂到一个对应的目录上，例如/home对应一块分区,home目录就是这块分区的挂载点、/boot对应一块分区,boot目录就是这块分区的挂载点、/usr对应一块分区,usr目录就是这块分区的挂载点。你可以形象的理解：一棵大树(根目录/)有很多树枝(目录，挂载点)，每个树枝上都挂着一个箱子(分区，存储空间)。</p>
+<h2 id="目录结构"><a href="#目录结构" class="headerlink" title="目录结构"></a>目录结构</h2><table>
+<thead>
+<tr>
+<th>目录名称</th>
+<th>目录内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>bin</td>
+<td>保存二进制文件</td>
+</tr>
+<tr>
+<td>boot</td>
+<td>系统的启动文件，包含系统的初始化文件和内核</td>
+</tr>
+<tr>
+<td>dev</td>
+<td>设备文件</td>
+</tr>
+<tr>
+<td>etc</td>
+<td>配置文件</td>
+</tr>
+<tr>
+<td>home</td>
+<td>用户的家目录</td>
+</tr>
+<tr>
+<td>lib</td>
+<td>系统的库文件</td>
+</tr>
+<tr>
+<td>media</td>
+<td>系统的自动挂载点，当你访问U盘的时候实际上访问的是media这个文件夹中的某个子文件夹</td>
+</tr>
+<tr>
+<td>mnt</td>
+<td>挂载点</td>
+</tr>
+<tr>
+<td>opt</td>
+<td>当使用源码包安装软件的时候一般都会把软件安装到opt中去</td>
+</tr>
+<tr>
+<td>proc</td>
+<td>内核中的参数</td>
+</tr>
+<tr>
+<td>root</td>
+<td>系统管理员的家目录</td>
+</tr>
+<tr>
+<td>sbin</td>
+<td>存放的二进制的命令，只有系统管理员可以使用</td>
+</tr>
+<tr>
+<td>usr</td>
+<td>默认安装软件的路径</td>
+</tr>
+<tr>
+<td>tmp</td>
+<td>存放临时文件</td>
+</tr>
+<tr>
+<td>var</td>
+<td>缓存，日志，数据库文件</td>
+</tr>
+</tbody>
+</table>
+<p>假如我下载了100G的电影我放置在那个地方</p>
+<p>可以新建一个文件夹，让分区挂载在这个文件夹上面</p>
+<p><img src="/2018/07/10/Linux/images/timg.jpg" alt="k"></p>
+
+      
+    </div>
+    
+    
+    
+	<div>
+	  
+		<div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+	  
+	</div>
+	
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Linux/" rel="tag"><i class="fa fa-tag"></i> Linux</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/08/13/java-base/" rel="prev" title="Java基础">
+                Java基础 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Ma Xu</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">标签</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#命令学习"><span class="nav-number">1.</span> <span class="nav-text">命令学习</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#文件-磁盘管理"><span class="nav-number">2.</span> <span class="nav-text">文件-磁盘管理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#简单命令"><span class="nav-number">2.1.</span> <span class="nav-text">简单命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建目录-mkdir"><span class="nav-number">2.2.</span> <span class="nav-text">创建目录: mkdir</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#显示文件目录-tree"><span class="nav-number">2.3.</span> <span class="nav-text">显示文件目录 tree</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#删除目录-rmdir"><span class="nav-number">2.4.</span> <span class="nav-text">删除目录: rmdir</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#删除文件-rm"><span class="nav-number">2.5.</span> <span class="nav-text">删除文件: rm</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#建立链接文件-in"><span class="nav-number">2.6.</span> <span class="nav-text">建立链接文件: in</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#输出文件内容或者合并文件内容-cat"><span class="nav-number">2.7.</span> <span class="nav-text">输出文件内容或者合并文件内容 cat</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cp-拷贝文件"><span class="nav-number">2.8.</span> <span class="nav-text">cp: 拷贝文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#移动文件-mv"><span class="nav-number">2.9.</span> <span class="nav-text">移动文件: mv</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#归档管理-tar"><span class="nav-number">2.10.</span> <span class="nav-text">归档管理: tar</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文件压缩解压-gizp"><span class="nav-number">2.11.</span> <span class="nav-text">文件压缩解压: gizp</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查看命令位置-which"><span class="nav-number">2.12.</span> <span class="nav-text">查看命令位置: which</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Linux命令-用户、权限管理"><span class="nav-number">3.</span> <span class="nav-text">Linux命令-用户、权限管理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#查看当前用户-whoami"><span class="nav-number">3.1.</span> <span class="nav-text">查看当前用户: whoami</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#who"><span class="nav-number">3.2.</span> <span class="nav-text">who</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设置文件权限-chmod"><span class="nav-number">3.3.</span> <span class="nav-text">设置文件权限: chmod</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#修改文件所有者-chown"><span class="nav-number">3.4.</span> <span class="nav-text">修改文件所有者: chown</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#修改文件所属组：chgrp"><span class="nav-number">3.5.</span> <span class="nav-text">修改文件所属组：chgrp</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Linux系统管理"><span class="nav-number">4.</span> <span class="nav-text">Linux系统管理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#查看进程信息：ps"><span class="nav-number">4.1.</span> <span class="nav-text">查看进程信息：ps</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#杀死进程kill"><span class="nav-number">4.2.</span> <span class="nav-text">杀死进程kill</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关于挂载点的理解"><span class="nav-number">4.3.</span> <span class="nav-text">关于挂载点的理解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#目录结构"><span class="nav-number">4.4.</span> <span class="nav-text">目录结构</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站总访问量<span id="busuanzi_value_site_uv"></span>次
+</span></div>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ma Xu</span>
+
+  
+</div>
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":"wanko","mobileShow":true,"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+
+
+</html>
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/love.js"></script>
