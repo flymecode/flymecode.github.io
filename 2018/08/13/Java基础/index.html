@@ -92,7 +92,7 @@
 <meta property="og:image" content="http://yoursite.com/2018/08/13/Java基础/overview.png">
 <meta property="og:image" content="http://yoursite.com/2018/08/13/Java基础/1549014708591.png">
 <meta property="og:image" content="http://yoursite.com/2018/08/13/Java基础/1553175374905.png">
-<meta property="og:updated_time" content="2019-08-12T09:14:31.552Z">
+<meta property="og:updated_time" content="2019-08-12T09:18:09.182Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java基础">
 <meta name="twitter:description" content="对学习的知识进行回顾和总结">
@@ -440,7 +440,7 @@
 <p>字符串 s 和 t 拥有相同的散列码，是因为字符串的散列码是由内容导出的，而字符串缓冲sb与tb却有着不同的散列码，这是因为在StringBuilder类中没有定义hashCode方法，它的散列码是由Object类的默认hashCode方法导出的对象存储地址。</p>
 <p>如果重新定义了equals方法，就必须重新定义hashCode方法，以便用户可以将对象方便的插入到散列列表中，hashCode应该返回一个整形数值，并合理地组合实例域的散列码，以便用户能够让各个不同的对象产生散列码更加均匀。</p>
 <p>equals与hashCode的定义必须一致，如果x.equals(y),那么x.hashCode()就必须与y.hashCode()具有相同的值。比如，如果用定义的Employee.equals比较雇员的ID，那么hashCode方法就需要散列ID,而不是雇员的姓名或者存储地址。</p>
-<h2 id="Java异常体系"><a href="#Java异常体系" class="headerlink" title="Java异常体系"></a>Java异常体系</h2><p><img src="/2018/08/13/Java基础/1553175374905.png" alt="1553175374905"></p>
+<h2 id="Java异常体系"><a href="#Java异常体系" class="headerlink" title="Java异常体系"></a>Java异常体系</h2><p><img src="/2018/08/13/Java基础/1553175374905.png" alt></p>
 <h3 id="概念角度解析Java的异常处理机制"><a href="#概念角度解析Java的异常处理机制" class="headerlink" title="概念角度解析Java的异常处理机制"></a>概念角度解析Java的异常处理机制</h3><ul>
 <li>Error：程序无法处理的系统错误，编译器不做检查</li>
 <li><p>Exception:程序可以处理的异常，捕获后可能恢复</p>
