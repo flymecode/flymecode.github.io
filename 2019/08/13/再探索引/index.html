@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="网络,">
+  <meta name="keywords" content="mysql,">
 
 
 
@@ -81,21 +81,18 @@
 
 
 
-<meta name="description" content="对网络层知识点学习总结，对每一层划分，对网络知识整体上有了认知">
-<meta name="keywords" content="网络">
+<meta name="description" content="1. 独立的列在进行查询时，索引列不能是表达式的一部分，也不能是函数的参数，否则无法使用索引。 例如下面的查询不能使用 actor_id 列的索引： 1SELECT actor_id FROM sakila.actor WHERE actor_id + 1 = 5; 2. 多列索引在需要使用多个列作为条件进行查询时，使用多列索引比使用多个单列索引性能更好。例如下面的语句中，最好把 actor_id">
+<meta name="keywords" content="mysql">
 <meta property="og:type" content="article">
-<meta property="og:title" content="网络">
-<meta property="og:url" content="http://yoursite.com/2019/05/09/network/index.html">
+<meta property="og:title" content="再探索引-索引优化">
+<meta property="og:url" content="http://yoursite.com/2019/08/13/再探索引/index.html">
 <meta property="og:site_name" content="小白君的博客">
-<meta property="og:description" content="对网络层知识点学习总结，对每一层划分，对网络知识整体上有了认知">
+<meta property="og:description" content="1. 独立的列在进行查询时，索引列不能是表达式的一部分，也不能是函数的参数，否则无法使用索引。 例如下面的查询不能使用 actor_id 列的索引： 1SELECT actor_id FROM sakila.actor WHERE actor_id + 1 = 5; 2. 多列索引在需要使用多个列作为条件进行查询时，使用多列索引比使用多个单列索引性能更好。例如下面的语句中，最好把 actor_id">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://yoursite.com/2019/05/09/network/E:/Git/TTMS/MX-Notes/image/1557411990645.png">
-<meta property="og:image" content="http://yoursite.com/2019/05/09/network/E:/Git/TTMS/MX-Notes/image/1557412704769.png">
-<meta property="og:updated_time" content="2019-08-11T05:25:14.656Z">
+<meta property="og:updated_time" content="2019-08-13T06:51:14.237Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="网络">
-<meta name="twitter:description" content="对网络层知识点学习总结，对每一层划分，对网络知识整体上有了认知">
-<meta name="twitter:image" content="http://yoursite.com/2019/05/09/network/E:/Git/TTMS/MX-Notes/image/1557411990645.png">
+<meta name="twitter:title" content="再探索引-索引优化">
+<meta name="twitter:description" content="1. 独立的列在进行查询时，索引列不能是表达式的一部分，也不能是函数的参数，否则无法使用索引。 例如下面的查询不能使用 actor_id 列的索引： 1SELECT actor_id FROM sakila.actor WHERE actor_id + 1 = 5; 2. 多列索引在需要使用多个列作为条件进行查询时，使用多列索引比使用多个单列索引性能更好。例如下面的语句中，最好把 actor_id">
 
 
 
@@ -125,13 +122,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/05/09/network/">
+  <link rel="canonical" href="http://yoursite.com/2019/08/13/再探索引/">
 
 
 
 
 
-  <title>网络 | 小白君的博客</title>
+  <title>再探索引-索引优化 | 小白君的博客</title>
   
 
 
@@ -258,7 +255,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/09/network/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/13/再探索引/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Ma Xu">
@@ -275,7 +272,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">网络</h1>
+          <h1 class="post-title" itemprop="name headline">再探索引-索引优化</h1>
         
 
         <div class="post-meta">
@@ -287,8 +284,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-09T19:44:25+08:00">
-                2019-05-09
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-13T00:41:13+08:00">
+                2019-08-13
               </time>
             
 
@@ -311,10 +308,6 @@
           
 
           
-              <div class="post-description">
-                  对网络层知识点学习总结，对每一层划分，对网络知识整体上有了认知
-              </div>
-          
 
         </div>
       </header>
@@ -329,53 +322,35 @@
       
 
       
-        <h1 id="网络"><a href="#网络" class="headerlink" title="网络"></a>网络</h1><h2 id="应用层"><a href="#应用层" class="headerlink" title="应用层"></a>应用层</h2><p>应用层的任务就是通过应用进程间的交互来完成特定网络应用，应用层协议定义的的是应用进程间的通信和交互规则，对于不同的网路需要不同的应用层协议。我们把应用层交互的数据叫做报文。</p>
-<h2 id="传输层"><a href="#传输层" class="headerlink" title="传输层"></a>传输层</h2><p>网络层只是把分组发送到目的主机，但是真正通信并不是主机中的进程。传输层提供了进程间的逻辑通信，传输层向高层用户屏蔽了下面网络层的核心细节，使应用程序看起来好像在两个传输实体之间有一条端到端的逻辑通信信道。</p>
-<h3 id="UDP-和-TCP-的特点"><a href="#UDP-和-TCP-的特点" class="headerlink" title="UDP 和 TCP 的特点"></a>UDP 和 TCP 的特点</h3><ul>
-<li>用户数据协议 UDP 是无连接的，尽最大的可能提供交付，没有拥塞控制，面向报文（对应用层序传输下来的报文即不拆分也不合并，只是添加 UDP 首部），支持一对一，一对多，多对一，多对多的通信。</li>
-<li>传输控制协议 TCP 是面向连接的，提供可靠的交付，有流量控制，拥塞控制，提供全双工通信，面向字节流（把应用层传下来的报文看成字节流，把字节流组织成大小不等的数据块），每一条 TCP 连接只能点对点的通信。</li>
-</ul>
-<h3 id="TCP-首部格式"><a href="#TCP-首部格式" class="headerlink" title="TCP 首部格式"></a>TCP 首部格式</h3><ul>
-<li><strong>序号：</strong> 用来对字节流进行编号。</li>
-<li><strong>确认号：</strong>期望下次收到的报文段的序号。 </li>
-<li><strong>数据偏移：</strong> 指数据部分距离报文段起始处的偏移量，实际上指的是首部的长度。</li>
-<li><strong>确认ACK：</strong> 当 ACK = 1 的确认号字段有效，否则无效，TCP 规定，在连接建立之后所有传输的报文段都必须把 ACK 设置为 1。</li>
-<li><strong>同步SYN：</strong> 在连接建立时用来同步序号。当 SYN = 1，ACK = 0 时表示这是一个连接请求报文段。若对方同意建立连接则响应报文中 SYN = 1，ACK = 1。</li>
-<li><strong>终止FIN：</strong> 用来释放一个连接，当 FIN = 1 的时候，表示报文端已经发送完毕，并要求释放连接。</li>
-<li><strong>窗口：</strong> 窗口作为接收方让发送方设置其发窗口的依据。之所以要有要有这个限制，是因为接受方的数据缓存空间是有限的。</li>
-</ul>
-<h3 id="TCP-的三次握手"><a href="#TCP-的三次握手" class="headerlink" title="TCP 的三次握手"></a>TCP 的三次握手</h3><p><img src="/2019/05/09/network/E:/Git\TTMS\MX-Notes\image\1557411990645.png" alt="1557411990645"></p>
-<p>假设 A 为客户端，B 为服务端</p>
+        <h3 id="1-独立的列"><a href="#1-独立的列" class="headerlink" title="1. 独立的列"></a>1. 独立的列</h3><p>在进行查询时，索引列不能是表达式的一部分，也不能是函数的参数，否则无法使用索引。</p>
+<p>例如下面的查询不能使用 actor_id 列的索引：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> actor_id <span class="keyword">FROM</span> sakila.actor <span class="keyword">WHERE</span> actor_id + <span class="number">1</span> = <span class="number">5</span>;</span><br></pre></td></tr></table></figure>
+<h3 id="2-多列索引"><a href="#2-多列索引" class="headerlink" title="2. 多列索引"></a>2. 多列索引</h3><p>在需要使用多个列作为条件进行查询时，使用多列索引比使用多个单列索引性能更好。例如下面的语句中，最好把 actor_id 和 film_id 设置为多列索引。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT film_id, actor_ id FROM sakila.film_actor WHERE actor_id = 1 AND film_id = 1;</span><br></pre></td></tr></table></figure>
+<h3 id="3-索引列的顺序"><a href="#3-索引列的顺序" class="headerlink" title="3. 索引列的顺序"></a>3. 索引列的顺序</h3><p>让选择性最强的索引列放在前面。</p>
+<p>索引的选择性是指：不重复的索引值和记录总数的比值。最大值为 1，此时每个记录都有唯一的索引与其对应。选择性越高，每个记录的区分度越高，查询效率也越高。</p>
+<p>例如下面显示的结果中 customer_id 的选择性比 staff_id 更高，因此最好把 customer_id 列放在多列索引的前面。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">COUNT</span>(<span class="keyword">DISTINCT</span> staff_id)/<span class="keyword">COUNT</span>(*) <span class="keyword">AS</span> staff_id_selectivity,</span><br><span class="line"><span class="keyword">COUNT</span>(<span class="keyword">DISTINCT</span> customer_id)/<span class="keyword">COUNT</span>(*) <span class="keyword">AS</span> customer_id_selectivity,</span><br><span class="line"><span class="keyword">COUNT</span>(*)</span><br><span class="line"><span class="keyword">FROM</span> payment;</span><br></pre></td></tr></table></figure>
+<h3 id="4-前缀索引"><a href="#4-前缀索引" class="headerlink" title="4. 前缀索引"></a>4. 前缀索引</h3><p>对于 BLOB、TEXT 和 VARCHAR 类型的列，必须使用前缀索引，只索引开始的部分字符。</p>
+<p>前缀长度的选取需要根据索引选择性来确定。</p>
+<h3 id="5-覆盖索引"><a href="#5-覆盖索引" class="headerlink" title="5. 覆盖索引"></a>5. 覆盖索引</h3><p>索引包含所有需要查询的字段的值。</p>
+<p>具有以下优点：</p>
 <ul>
-<li>首先 B 处于监听状态，等待客户的连接请求。</li>
-<li>A 向 B 发送连接请求报文，SYN = 1, ACK = 0,选择一个初始的序号 x </li>
-<li>B 收到请求报文之后，如果同意连接，则向 A 发送连接确认的报文，SYN = 1，ACK = 1,确认号为 x + 1,同时选择一个初始序号 y。</li>
-<li>A 收到 B 的连接确认报文之后，还要向 B 发处确认，ACK = 1, 确认号为 y + 1,序号为 x + 1</li>
-<li>B 收到 A 的确认后，连接建立</li>
+<li>索引通常远小于数据行的大小，只读取索引能大大减少数据访问量。</li>
+<li>一些存储引擎（例如 MyISAM）在内存中只缓存索引，而数据依赖于操作系统来缓存。因此，只访问索引可以不使用系统调用（通常比较费时）。</li>
+<li>对于 InnoDB 引擎，若辅助索引能够覆盖查询，则无需访问主索引。</li>
 </ul>
-<h4 id="三次握手的原因"><a href="#三次握手的原因" class="headerlink" title="三次握手的原因"></a>三次握手的原因</h4><ul>
-<li>第三次握手是为了防止失效的连接请求到达服务器，让服务器错误的打开连接。</li>
-<li>客户端发送的连接请求在网络中滞留，那么会隔很长的时间才能收到服务端发来回来的连接确认。客户端等待一个超时重传时间之后，就会重新请求连接。但是这个滞留的连接请求最后还是会到达服务器，如果不进行三次握手，那么服务器就会打开两个连接。如果有第三次握手，客户端会忽略服务器之后发送的对滞留连接请求的确认连接确认，不进行第三次握手，因此就不会再次打开连接。</li>
+<h2 id="索引的优点"><a href="#索引的优点" class="headerlink" title="索引的优点"></a>索引的优点</h2><ul>
+<li>大大减少了服务器需要扫描的数据行数。</li>
+<li>帮助服务器避免进行排序和分组，以及避免创建临时表（B+Tree 索引是有序的，可以用于 ORDER BY 和 GROUP BY 操作。临时表主要是在排序和分组过程中创建，不需要排序和分组，也就不需要创建临时表）。</li>
+<li>将随机 I/O 变为顺序 I/O（B+Tree 索引是有序的，会将相邻的数据都存储在一起）。</li>
 </ul>
-<h3 id="TCP-四次挥手"><a href="#TCP-四次挥手" class="headerlink" title="TCP 四次挥手"></a>TCP 四次挥手</h3><p><img src="/2019/05/09/network/E:/Git\TTMS\MX-Notes\image\1557412704769.png" alt="1557412704769"></p>
-<p>以下描述不讨论序号和确认号，因为序号和确认号的规则比较简单。并且不讨论 ACK，因为 ACK 在连接建立之后都为 1。</p>
-<ul>
-<li>A 发送连接释放报文，FIN=1。</li>
-<li>B 收到之后发出确认，此时 TCP 属于半关闭状态，B 能向 A 发送数据但是 A 不能向 B 发送数据。</li>
-<li>当 B 不再需要连接时，发送连接释放报文，FIN=1。</li>
-<li>A 收到后发出确认，进入 TIME-WAIT 状态，等待 2 MSL（最大报文存活时间）后释放连接。</li>
-<li>B 收到 A 的确认后释放连接。</li>
+<h2 id="索引的使用条件"><a href="#索引的使用条件" class="headerlink" title="索引的使用条件"></a>索引的使用条件</h2><ul>
+<li>对于非常小的表、大部分情况下简单的全表扫描比建立索引更高效；</li>
+<li>对于中到大型的表，索引就非常有效；</li>
+<li>但是对于特大型的表，建立和维护索引的代价将会随之增长。这种情况下，需要用到一种技术可以直接区分出需要查询的一组数据，而不是一条记录一条记录地匹配，例如可以使用分区技术。</li>
 </ul>
-<h4 id="四次挥手的原因"><a href="#四次挥手的原因" class="headerlink" title="四次挥手的原因"></a><strong>四次挥手的原因</strong></h4><p>客户端发送了 FIN 连接释放报文之后，服务器收到了这个报文，就进入了 CLOSE-WAIT 状态。这个状态是为了让服务器端发送还未传送完毕的数据，传送完毕之后，服务器会发送 FIN 连接释放报文。</p>
-<p><strong>TIME_WAIT</strong></p>
-<p>客户端接收到服务器端的 FIN 报文后进入此状态，此时并不是直接进入 CLOSED 状态，还需要等待一个时间计时器设置的时间 2MSL。这么做有两个理由：</p>
-<ul>
-<li>确保最后一个确认报文能够到达。如果 B 没收到 A 发送来的确认报文，那么就会重新发送连接释放请求报文，A 等待一段时间就是为了处理这种情况的发生。</li>
-<li>等待一段时间是为了让本连接持续时间内所产生的所有报文都从网络中消失，使得下一个新的连接不会出现旧的连接请求报文。</li>
-</ul>
-<h2 id="网络层"><a href="#网络层" class="headerlink" title="网络层"></a>网络层</h2><p>在计算机网络进行通信的两个计算机之间可能会经过多个数据链路，可能还要经过多个通信子网，网络层的任务就是选择合适的网络路由和交换节点，确保数据的及时发送。在发送数据的时候把运输层的数据报封装成组和包进行传送，网络层使用的协议是 IP 协议，因此分组也叫数据报。</p>
-<h2 id="数据链路层"><a href="#数据链路层" class="headerlink" title="数据链路层"></a>数据链路层</h2><p>将网络层交下来的IP数据组装成帧。在两个相邻节点的链路上传送帧。</p>
-<h2 id="物理层"><a href="#物理层" class="headerlink" title="物理层"></a>物理层</h2><p>实现相邻计算机节点之间比特流的透明传输，尽可能屏蔽掉具体传输介质和物理设备的差异。</p>
+<p># </p>
 
       
     </div>
@@ -402,7 +377,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/网络/" rel="tag"><i class="fa fa-tag"></i> 网络</a>
+            <a href="/tags/mysql/" rel="tag"><i class="fa fa-tag"></i> mysql</a>
           
         </div>
       
@@ -415,8 +390,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/11/13/design/" rel="next" title="Java设计笔记">
-                <i class="fa fa-chevron-left"></i> Java设计笔记
+              <a href="/2019/08/12/关于CMS的Young-GC/" rel="next" title="关于CMS的Young GC">
+                <i class="fa fa-chevron-left"></i> 关于CMS的Young GC
               </a>
             
           </div>
@@ -424,10 +399,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/05/09/MQ常见问题/" rel="prev" title="常见问题总结">
-                常见问题总结 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -557,7 +528,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#网络"><span class="nav-number">1.</span> <span class="nav-text">网络</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#应用层"><span class="nav-number">1.1.</span> <span class="nav-text">应用层</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#传输层"><span class="nav-number">1.2.</span> <span class="nav-text">传输层</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#UDP-和-TCP-的特点"><span class="nav-number">1.2.1.</span> <span class="nav-text">UDP 和 TCP 的特点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TCP-首部格式"><span class="nav-number">1.2.2.</span> <span class="nav-text">TCP 首部格式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TCP-的三次握手"><span class="nav-number">1.2.3.</span> <span class="nav-text">TCP 的三次握手</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#三次握手的原因"><span class="nav-number">1.2.3.1.</span> <span class="nav-text">三次握手的原因</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TCP-四次挥手"><span class="nav-number">1.2.4.</span> <span class="nav-text">TCP 四次挥手</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#四次挥手的原因"><span class="nav-number">1.2.4.1.</span> <span class="nav-text">四次挥手的原因</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#网络层"><span class="nav-number">1.3.</span> <span class="nav-text">网络层</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据链路层"><span class="nav-number">1.4.</span> <span class="nav-text">数据链路层</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#物理层"><span class="nav-number">1.5.</span> <span class="nav-text">物理层</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-独立的列"><span class="nav-number">1.</span> <span class="nav-text">1. 独立的列</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-多列索引"><span class="nav-number">2.</span> <span class="nav-text">2. 多列索引</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-索引列的顺序"><span class="nav-number">3.</span> <span class="nav-text">3. 索引列的顺序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-前缀索引"><span class="nav-number">4.</span> <span class="nav-text">4. 前缀索引</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-覆盖索引"><span class="nav-number">5.</span> <span class="nav-text">5. 覆盖索引</span></a></li></ol><li class="nav-item nav-level-2"><a class="nav-link" href="#索引的优点"><span class="nav-number"></span> <span class="nav-text">索引的优点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#索引的使用条件"><span class="nav-number"></span> <span class="nav-text">索引的使用条件</span></a></li></div>
             
 
           </div>
