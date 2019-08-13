@@ -81,20 +81,20 @@
 
 
 
-<meta name="description" content="分布式锁在单机场景下，可以使用语言的内置锁来实现进程同步。但是在分布式场景下，需要同步的进程可能位于不同的节点上，那么就需要使用分布式锁。 阻塞锁通常使用互斥量来实现：  互斥量为 0 表示有其它进程在使用锁，此时处于锁定状态； 互斥量为 1 表示未锁定状态。  1 和 0 可以用一个整型值表示，也可以用某个数据是否存在表示。 数据库的唯一索引获得锁时向表中插入一条记录，释放锁时删除这条记录。唯一">
+<meta name="description" content="分布式锁在单机场景下，可以使用语言的内置锁来实现进程同步。但是在分布式场景下，需要同步的进程可能位于不同的节点上，那么就需要使用分布式锁。 阻塞锁通常使用互斥量来实现：  互斥量为 0 表示有其它进程在使用锁，此时处于锁定状态； 互斥量为 1 表示未锁定状态。  1 和 0 可以用一个整型值表示，也可以用某个数据是否存在表示。">
 <meta name="keywords" content="分布式">
 <meta property="og:type" content="article">
 <meta property="og:title" content="分布式锁">
 <meta property="og:url" content="http://yoursite.com/2019/08/13/分布式锁/index.html">
 <meta property="og:site_name" content="小白君的博客">
-<meta property="og:description" content="分布式锁在单机场景下，可以使用语言的内置锁来实现进程同步。但是在分布式场景下，需要同步的进程可能位于不同的节点上，那么就需要使用分布式锁。 阻塞锁通常使用互斥量来实现：  互斥量为 0 表示有其它进程在使用锁，此时处于锁定状态； 互斥量为 1 表示未锁定状态。  1 和 0 可以用一个整型值表示，也可以用某个数据是否存在表示。 数据库的唯一索引获得锁时向表中插入一条记录，释放锁时删除这条记录。唯一">
+<meta property="og:description" content="分布式锁在单机场景下，可以使用语言的内置锁来实现进程同步。但是在分布式场景下，需要同步的进程可能位于不同的节点上，那么就需要使用分布式锁。 阻塞锁通常使用互斥量来实现：  互斥量为 0 表示有其它进程在使用锁，此时处于锁定状态； 互斥量为 1 表示未锁定状态。  1 和 0 可以用一个整型值表示，也可以用某个数据是否存在表示。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://yoursite.com/2019/08/13/分布式锁/Users/maxu/hexo/source/_posts/分布式锁/WX20190813-203526@2x.png">
-<meta property="og:updated_time" content="2019-08-13T12:36:34.712Z">
+<meta property="og:image" content="http://yoursite.com/2019/08/13/分布式锁/WX20190813-203526@2x.png">
+<meta property="og:updated_time" content="2019-08-13T12:38:13.514Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="分布式锁">
-<meta name="twitter:description" content="分布式锁在单机场景下，可以使用语言的内置锁来实现进程同步。但是在分布式场景下，需要同步的进程可能位于不同的节点上，那么就需要使用分布式锁。 阻塞锁通常使用互斥量来实现：  互斥量为 0 表示有其它进程在使用锁，此时处于锁定状态； 互斥量为 1 表示未锁定状态。  1 和 0 可以用一个整型值表示，也可以用某个数据是否存在表示。 数据库的唯一索引获得锁时向表中插入一条记录，释放锁时删除这条记录。唯一">
-<meta name="twitter:image" content="http://yoursite.com/2019/08/13/分布式锁/Users/maxu/hexo/source/_posts/分布式锁/WX20190813-203526@2x.png">
+<meta name="twitter:description" content="分布式锁在单机场景下，可以使用语言的内置锁来实现进程同步。但是在分布式场景下，需要同步的进程可能位于不同的节点上，那么就需要使用分布式锁。 阻塞锁通常使用互斥量来实现：  互斥量为 0 表示有其它进程在使用锁，此时处于锁定状态； 互斥量为 1 表示未锁定状态。  1 和 0 可以用一个整型值表示，也可以用某个数据是否存在表示。">
+<meta name="twitter:image" content="http://yoursite.com/2019/08/13/分布式锁/WX20190813-203526@2x.png">
 
 
 
@@ -321,6 +321,7 @@
 <li>互斥量为 1 表示未锁定状态。</li>
 </ul>
 <p>1 和 0 可以用一个整型值表示，也可以用某个数据是否存在表示。</p>
+<a id="more"></a>
 <h2 id="数据库的唯一索引"><a href="#数据库的唯一索引" class="headerlink" title="数据库的唯一索引"></a>数据库的唯一索引</h2><p>获得锁时向表中插入一条记录，释放锁时删除这条记录。唯一索引可以保证该记录只被插入一次，那么就可以用这个记录是否存在来判断是否存于锁定状态。</p>
 <p>存在以下几个问题：</p>
 <ul>
@@ -338,7 +339,7 @@
 <li>如果锁获取失败，就到每个实例上释放锁。</li>
 </ul>
 <h2 id="Zookeeper-的有序节点"><a href="#Zookeeper-的有序节点" class="headerlink" title="Zookeeper 的有序节点"></a>Zookeeper 的有序节点</h2><h3 id="1-Zookeeper-抽象模型"><a href="#1-Zookeeper-抽象模型" class="headerlink" title="1. Zookeeper 抽象模型"></a>1. Zookeeper 抽象模型</h3><p>Zookeeper 提供了一种树形结构的命名空间，/app1/p_1 节点的父节点为 /app1。</p>
-<p><img src="/2019/08/13/分布式锁/Users/maxu/hexo/source/_posts/分布式锁/WX20190813-203526@2x.png" alt></p>
+<p><img src="/2019/08/13/分布式锁/WX20190813-203526@2x.png" alt></p>
 <h3 id="2-节点类型"><a href="#2-节点类型" class="headerlink" title="2. 节点类型"></a>2. 节点类型</h3><ul>
 <li>永久节点：不会因为会话结束或者超时而消失；</li>
 <li>临时节点：如果会话结束或者超时就会消失；</li>
