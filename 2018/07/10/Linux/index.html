@@ -81,20 +81,17 @@
 
 
 
-<meta name="description" content="学习基础的Liunx命令">
 <meta name="keywords" content="Linux">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Liunx">
 <meta property="og:url" content="http://yoursite.com/2018/07/10/Linux/index.html">
 <meta property="og:site_name" content="小白君的博客">
-<meta property="og:description" content="学习基础的Liunx命令">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://yoursite.com/2018/07/10/Linux/images/timg.jpg">
-<meta property="og:updated_time" content="2019-08-11T05:25:14.655Z">
+<meta property="og:image" content="http://yoursite.com/2018/07/10/Linux/timg.jpg">
+<meta property="og:updated_time" content="2019-08-14T05:23:55.041Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Liunx">
-<meta name="twitter:description" content="学习基础的Liunx命令">
-<meta name="twitter:image" content="http://yoursite.com/2018/07/10/Linux/images/timg.jpg">
+<meta name="twitter:image" content="http://yoursite.com/2018/07/10/Linux/timg.jpg">
 
 
 
@@ -300,10 +297,6 @@
           
 
           
-              <div class="post-description">
-                  学习基础的Liunx命令
-              </div>
-          
 
         </div>
       </header>
@@ -318,7 +311,9 @@
       
 
       
-        <h1 id="命令学习"><a href="#命令学习" class="headerlink" title="命令学习"></a>命令学习</h1><ul>
+        <p><img src="/2018/07/10/Linux/timg.jpg" alt></p>
+<a id="more"></a>
+<h1 id="命令学习"><a href="#命令学习" class="headerlink" title="命令学习"></a>命令学习</h1><ul>
 <li>返回上一次所在的目录：cd - </li>
 <li>查看环境变量：echo $PATH</li>
 <li>设置环境变量：PATH=””</li>
@@ -452,7 +447,60 @@
 </table>
 <p>假如我下载了100G的电影我放置在那个地方</p>
 <p>可以新建一个文件夹，让分区挂载在这个文件夹上面</p>
-<p><img src="/2018/07/10/Linux/images/timg.jpg" alt="k"></p>
+<p>体系结构</p>
+<p>用户态（用户上层活动）和内核态</p>
+<p>内核：本质上是一段管理计算机硬件设备的程序</p>
+<p>内核提供上层应用访问的接口</p>
+<p>系统调用：内核访问接口，是一种不能再简化操作</p>
+<p>公用函数库：系统调用的组合拳</p>
+<p>Shell: 命令解释器，可编程</p>
+<h3 id="Linux基本命令"><a href="#Linux基本命令" class="headerlink" title="Linux基本命令"></a>Linux基本命令</h3><p>top 查看占用的资源</p>
+<h5 id="tail-fn-10-lt-文件名称-gt-动态查看文件内容，用来查看日志"><a href="#tail-fn-10-lt-文件名称-gt-动态查看文件内容，用来查看日志" class="headerlink" title="tail -fn 10 &lt;文件名称&gt;  动态查看文件内容，用来查看日志"></a>tail -fn 10 &lt;文件名称&gt;  动态查看文件内容，用来查看日志</h5><p>①  sudo apt-get update        ##更新所有软件包</p>
+<p>②  apt-get常用命令</p>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>apt-get  install</td>
+<td>下载并安装软件包</td>
+</tr>
+<tr>
+<td>apt-get  upgrade</td>
+<td>下载并安装本系统上已有的软件包的最新版</td>
+</tr>
+<tr>
+<td>apt-get  remove</td>
+<td>卸载特定的软件包</td>
+</tr>
+<tr>
+<td>apt-get source</td>
+<td>下载特定软件的源代码</td>
+</tr>
+<tr>
+<td>apt-get clean</td>
+<td>删除所有的已下载的包文件</td>
+</tr>
+</tbody>
+</table>
+<h5 id="查找特定的文件-find"><a href="#查找特定的文件-find" class="headerlink" title="查找特定的文件 find"></a>查找特定的文件 find</h5><p>find -name</p>
+<p>检索文件内容 grep</p>
+<p>管道 |，可将指令连接起来，前一个指令的输出可以作为另一个指令的输入</p>
+<h5 id="快捷键"><a href="#快捷键" class="headerlink" title="快捷键"></a>快捷键</h5><p>ctrl+l</p>
+<p>ctrl+u</p>
+<p>ctrl + a</p>
+<p>ctrl + e</p>
+<p>ctrl + r</p>
+<p>top - H</p>
+<p>cpu us: 用户空间的cpu使用情况 用户层代码</p>
+<p>cpu sy:内核空间的cpu使用情况 系统调用</p>
+<p>load average: 1,5,15分钟load平均值，跟着核数系数，0代表通常，1，代表打满，1+代表等待阻塞</p>
+<p>memory:free 空闲内存，used使用内存</p>
+<p>pstree -p 端口号  线程树</p>
 
       
     </div>
@@ -492,8 +540,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/06/14/实现ArrayList/" rel="next" title="实现ArrayList">
-                <i class="fa fa-chevron-left"></i> 实现ArrayList
+              <a href="/2018/06/17/实现LinkedList/" rel="next" title="实现LinkedList">
+                <i class="fa fa-chevron-left"></i> 实现LinkedList
               </a>
             
           </div>
@@ -581,7 +629,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-count">36</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -594,7 +642,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-count">17</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -634,7 +682,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#命令学习"><span class="nav-number">1.</span> <span class="nav-text">命令学习</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#文件-磁盘管理"><span class="nav-number">2.</span> <span class="nav-text">文件-磁盘管理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#简单命令"><span class="nav-number">2.1.</span> <span class="nav-text">简单命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建目录-mkdir"><span class="nav-number">2.2.</span> <span class="nav-text">创建目录: mkdir</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#显示文件目录-tree"><span class="nav-number">2.3.</span> <span class="nav-text">显示文件目录 tree</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#删除目录-rmdir"><span class="nav-number">2.4.</span> <span class="nav-text">删除目录: rmdir</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#删除文件-rm"><span class="nav-number">2.5.</span> <span class="nav-text">删除文件: rm</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#建立链接文件-in"><span class="nav-number">2.6.</span> <span class="nav-text">建立链接文件: in</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#输出文件内容或者合并文件内容-cat"><span class="nav-number">2.7.</span> <span class="nav-text">输出文件内容或者合并文件内容 cat</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cp-拷贝文件"><span class="nav-number">2.8.</span> <span class="nav-text">cp: 拷贝文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#移动文件-mv"><span class="nav-number">2.9.</span> <span class="nav-text">移动文件: mv</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#归档管理-tar"><span class="nav-number">2.10.</span> <span class="nav-text">归档管理: tar</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文件压缩解压-gizp"><span class="nav-number">2.11.</span> <span class="nav-text">文件压缩解压: gizp</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查看命令位置-which"><span class="nav-number">2.12.</span> <span class="nav-text">查看命令位置: which</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Linux命令-用户、权限管理"><span class="nav-number">3.</span> <span class="nav-text">Linux命令-用户、权限管理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#查看当前用户-whoami"><span class="nav-number">3.1.</span> <span class="nav-text">查看当前用户: whoami</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#who"><span class="nav-number">3.2.</span> <span class="nav-text">who</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设置文件权限-chmod"><span class="nav-number">3.3.</span> <span class="nav-text">设置文件权限: chmod</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#修改文件所有者-chown"><span class="nav-number">3.4.</span> <span class="nav-text">修改文件所有者: chown</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#修改文件所属组：chgrp"><span class="nav-number">3.5.</span> <span class="nav-text">修改文件所属组：chgrp</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Linux系统管理"><span class="nav-number">4.</span> <span class="nav-text">Linux系统管理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#查看进程信息：ps"><span class="nav-number">4.1.</span> <span class="nav-text">查看进程信息：ps</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#杀死进程kill"><span class="nav-number">4.2.</span> <span class="nav-text">杀死进程kill</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关于挂载点的理解"><span class="nav-number">4.3.</span> <span class="nav-text">关于挂载点的理解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#目录结构"><span class="nav-number">4.4.</span> <span class="nav-text">目录结构</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#命令学习"><span class="nav-number">1.</span> <span class="nav-text">命令学习</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#文件-磁盘管理"><span class="nav-number">2.</span> <span class="nav-text">文件-磁盘管理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#简单命令"><span class="nav-number">2.1.</span> <span class="nav-text">简单命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建目录-mkdir"><span class="nav-number">2.2.</span> <span class="nav-text">创建目录: mkdir</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#显示文件目录-tree"><span class="nav-number">2.3.</span> <span class="nav-text">显示文件目录 tree</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#删除目录-rmdir"><span class="nav-number">2.4.</span> <span class="nav-text">删除目录: rmdir</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#删除文件-rm"><span class="nav-number">2.5.</span> <span class="nav-text">删除文件: rm</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#建立链接文件-in"><span class="nav-number">2.6.</span> <span class="nav-text">建立链接文件: in</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#输出文件内容或者合并文件内容-cat"><span class="nav-number">2.7.</span> <span class="nav-text">输出文件内容或者合并文件内容 cat</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cp-拷贝文件"><span class="nav-number">2.8.</span> <span class="nav-text">cp: 拷贝文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#移动文件-mv"><span class="nav-number">2.9.</span> <span class="nav-text">移动文件: mv</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#归档管理-tar"><span class="nav-number">2.10.</span> <span class="nav-text">归档管理: tar</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文件压缩解压-gizp"><span class="nav-number">2.11.</span> <span class="nav-text">文件压缩解压: gizp</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查看命令位置-which"><span class="nav-number">2.12.</span> <span class="nav-text">查看命令位置: which</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Linux命令-用户、权限管理"><span class="nav-number">3.</span> <span class="nav-text">Linux命令-用户、权限管理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#查看当前用户-whoami"><span class="nav-number">3.1.</span> <span class="nav-text">查看当前用户: whoami</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#who"><span class="nav-number">3.2.</span> <span class="nav-text">who</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设置文件权限-chmod"><span class="nav-number">3.3.</span> <span class="nav-text">设置文件权限: chmod</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#修改文件所有者-chown"><span class="nav-number">3.4.</span> <span class="nav-text">修改文件所有者: chown</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#修改文件所属组：chgrp"><span class="nav-number">3.5.</span> <span class="nav-text">修改文件所属组：chgrp</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Linux系统管理"><span class="nav-number">4.</span> <span class="nav-text">Linux系统管理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#查看进程信息：ps"><span class="nav-number">4.1.</span> <span class="nav-text">查看进程信息：ps</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#杀死进程kill"><span class="nav-number">4.2.</span> <span class="nav-text">杀死进程kill</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关于挂载点的理解"><span class="nav-number">4.3.</span> <span class="nav-text">关于挂载点的理解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#目录结构"><span class="nav-number">4.4.</span> <span class="nav-text">目录结构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Linux基本命令"><span class="nav-number">4.4.1.</span> <span class="nav-text">Linux基本命令</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#tail-fn-10-lt-文件名称-gt-动态查看文件内容，用来查看日志"><span class="nav-number">4.4.1.0.1.</span> <span class="nav-text">tail -fn 10 &lt;文件名称&gt;  动态查看文件内容，用来查看日志</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#查找特定的文件-find"><span class="nav-number">4.4.1.0.2.</span> <span class="nav-text">查找特定的文件 find</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#快捷键"><span class="nav-number">4.4.1.0.3.</span> <span class="nav-text">快捷键</span></a></li></ol></li></ol></li></ol></li></ol></div>
             
 
           </div>

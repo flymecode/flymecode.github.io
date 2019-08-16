@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2019-08-13T12:38:13.514Z</updated>
+  <updated>2019-08-16T09:06:26.045Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,67 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>LinkedList介绍</title>
+    <link href="http://yoursite.com/2019/08/16/LinkedList%E4%BB%8B%E7%BB%8D/"/>
+    <id>http://yoursite.com/2019/08/16/LinkedList介绍/</id>
+    <published>2019-08-16T08:32:13.000Z</published>
+    <updated>2019-08-16T09:06:26.045Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>LinkedHashMap继承于HashMap</p><h2 id="应用场景"><a href="#应用场景" class="headerlink" title="应用场景"></a>应用场景</h2><p>HashMap是无序的，当我们希望有顺序地去存储key-value时，就需要使用LinkedHashMap了。</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Map&lt;String, String&gt; hashMap = <span class="keyword">new</span> HashMap&lt;String, String&gt;();</span><br><span class="line">      hashMap.put(<span class="string">"name5"</span>, <span class="string">"value5"</span>);</span><br><span class="line">      hashMap.put(<span class="string">"name6"</span>, <span class="string">"value6"</span>);</span><br><span class="line">      hashMap.put(<span class="string">"name7"</span>, <span class="string">"value7"</span>);</span><br><span class="line">      Set&lt;Map.Entry&lt;String, String&gt;&gt; set = hashMap.entrySet();</span><br><span class="line">      Iterator&lt;Map.Entry&lt;String, String&gt;&gt; iterator = set.iterator();</span><br><span class="line">      <span class="keyword">while</span>(iterator.hasNext()) &#123;</span><br><span class="line">          Map.Entry entry = iterator.next();</span><br><span class="line">          String key = (String) entry.getKey();</span><br><span class="line">          String value = (String) entry.getValue();</span><br><span class="line">          System.out.println(<span class="string">"key:"</span> + key + <span class="string">",value:"</span> + value);</span><br><span class="line">      &#125;</span><br></pre></td></tr></table></figure><p>输出结果</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">key:name6,value:value6</span><br><span class="line">key:name5,value:value5</span><br><span class="line">key:name7,value:value7</span><br></pre></td></tr></table></figure><p>同样的数据，我们再试试LinkedHashMap</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Map&lt;String, String&gt; hashMap = <span class="keyword">new</span> LinkedHashMap&lt;&gt;();</span><br><span class="line">        hashMap.put(<span class="string">"name5"</span>, <span class="string">"value5"</span>);</span><br><span class="line">        hashMap.put(<span class="string">"name6"</span>, <span class="string">"value6"</span>);</span><br><span class="line">        hashMap.put(<span class="string">"name7"</span>, <span class="string">"value7"</span>);</span><br><span class="line">        Set&lt;Map.Entry&lt;String, String&gt;&gt; set = hashMap.entrySet();</span><br><span class="line">        Iterator&lt;Map.Entry&lt;String, String&gt;&gt; iterator = set.iterator();</span><br><span class="line">        <span class="keyword">while</span>(iterator.hasNext()) &#123;</span><br><span class="line">            Map.Entry entry = iterator.next();</span><br><span class="line">            String key = (String) entry.getKey();</span><br><span class="line">            String value = (String) entry.getValue();</span><br><span class="line">            System.out.println(<span class="string">"key:"</span> + key + <span class="string">",value:"</span> + value);</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure><p>输出结果</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">key:name5,value:value5</span><br><span class="line">key:name6,value:value6</span><br><span class="line">key:name7,value:value7</span><br></pre></td></tr></table></figure><p>LinkedHashMap是有序的，且默认为插入顺序。</p><p>LinkedHashMap空参的构造方法。</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">LinkedHashMap</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 调用HashMap的构造方法</span></span><br><span class="line">        <span class="keyword">super</span>();</span><br><span class="line">        <span class="comment">// 这里是指是否基于访问排序，默认为false</span></span><br><span class="line">        accessOrder = <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure><p>这里accessOrder设置为false，表示不是访问顺序而是插入顺序存储的，这也是默认值，表示LinkedHashMap中存储的顺序是按照调用put方法插入的顺序进行排序的。LinkedHashMap也提供了可以设置accessOrder的构造方法。</p><p>在HashMap的构造函数中，调用了init方法，而在HashMap中init方法是空实现，但LinkedHashMap重写了该方法，所以在LinkedHashMap的构造方法里，调用了自身的init方法，init的重写实现如下：</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">    * Called by superclass constructors and pseudoconstructors (clone,</span></span><br><span class="line"><span class="comment">    * readObject) before any entries are inserted into the map.  Initializes</span></span><br><span class="line"><span class="comment">    * the chain.</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">   <span class="meta">@Override</span></span><br><span class="line">   <span class="function"><span class="keyword">void</span> <span class="title">init</span><span class="params">()</span> </span>&#123;</span><br><span class="line">       <span class="comment">// 创建了一个hash=-1，key、value、next都为null的Entry</span></span><br><span class="line">       header = <span class="keyword">new</span> Entry&lt;&gt;(-<span class="number">1</span>, <span class="keyword">null</span>, <span class="keyword">null</span>, <span class="keyword">null</span>);</span><br><span class="line">       <span class="comment">// 让创建的Entry的before和after都指向自身，注意after不是之前提到的next</span></span><br><span class="line">       <span class="comment">// 其实就是创建了一个只有头部节点的双向链表</span></span><br><span class="line">       header.before = header.after = header;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure><p>LinkedHashMap有自己的静态内部类Entry，它继承了HashMap.Node，定义如下:</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Entry</span>&lt;<span class="title">K</span>,<span class="title">V</span>&gt; <span class="keyword">extends</span> <span class="title">HashMap</span>.<span class="title">Node</span>&lt;<span class="title">K</span>,<span class="title">V</span>&gt; </span>&#123;</span><br><span class="line">        Entry&lt;K,V&gt; before, after;</span><br><span class="line">        Entry(<span class="keyword">int</span> hash, K key, V value, Node&lt;K,V&gt; next) &#123;</span><br><span class="line">            <span class="keyword">super</span>(hash, key, value, next);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure><p>所以LinkedHashMap构造函数，主要就是调用HashMap构造函数初始化了一个Entry[] table，然后调用自身的init初始化了一个只有头结点的双向链表。</p><p>总结</p><p>LinkedHashMap 是继承于HashMap，是基于HashMap和双向链表来实现的。</p><p>HashMap无序；LinkedHashMap有序，可分为插入顺序和访问顺序两种。如果是访问顺序，那put和get操作已存在的Entry时，都会把Entry移动到双向链表的表尾(其实是先删除再插入)。</p><p>LinkedHashMap存取数据，还是跟HashMap一样使用的Entry[]的方式，双向链表只是为了保证顺序。</p><p>LinkedHashMap是线程不安全的。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;p&gt;LinkedHashMap继承于HashMap&lt;/p&gt;
+&lt;h2 id=&quot;应用场景&quot;&gt;&lt;a href=&quot;#应用场景&quot; class=&quot;heade
+      
+    
+    </summary>
+    
+    
+      <category term="Java容器" scheme="http://yoursite.com/tags/Java%E5%AE%B9%E5%99%A8/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>并发下是先操作数据库还是先操作缓存</title>
+    <link href="http://yoursite.com/2019/08/15/%E5%B9%B6%E5%8F%91%E4%B8%8B%E6%98%AF%E5%85%88%E6%93%8D%E4%BD%9C%E6%95%B0%E6%8D%AE%E5%BA%93%E8%BF%98%E6%98%AF%E5%85%88%E6%93%8D%E4%BD%9C%E7%BC%93%E5%AD%98/"/>
+    <id>http://yoursite.com/2019/08/15/并发下是先操作数据库还是先操作缓存/</id>
+    <published>2019-08-15T03:54:49.000Z</published>
+    <updated>2019-08-15T03:54:49.412Z</updated>
+    
+    <summary type="html">
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>面试总结</title>
+    <link href="http://yoursite.com/2019/08/14/%E9%9D%A2%E8%AF%95%E6%80%BB%E7%BB%93/"/>
+    <id>http://yoursite.com/2019/08/14/面试总结/</id>
+    <published>2019-08-14T11:07:36.000Z</published>
+    <updated>2019-08-14T11:10:23.686Z</updated>
+    
+    <content type="html"><![CDATA[<h4 id="Spring-AOP-实现机制"><a href="#Spring-AOP-实现机制" class="headerlink" title="Spring AOP 实现机制"></a>Spring AOP 实现机制</h4><h4 id="Mybatis-缓存"><a href="#Mybatis-缓存" class="headerlink" title="Mybatis 缓存"></a>Mybatis 缓存</h4><h4 id="LinkedHashMap-使用场景"><a href="#LinkedHashMap-使用场景" class="headerlink" title="LinkedHashMap 使用场景"></a>LinkedHashMap 使用场景</h4><h4 id="Redis数据结构底层实现"><a href="#Redis数据结构底层实现" class="headerlink" title="Redis数据结构底层实现"></a>Redis数据结构底层实现</h4><h4 id="Innodb-怎么保证事务"><a href="#Innodb-怎么保证事务" class="headerlink" title="Innodb 怎么保证事务"></a>Innodb 怎么保证事务</h4>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h4 id=&quot;Spring-AOP-实现机制&quot;&gt;&lt;a href=&quot;#Spring-AOP-实现机制&quot; class=&quot;headerlink&quot; title=&quot;Spring AOP 实现机制&quot;&gt;&lt;/a&gt;Spring AOP 实现机制&lt;/h4&gt;&lt;h4 id=&quot;Mybatis-缓存&quot;&gt;&lt;
+      
+    
+    </summary>
+    
+    
+      <category term="面试" scheme="http://yoursite.com/tags/%E9%9D%A2%E8%AF%95/"/>
+    
+  </entry>
   
   <entry>
     <title>分布式锁</title>
@@ -238,6 +299,26 @@
   </entry>
   
   <entry>
+    <title>Cache、内存、虚拟内存</title>
+    <link href="http://yoursite.com/2019/05/14/Cache%E3%80%81%E5%86%85%E5%AD%98%E3%80%81%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98/"/>
+    <id>http://yoursite.com/2019/05/14/Cache、内存、虚拟内存/</id>
+    <published>2019-05-14T05:14:29.000Z</published>
+    <updated>2019-08-14T05:17:02.389Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="Cache、内存、虚拟内存"><a href="#Cache、内存、虚拟内存" class="headerlink" title="Cache、内存、虚拟内存"></a>Cache、内存、虚拟内存</h3><p>内存就是RAM，RAM和ROM是相对的，RAM在断掉后保存在里面的信息会消失，而ROM在断电后存储在里面的信息不会消失。RAM分为静态RAM和动态RAM，静态RAM叫SRAM，是仅次于CPU访问速度的RAM，L1 cache就是SRAM，一般我们电脑上用的都是动态RAM，即DRAM，DRAM的访问速度比SRAM要慢很多，但是体积小，价格便宜。系统里面内存分配说的物理内存大多数也就是DRAM里的情况。</p><a id="more"></a><p>cache就是高速缓存，是为了调和CPU得过快访问速度和内存过慢的速度的一个硬件，现代计算机一般都有三级高速缓存，L1、L2、L3，访问速度依次递减。因为CPU要从内存中读取数据的时候会很慢，大部分时间会浪费在等待上，所以引入cache，把预计将要读取的数据先存放到cache中，这样CPU就可以先到cache中读取，从而节约了等待时间，如果cache中没有要读取的数据，那么继续往下到内存中读取。前面文章讲到了数据从内存读到cache中的算法。</p><p>虚拟内存是为了防止内存不够用，从硬盘上分割出一些空间给内存扩展使用，这样程序就认为运行内存还够用。实际上呢，是把内存中一些不常用的数据或指令放到虚拟内存中，等到使用的时候再存放到内存中，因为内存的读取速度虽然比CPU和cache低，但是比硬盘要高很多，从而就加快了程序的运行速度。在内存为4G以上的计算机中，一般这个大小足够用了，虚拟内存就一般无用武之地了。</p><p>CPU首先得到的是虚拟地址，要经过地址翻译成物理地址才能进行数据访问，这个过程要检查TLB（翻译后备缓冲器），如果命中，会得到其物理地址，之后会访问cache，如果cache中有要访问的数据，那么本次访问就结束，如果没有就到内存中寻找，并更新cache；如果TLB不命中，那么那么系统内核会调用缺页异常处理程序去处理，这个过程中会进行页替换等操作，最终取得要访问的数据。</p><p>到这可能会有疑问：cache是在CPU之后访问，在内存之前访问的，但是刚刚又说到CPU首先得到的是虚拟地址，要映射成相对应的物理地址之后才进行cache访问，然而虚拟内存是在内存不够用的情况下才调用的，和虚拟内存定义有点不符合啊？注意：在这里不要把虚拟地址和虚拟内存相混淆了，这个图能帮你很好地来说明区别。</p><h3 id="cache和虚拟内存的区别"><a href="#cache和虚拟内存的区别" class="headerlink" title="cache和虚拟内存的区别"></a>cache和虚拟内存的区别</h3><p>(1)侧重点不同：cache主要解决主存与CPU的速度差异问题；而就性能价格比的提高而言，虚存主要是解决存储容量问题，另外还包括存储管理、主存分配和存储保护等方面。</p><p>(2)数据通路不同：CPU与cache和主存之间均有直接访问通路，cache不命中时可直接访问主存；而虚存所依赖的辅存与CPU之间不存在直接的数据通路，当主存不命中时只能通过调页解决，CPU最终还是要访问主存。</p><p>(3)透明性不同：cache的管理完全由硬件完成，对系统程序员和应用程序员均透明；而虚存管理由软件（操作系统）和硬件共同完成，由于软件的介入，虚存对实现存储管理的系统程序员不透明，而只对应用程序员透明（段式和段页式管理对应用程序员“半透明”）。</p><p>(4)未命中时的损失不同：由于主存的存取时间是cache的存取时间的5～10倍，而主存的存取速度通常比辅存的存取速度快上千倍，故主存未命中时系统的性能损失要远大于cache未命中时的损失。</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;Cache、内存、虚拟内存&quot;&gt;&lt;a href=&quot;#Cache、内存、虚拟内存&quot; class=&quot;headerlink&quot; title=&quot;Cache、内存、虚拟内存&quot;&gt;&lt;/a&gt;Cache、内存、虚拟内存&lt;/h3&gt;&lt;p&gt;内存就是RAM，RAM和ROM是相对的，RAM在断掉后保存在里面的信息会消失，而ROM在断电后存储在里面的信息不会消失。RAM分为静态RAM和动态RAM，静态RAM叫SRAM，是仅次于CPU访问速度的RAM，L1 cache就是SRAM，一般我们电脑上用的都是动态RAM，即DRAM，DRAM的访问速度比SRAM要慢很多，但是体积小，价格便宜。系统里面内存分配说的物理内存大多数也就是DRAM里的情况。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="操作系统" scheme="http://yoursite.com/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
+    
+  </entry>
+  
+  <entry>
     <title>count(1) 和 count(*)的区别</title>
     <link href="http://yoursite.com/2019/05/13/count-1-%E5%92%8Ccount-%E7%9A%84%E5%8C%BA%E5%88%AB/"/>
     <id>http://yoursite.com/2019/05/13/count-1-和count-的区别/</id>
@@ -384,88 +465,6 @@
     
     
       <category term="操作系统" scheme="http://yoursite.com/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Http 和 Https的区别</title>
-    <link href="http://yoursite.com/2019/05/09/Http-%E5%92%8C-Https%E7%9A%84%E5%8C%BA%E5%88%AB/"/>
-    <id>http://yoursite.com/2019/05/09/Http-和-Https的区别/</id>
-    <published>2019-05-09T15:56:33.000Z</published>
-    <updated>2019-08-11T15:19:16.021Z</updated>
-    
-    <content type="html"><![CDATA[<p>在开发中我们经常使用到 http 协议和 https 协议，那他们之间有什么区别呢？</p><p>他们的基本概念是什么呢？我们今天来学习一下。</p><a id="more"></a><h2 id="详细解析-HTTP-与-HTTPS-的区别"><a href="#详细解析-HTTP-与-HTTPS-的区别" class="headerlink" title="详细解析 HTTP 与 HTTPS 的区别"></a>详细解析 HTTP 与 HTTPS 的区别</h2><p>超文本传输协议HTTP协议被用于在Web浏览器和网站服务器之间传递信息，HTTP协议以明文方式发送内容，不提供任何方式的数据加密，如果攻击者截取了Web浏览器和网站服务器之间的传输报文，就可以直接读懂其中的信息，因此，HTTP协议不适合传输一些敏感信息，比如：信用卡号、密码等支付信息。为了解决 HTTP 协议的这一缺陷，需要使用另一种协议：安全套接字层超文本传输协议 HTTPS，为了数据传输的安全，HTTPS 在HTTP的基础上加入了 SSL 协议，SSL 依靠证书来验证服务器的身份，并为浏览器和服务器之间的通信加密。</p><h2 id="HTTP和HTTPS的基本概念"><a href="#HTTP和HTTPS的基本概念" class="headerlink" title="HTTP和HTTPS的基本概念"></a><strong>HTTP和HTTPS的基本概念</strong></h2><p><strong>HTTP</strong>：是互联网上应用最为广泛的一种网络协议，是一个客户端和服务器端请求和应答的标准（TCP），用于从WWW 服务器传输超文本到本地浏览器的传输协议，它可以使浏览器更加高效，使网络传输减少。</p><p><strong>HTTPS</strong>：是以安全为目标的 HTTP 通道，简单讲是 HTTP 的安全版，即 HTTP下 加入SSL层，HTTPS 的安全基础是SSL，因此加密的详细内容就需要SSL。</p><p><strong>HTTPS 协议的主要作用可以分为两种</strong>：</p><ul><li>建立一个信息安全通道，来保证数据传输的安全。</li><li>确认网站的真实性。</li></ul><h2 id="HTTP与HTTPS有什么区别"><a href="#HTTP与HTTPS有什么区别" class="headerlink" title="HTTP与HTTPS有什么区别"></a><strong>HTTP与HTTPS有什么区别</strong></h2><ul><li>https 协议需要到CA申请证书，一般免费证书较少，因而需要一定费用。</li><li>http 是超文本传输协议，信息是明文传输，https 则是具有安全性的 ssl 加密传输协议。</li><li>http 和 https 使用的是完全不同的连接方式，用的端口也不一样，前者是80，后者是443。</li><li>http 的连接很简单，是无状态的；HTTPS协议是由SSL+HTTP协议构建的可进行加密传输、身份认证的网络协议，比 http 协议安全。</li></ul><h2 id="数据传输安全的意思？"><a href="#数据传输安全的意思？" class="headerlink" title="数据传输安全的意思？"></a>数据传输安全的意思？</h2><ul><li>客户端和服务器之间的通信只能又自己看得懂，第三方拿到数据也看不懂这些信息的真实含义。</li><li>第三方虽然看不懂，但是可以对数据篡改，因此客户端和服务端必须有能力判断数据是否被修改过。</li><li>客户端必须避免中间人攻击，即除了真正的服务器，任何第三方都无法冒充服务器。</li></ul><h2 id="怎么加密信息？"><a href="#怎么加密信息？" class="headerlink" title="怎么加密信息？"></a>怎么加密信息？</h2><p>使用对称秘钥和非对称秘钥进行加密，对称秘钥是加密和解密都用相同的秘钥进行。非对称秘钥有两个秘钥，一个公钥和一个私钥。公钥加密的内容只有通过私钥才能解密，私钥加密的内容只有通过公钥进行解密。使用对称加密一般比非对称加密快得多，对服务器的运算压力也小。</p><h2 id="对称秘钥怎么传输"><a href="#对称秘钥怎么传输" class="headerlink" title="对称秘钥怎么传输?"></a>对称秘钥怎么传输?</h2><p>服务器明文传输对称秘钥是不安去的，如果监听者拿到对称秘钥，以后的通信内容就被破解了。所以不能明文传输对称秘钥，而且不能用一个新的对称秘钥来加密原来的对称秘钥，否则新的对称秘钥同样无法传输，就是鸡生蛋，蛋生鸡的驳论。</p><p>这里我们采用非对称加密的方式，非对称加密的特性决定了服务器用私钥加密的内容并不是真正的加密，因为公钥所有人都有，所以服务器的密文能被所有人解析，但是私钥只掌握在服务器手上，这就带来了两个好的优势：</p><ul><li>服务器下发的内容不能被伪造，因为别人都没有私钥，只有服务器有，所以无法加密。强行加密的后果是客户端使用公钥都无法完成解密。</li><li>任何人用公钥加密的内容都是绝对安全的，因为私钥只有服务端有，也就是只有真正的服务器可以看到加密的原文</li></ul><p>所以传输对称秘钥的问题就迎刃而解了：秘钥不是由服务器下发的，而是由客户端生成并主动高数服务器。所以当引入非对称加密后，HTTPS的握手流程依然是两部，不过细节略有变化：</p><p>​    客户端：你好，我要发起一个HTTPS的请求，这是我的秘钥（用公钥加密后的）</p><p>​    服务端：好的，我知道你的秘钥了，后续就用它来传输。</p><h2 id="公钥怎么传输？"><a href="#公钥怎么传输？" class="headerlink" title="公钥怎么传输？"></a>公钥怎么传输？</h2><p>对公钥进行加密，每一个HTTPS服务器都必须去专门的证书机构注册一个证书，证书中存储了用权威机构私钥加密的公钥。这样客户端用权威机构的公钥解密就可以了。</p><p>现在HTTPS协议握手阶段变成四步：</p><ol><li>客户端：你好，我要发起一个HTTPS请求，请给我公钥</li><li>服务器：好的，这是我的证书，里面有加密后的公钥</li><li>客户端：解密成功以后告诉服务器，这是我的对称秘钥</li><li>服务器：好的，我知道了你的秘钥了，后续就用它来传输吧。</li></ol><h2 id="那么权威机构的公钥怎么传输呢？"><a href="#那么权威机构的公钥怎么传输呢？" class="headerlink" title="那么权威机构的公钥怎么传输呢？"></a>那么权威机构的公钥怎么传输呢？</h2><p>这个公钥不用传输，会直接内置在各大操作系统或者浏览器的出厂设置里。之所以不把每个服务器的公钥内置在电脑里，一方面服务器太多，存不过来。另一方面操作系统也不信任你，凭什么你说你这个就是百度的证书呢。所以各个公司先去权威机构认证，申请证书，然后操作系统只会存储权威机构的公钥。因为权威机构数量有限，所以操作系统厂商相对来说容易管理。如果这个权威机构不够权威，胡乱发证书，就会取消他的资格，比如可怜的沃通。</p><h2 id="怎么知道证书没有被篡改？"><a href="#怎么知道证书没有被篡改？" class="headerlink" title="怎么知道证书没有被篡改？"></a>怎么知道证书没有被篡改？</h2><p>将信息哈希值随着信息一起传递。为了保证证书没有篡改，我们可以在传递证书的同时传递的哈希值。由于第三者无法解析数据，只能胡乱改，那么修改后的数据在解密后，就不能通过哈希。</p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;在开发中我们经常使用到 http 协议和 https 协议，那他们之间有什么区别呢？&lt;/p&gt;
-&lt;p&gt;他们的基本概念是什么呢？我们今天来学习一下。&lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="网络" scheme="http://yoursite.com/tags/%E7%BD%91%E7%BB%9C/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>线程池使用总结</title>
-    <link href="http://yoursite.com/2019/05/09/%E7%BA%BF%E7%A8%8B%E6%B1%A0%E4%BD%BF%E7%94%A8%E6%80%BB%E7%BB%93/"/>
-    <id>http://yoursite.com/2019/05/09/线程池使用总结/</id>
-    <published>2019-05-09T14:00:43.000Z</published>
-    <updated>2019-08-11T05:25:14.657Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="线程池的好处"><a href="#线程池的好处" class="headerlink" title="线程池的好处"></a>线程池的好处</h2><h2 id="线程池"><a href="#线程池" class="headerlink" title="线程池"></a>线程池</h2><p><img src="/2019/05/09/线程池使用总结/1557327261076.png" alt></p><h2 id="线程池的执行流程"><a href="#线程池的执行流程" class="headerlink" title="线程池的执行流程"></a>线程池的执行流程</h2><p><img src="/2019/05/09/线程池使用总结/1557327546254.png" alt></p><h2 id="线程池的创建"><a href="#线程池的创建" class="headerlink" title="线程池的创建"></a>线程池的创建</h2><p><img src="/2019/05/09/线程池使用总结/1557327451978.png" alt></p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h2 id=&quot;线程池的好处&quot;&gt;&lt;a href=&quot;#线程池的好处&quot; class=&quot;headerlink&quot; title=&quot;线程池的好处&quot;&gt;&lt;/a&gt;线程池的好处&lt;/h2&gt;&lt;h2 id=&quot;线程池&quot;&gt;&lt;a href=&quot;#线程池&quot; class=&quot;headerlink&quot; title=&quot;线程池
-      
-    
-    </summary>
-    
-    
-      <category term="thread" scheme="http://yoursite.com/tags/thread/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>spring回滚事务的处理思路</title>
-    <link href="http://yoursite.com/2019/05/09/spring%E5%9B%9E%E6%BB%9A%E4%BA%8B%E5%8A%A1%E7%9A%84%E5%A4%84%E7%90%86%E6%80%9D%E8%B7%AF/"/>
-    <id>http://yoursite.com/2019/05/09/spring回滚事务的处理思路/</id>
-    <published>2019-05-09T13:48:02.000Z</published>
-    <updated>2019-08-11T15:16:05.197Z</updated>
-    
-    <content type="html"><![CDATA[<p>我们在使用中经常使用 spring，但是我们是否真正的理解当事务发生回滚的时候spring 是怎么给我处理的吗？是否会回滚呢，现在让我们来一起看看吧。</p><a id="more"></a><h2 id="spring-try-…-catch-事务不回滚的处理思路"><a href="#spring-try-…-catch-事务不回滚的处理思路" class="headerlink" title="spring try {…} catch {} 事务不回滚的处理思路"></a>spring try {…} catch {} 事务不回滚的处理思路</h2><p>当希望在某个方法中添加事务时，我们常常在方法头上添加@Transactional注解</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@ResponseBody</span></span><br><span class="line"><span class="meta">@RequestMapping</span>(value = <span class="string">"/payment"</span>, method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)</span><br><span class="line"><span class="meta">@Transactional</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Payment <span class="title">paymentJson</span><span class="params">(@RequestBody PaymentRequestInfo entity)</span> </span>&#123;</span><br><span class="line">    <span class="comment">//method</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>容易让人忽略的是：方法上未加任何属性的 @Transactional 注解只能在抛出 RuntimeException 或者 Error 时才会触发事务的回滚，常见的 非RuntimeException 是不会触发事务的回滚的。</p><p>如果要在抛出 非RuntimeException时也触发回滚机制，需要我们在注解上添加 rollbackFor = { Exception.class }属性。</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@ResponseBody</span></span><br><span class="line"><span class="meta">@RequestMapping</span>(value = <span class="string">"/payment"</span>, method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)</span><br><span class="line"><span class="meta">@Transactional</span>(rollbackFor = &#123; Exception.class &#125;)</span><br><span class="line"><span class="function"><span class="keyword">public</span> Payment <span class="title">paymentJson</span><span class="params">(@RequestBody PaymentRequestInfo entity)</span> </span>&#123;</span><br><span class="line">    <span class="comment">//method</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>当然，上面事务回滚的前提是添加 @Transactional 注解的方法中不含有 try{…}catch{…} 异常，使得程序运行过程中出现异常能顺利抛出，从而触发事务回滚。</p><p>在实际开发中，我们往往需要在方法中进行异常的捕获，从而对异常进行判断，为客户端返回提示信息。但是此时由于异常的被捕获，导致事务的回滚没有被触发，导致事务的失败。</p><p>下面提供几种解决方法：</p><h3 id="1-使用-Transactional注解，抛出-Transactional注解默认识别的RuntimeException"><a href="#1-使用-Transactional注解，抛出-Transactional注解默认识别的RuntimeException" class="headerlink" title="1. 使用@Transactional注解，抛出@Transactional注解默认识别的RuntimeException"></a>1. 使用@Transactional注解，抛出@Transactional注解默认识别的RuntimeException</h3><p>方法上使用@Transactional注解，在捕获到异常时在catch语句中抛出RuntimeException。</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@ResponseBody</span></span><br><span class="line"><span class="meta">@RequestMapping</span>(value = <span class="string">"/payment"</span>, method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)</span><br><span class="line"><span class="meta">@Transactional</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Payment <span class="title">paymentJson</span><span class="params">(@RequestBody PaymentRequestInfo entity)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        </span><br><span class="line">    &#125; <span class="keyword">catch</span>(Exception e) &#123;</span><br><span class="line">        <span class="comment">// 处理返回消息</span></span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h3 id="2-使用-Transactional-rollbackFor-Exception-class-，抛出捕获的非RuntimeException异常"><a href="#2-使用-Transactional-rollbackFor-Exception-class-，抛出捕获的非RuntimeException异常" class="headerlink" title="2. 使用@Transactional(rollbackFor = { Exception.class })，抛出捕获的非RuntimeException异常"></a>2. 使用@Transactional(rollbackFor = { Exception.class })，抛出捕获的非RuntimeException异常</h3><p>方法上使用@Transactional(rollbackFor = { Exception.class })注解声明事务回滚级别，在捕获到异常时在catch语句中直接抛出所捕获的异常。</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@ResponseBody</span></span><br><span class="line"><span class="meta">@RequestMapping</span>(value = <span class="string">"/payment"</span>, method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)</span><br><span class="line"><span class="meta">@Transactional</span>(rollbackFor = &#123; Exception.class &#125;)</span><br><span class="line"><span class="function"><span class="keyword">public</span> Payment <span class="title">paymentJson</span><span class="params">(@RequestBody PaymentRequestInfo entity)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">    &#125; <span class="keyword">catch</span>(Exception e) &#123;</span><br><span class="line">        <span class="comment">// 处理返回消息</span></span><br><span class="line">        <span class="keyword">throw</span> e;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h3 id="3-手动回滚"><a href="#3-手动回滚" class="headerlink" title="3. 手动回滚"></a>3. 手动回滚</h3><p>上面两个在catch{…}中抛出异常的方法都有个不足之处，就是不能在catch{…}中存在return子句，所以设置手动回滚，当捕获到异常时，手动回滚，同时返回前台提示信息。</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@ResponseBody</span></span><br><span class="line"><span class="meta">@RequestMapping</span>(value = <span class="string">"/payment"</span>, method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)</span><br><span class="line"><span class="meta">@Transactional</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Payment <span class="title">paymentJson</span><span class="params">(@RequestBody PaymentRequestInfo entity)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">    &#125; <span class="keyword">catch</span>(Exception e) &#123;</span><br><span class="line">        <span class="comment">// 手动回滚事务</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;我们在使用中经常使用 spring，但是我们是否真正的理解当事务发生回滚的时候spring 是怎么给我处理的吗？是否会回滚呢，现在让我们来一起看看吧。&lt;/p&gt;
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>常见问题总结</title>
-    <link href="http://yoursite.com/2019/05/09/MQ%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/"/>
-    <id>http://yoursite.com/2019/05/09/MQ常见问题/</id>
-    <published>2019-05-09T12:12:15.000Z</published>
-    <updated>2019-08-11T05:25:14.656Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="MQ常见问题"><a href="#MQ常见问题" class="headerlink" title="MQ常见问题"></a>MQ常见问题</h1><p>消息队列核心解决的问题主要是：异步、解耦、消息切峰。异步、解耦、消峰填谷这是消息队列最大的优点，除了这些消息队列还可以会解决一些我们特殊业务场景的问题。但是缺点主要在于系统的可用性、复杂性、一致性问题，引入消息队列后，需要考虑MQ的可用性，万一MQ崩溃了岂不是要爆炸？而且复杂性明显提高了，需要考虑一些消息队列的常见问题和解决方案，还有就是一致性问题，一条消息由多个消费者消费，万一有一个消费者消费失败了，就会导致数据不一致。</p><h2 id="RabbitMQ"><a href="#RabbitMQ" class="headerlink" title="RabbitMQ"></a>RabbitMQ</h2><ul><li>单机吞吐量：万级别</li><li>失效性：微秒级别</li><li>可用性：基于主从架构</li></ul><p>RabbitMQ现在使用的较为多一些，社区活跃度也很高，功能也很强大，官方还提供了管理的web界面，性能也很好，但是RabbitMQ性能好的主要原因是因为使用erlang语言开发的，erlang语言貌似天生性能好，但对于我们java开发者来说，源码基本看不懂，更别提深入的研究了，不过spring推出了rabbit的支持，貌似还比较好用，比自己去封装实现并且去处理一些问题的要好多了。</p><h2 id="RabbitMQ-模式"><a href="#RabbitMQ-模式" class="headerlink" title="RabbitMQ 模式"></a>RabbitMQ 模式</h2><ul><li><p>单机模式</p><p>单机模式通常是用来进行测试和开发的场景，测试一般是否能正确的处理数据，线上环境没人去用单机模式，风险大。</p></li><li><p>普通集群模式</p><p>普通集群模式就是启动多个 RabbitMQ 实例，在你创建queue只会放在一个 RabbitMQ上，但是每个实例都同步 queue 的元数据，在消费的时候，如果连接到了另外一个实例，那么那个实例会从queue所在实例上拉取数据过来。这种方式确实很麻烦，也不怎么好，没做到所谓的分布式，就是个普通集群。因为这导致你要么消费者每次随机连接一个实例然后拉取数据，要么固定连接那个queue所在实例消费数据，后者有数据拉取的开销，前者导致单实例性能瓶颈。而且如果那个放queue的实例宕机了，会导致接下来其他实例就无法从那个实例拉取，如果你开启了消息持久化，让RabbitMQ落地存储消息的话，消息不一定会丢，得等这个实例恢复了，然后才可以继续从这个queue拉取数据。这方案主要是提高吞吐量的，就是说让集群中多个节点来服务某个queue的读写操作</p></li><li><p>镜像集群模式</p><p>镜像集群模式是所谓的RabbitMQ的高可用模式，跟普通集群模式不一样的是，你创建的queue，无论元数据还是queue里的消息都会存在于多个实例上，然后每次你写消息到queue的时候，都会自动把消息到多个实例的queue里进行消息同步。</p><p>优点在于你任何一个实例宕机了，没事儿，别的实例都可以用。缺点在于性能开销太大和扩展性很低，同步所有实例，这会导致网络带宽和压力很重，而且扩展性很低，每增加一个实例都会去包含已有的queue的所有数据，并没有办法线性扩展queue。</p><p>开启镜像集群模式可以去RabbitMQ的管理控制台去增加一个策略，指定要求数据同步到所有节点的，也可以要求就同步到指定数量的节点，然后你再次创建queue的时候，应用这个策略，就会自动将数据同步到其他的节点上去了。</p></li></ul><h2 id="如何保证消息的幂等性"><a href="#如何保证消息的幂等性" class="headerlink" title="如何保证消息的幂等性"></a>如何保证消息的幂等性</h2><p>消息重复消费的原因主要是在与回馈机制，在某些场景中我们采用回馈机制不同，原因也不同，比如消费者消费完成消息之后回复 ack ，但是刚消费完成还没有来的及提交，系统就重新启动。这时重新启动就会pull 消息的时候没有提高 ack ，消息还是上次的消息。</p><p>那么如何怎么来保证消息消费的幂等性呢？实际上我们只要保证多条相同的数据过来的时候只处理一条或者说多条处理和处理一条造成的结果相同即可，但是具体怎么做要根据业务需求来定，例如入库消息，先查一下消息是否已经入库啊或者说搞个唯一约束啊什么的，还有一些是天生保证幂等性就根本不用去管，例如redis就是天然幂等性。</p><p>还有一个问题，消费者消费消息的时候在某些场景下要放过消费不了的消息，遇到消费不了的消息通过日志记录一下或者搞个什么措施以后再来处理，但是一定要放过消息，因为在某些场景下例如spring-rabbitmq的默认回馈策略是出现异常就没有提交ack，导致了一直在重发那条消费异常的消息，而且一直还消费不了，这就尴尬了，后果你会懂的。</p><h2 id="消息遗漏"><a href="#消息遗漏" class="headerlink" title="消息遗漏"></a>消息遗漏</h2><p><strong>1）生产者弄丢了数据</strong><br>　　生产者将数据发送到RabbitMQ的时候，可能数据就在半路给搞丢了，因为网络啥的问题，都有可能。此时可以选择用RabbitMQ提供的事务功能，就是生产者发送数据之前开启RabbitMQ事务（channel.txSelect），然后发送消息，如果消息没有成功被RabbitMQ接收到，那么生产者会收到异常报错，此时就可以回滚事务（channel.txRollback），然后重试发送消息；如果收到了消息，那么可以提交事务（channel.txCommit）。但是问题是，RabbitMQ事务机制一搞，基本上吞吐量会下来，因为太耗性能。</p><p>　　所以一般来说，如果你要确保说写RabbitMQ的消息别丢，可以开启confirm模式，在生产者那里设置开启confirm模式之后，你每次写的消息都会分配一个唯一的id，然后如果写入了RabbitMQ中，RabbitMQ会给你回传一个ack消息，告诉你说这个消息ok了。如果RabbitMQ没能处理这个消息，会回调你一个nack接口，告诉你这个消息接收失败，你可以重试。而且你可以结合这个机制自己在内存里维护每个消息id的状态，如果超过一定时间还没接收到这个消息的回调，那么你可以重发。</p><p>　　事务机制和cnofirm机制最大的不同在于，事务机制是同步的，你提交一个事务之后会阻塞在那儿，但是confirm机制是异步的，你发送个消息之后就可以发送下一个消息，然后那个消息RabbitMQ接收了之后会异步回调你一个接口通知你这个消息接收到了。</p><p>　　所以一般在生产者这块避免数据丢失，都是用confirm机制的。</p><p><strong>（2）RabbitMQ弄丢了数据</strong></p><p>　　就是RabbitMQ自己弄丢了数据，这个你必须开启RabbitMQ的持久化，就是消息写入之后会持久化到磁盘，哪怕是RabbitMQ自己挂了，恢复之后会自动读取之前存储的数据，一般数据不会丢。除非极其罕见的是，RabbitMQ还没持久化，自己就挂了，可能导致少量数据会丢失的，但是这个概率较小。</p><h5 id="设置持久化有两个步骤"><a href="#设置持久化有两个步骤" class="headerlink" title="设置持久化有两个步骤"></a>设置持久化有两个步骤</h5><p>第一个是创建queue的时候将其设置为持久化的，这样就可以保证RabbitMQ持久化queue的元数据，但是不会持久化queue里的数据；</p><p>第二个是发送消息的时候将消息的deliveryMode设置为2，就是将消息设置为持久化的，此时RabbitMQ就会将消息持久化到磁盘上去。必须要同时设置这两个持久化才行，RabbitMQ哪怕是挂了，再次重启，也会从磁盘上重启恢复queue，恢复这个queue里的数据。</p><p>而且持久化可以跟生产者那边的confirm机制配合起来，只有消息被持久化到磁盘之后，才会通知生产者ack了，所以哪怕是在持久化到磁盘之前，RabbitMQ挂了，数据丢了，生产者收不到ack，你也是可以自己重发的。</p><p>哪怕是你给RabbitMQ开启了持久化机制，也有一种可能，就是这个消息写到了RabbitMQ中，但是还没来得及持久化到磁盘上，结果不巧，此时RabbitMQ挂了，就会导致内存里的一点点数据会丢失。</p><p><strong>（3）消费端弄丢了数据</strong></p><p>　　RabbitMQ如果丢失了数据，主要是因为你消费的时候，刚消费到，还没处理，结果进程挂了，比如重启了，那么就尴尬了，RabbitMQ认为你都消费了，这数据就丢了。</p><p>　　这个时候得用RabbitMQ提供的ack机制，简单来说，就是你关闭RabbitMQ自动ack，可以通过一个api来调用就行，然后每次你自己代码里确保处理完的时候，在程序里ack一把。这样的话，如果你还没处理完，不就没有ack？那RabbitMQ就认为你还没处理完，这个时候RabbitMQ会把这个消费分配给别的consumer去处理，消息是不会丢的。</p><p>在发送消息的时候，接受时记录 DB 日志，定时轮询 DB 日志，查明那些发送的消息没有成功消费，启动重新发送消息机制。</p><h2 id="消息顺序"><a href="#消息顺序" class="headerlink" title="消息顺序"></a>消息顺序</h2><p><strong>场景： 比如下单操作，下单成功后，会发布创建订单和减库存的消息，但扣库存消息执行会先于创建订单的消息，也就说前者执行成功之后，才能执行后者。</strong></p><p>MQ 层面支持消息的顺序处理开销太大了，为了极少量的需求，增加了整体上的复杂性。应该尽可能的在应用层面进行处理。</p><p>解决方式如下：</p><ol><li>同步执行，当一个消息执行之后，再发送下一个消息。</li><li>rabbitmq：拆分多个queue，每个queue一个consumer，就是多一些queue而已，确实是麻烦点；或者就一个queue但是对应一个consumer，然后这个consumer内部用内存队列做排队，然后分发给底层不同的worker来处理。</li></ol><h2 id="消息重复"><a href="#消息重复" class="headerlink" title="消息重复"></a>消息重复</h2><p>如果消费端接受到两个一样的消息，应该如何处理呢？</p><ol><li>消费端处理消息的业务逻辑应该保持幂等性。</li><li>保证每条消息都有唯一标号，首先检查执行成功的日志中是否存有该消息的 ID 如果没有则执行，如果已经存在则丢弃消息。如果在消息系统中实现，会对消息系统的吞吐量造成影响。所以还是在业务端进行去重处理。</li></ol><h2 id="事务消息"><a href="#事务消息" class="headerlink" title="事务消息"></a>事务消息</h2><p> 具体来说，就是把消息的发送分成了2个阶段：Prepare阶段和确认阶段。</p><p>具体来说，上面的2个步骤，被分解成3个步骤：<br>(1) 发送Prepared消息<br>(2) update DB<br>(3) 根据update DB结果成功或失败，Confirm 或者取消 Prepared 消息。</p><p>可能有人会问了，前2步执行成功了，最后1步失败了怎么办？这里就涉及到了RocketMQ的关键点：RabbitMQ 会定期（默认是1分钟）扫描所有的Prepared消息，询问发送方，到底是要确认这条消息发出去？还是取消此条消息？</p><h2 id="消息阻塞"><a href="#消息阻塞" class="headerlink" title="消息阻塞"></a>消息阻塞</h2><p><strong>上千万条消息在 mq 里积压了几个小时了还没解决</strong> </p><p>紧急扩容</p><p>1）先修复 consumer 的问题，确保其恢复消费速度，然后将现有 consumer 都停掉<br>2）新建一个topic，partition是原来的10倍，临时建立好原先10倍或者20倍的queue数量<br>3）然后写一个临时的分发数据的 consumer 程序，这个程序部署上去消费积压的数据，<br>消费之后不做耗时的处理，直接均匀轮询写入临时建立好的10倍数量的queue<br>4）接着临时征用10倍的机器来部署consumer，每一批consumer消费一个临时queue的数据<br>5）这种做法相当于是临时将queue资源和consumer资源扩大10倍，以正常的10倍速度来消费数据<br>6）等快速消费完积压数据之后，得恢复原先部署架构，重新用原先的consumer机器来消费消息</p><h2 id="消息队列过期失效问题"><a href="#消息队列过期失效问题" class="headerlink" title="消息队列过期失效问题"></a>消息队列过期失效问题</h2><p>　假设你用的是rabbitmq，rabbitmq是可以设置过期时间的，就是TTL，如果消息在queue中积压超过一定的时间就会被rabbitmq给清理掉，这个数据就没了。晚上12点以后，用户都睡觉了。</p><p>　　这个时候我们就开始写程序，将丢失的那批数据，写个临时程序，一点一点的查出来，然后重新灌入mq里面去，把白天丢的数据给他补回来。也只能是这样了。</p><p>　　假设1万个订单积压在mq里面，没有处理，其中1000个订单都丢了，你只能手动写程序把那1000个订单给查出来，手动发到mq里去再补一次。</p><h2 id="消息队列满"><a href="#消息队列满" class="headerlink" title="消息队列满"></a>消息队列满</h2><p>丢弃，晚上补数据</p>]]></content>
-    
-    <summary type="html">
-    
-      MQ 生产上遇到的一些问题和解决办法进行总结
-    
-    </summary>
-    
-    
-      <category term="MQ" scheme="http://yoursite.com/tags/MQ/"/>
     
   </entry>
   
