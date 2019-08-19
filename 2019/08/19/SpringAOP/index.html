@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="Spring,">
 
 
 
@@ -81,22 +81,22 @@
 
 
 
-<meta name="description" content="AOP概述AOP称为面向切面编程，那我们怎么理解面向切面编程？ 我们学Java面向对象的时候，如果代码重复了怎么办啊？可以分成下面几个步骤：  抽取成方法 抽取类  抽取成类的方式我们称之为：纵向抽取  通过继承的方式实现纵向抽取  但是，我们现在的办法不行：即使抽取成类还是会出现重复的代码，因为这些逻辑(开始、结束、提交事务)依附在我们业务类的方法逻辑中！  现在纵向抽取的方式不行了，AOP的理">
-<meta name="keywords" content="sdaf">
+<meta name="description" content="AOP概述AOP称为面向切面编程，那我们怎么理解面向切面编程？ 我们学Java面向对象的时候，如果代码重复了怎么办啊？可以分成下面几个步骤：  抽取成方法 抽取类  抽取成类的方式我们称之为：纵向抽取  通过继承的方式实现纵向抽取  但是，我们现在的办法不行：即使抽取成类还是会出现重复的代码，因为这些逻辑(开始、结束、提交事务)依附在我们业务类的方法逻辑中！">
+<meta name="keywords" content="Spring">
 <meta property="og:type" content="article">
-<meta property="og:title" content="小白君的博客">
+<meta property="og:title" content="SpringAOP">
 <meta property="og:url" content="http://yoursite.com/2019/08/19/SpringAOP/index.html">
 <meta property="og:site_name" content="小白君的博客">
-<meta property="og:description" content="AOP概述AOP称为面向切面编程，那我们怎么理解面向切面编程？ 我们学Java面向对象的时候，如果代码重复了怎么办啊？可以分成下面几个步骤：  抽取成方法 抽取类  抽取成类的方式我们称之为：纵向抽取  通过继承的方式实现纵向抽取  但是，我们现在的办法不行：即使抽取成类还是会出现重复的代码，因为这些逻辑(开始、结束、提交事务)依附在我们业务类的方法逻辑中！  现在纵向抽取的方式不行了，AOP的理">
+<meta property="og:description" content="AOP概述AOP称为面向切面编程，那我们怎么理解面向切面编程？ 我们学Java面向对象的时候，如果代码重复了怎么办啊？可以分成下面几个步骤：  抽取成方法 抽取类  抽取成类的方式我们称之为：纵向抽取  通过继承的方式实现纵向抽取  但是，我们现在的办法不行：即使抽取成类还是会出现重复的代码，因为这些逻辑(开始、结束、提交事务)依附在我们业务类的方法逻辑中！">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/2019/08/19/SpringAOP/image-20190819150731837.png">
 <meta property="og:image" content="http://yoursite.com/2019/08/19/SpringAOP/image-20190819150839531.png">
 <meta property="og:image" content="http://yoursite.com/2019/08/19/SpringAOP/image-20190819151005879.png">
 <meta property="og:image" content="http://yoursite.com/2019/08/19/SpringAOP/image-20190819152914835.png">
-<meta property="og:updated_time" content="2019-08-19T07:43:04.767Z">
+<meta property="og:updated_time" content="2019-08-19T08:35:51.292Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="小白君的博客">
-<meta name="twitter:description" content="AOP概述AOP称为面向切面编程，那我们怎么理解面向切面编程？ 我们学Java面向对象的时候，如果代码重复了怎么办啊？可以分成下面几个步骤：  抽取成方法 抽取类  抽取成类的方式我们称之为：纵向抽取  通过继承的方式实现纵向抽取  但是，我们现在的办法不行：即使抽取成类还是会出现重复的代码，因为这些逻辑(开始、结束、提交事务)依附在我们业务类的方法逻辑中！  现在纵向抽取的方式不行了，AOP的理">
+<meta name="twitter:title" content="SpringAOP">
+<meta name="twitter:description" content="AOP概述AOP称为面向切面编程，那我们怎么理解面向切面编程？ 我们学Java面向对象的时候，如果代码重复了怎么办啊？可以分成下面几个步骤：  抽取成方法 抽取类  抽取成类的方式我们称之为：纵向抽取  通过继承的方式实现纵向抽取  但是，我们现在的办法不行：即使抽取成类还是会出现重复的代码，因为这些逻辑(开始、结束、提交事务)依附在我们业务类的方法逻辑中！">
 <meta name="twitter:image" content="http://yoursite.com/2019/08/19/SpringAOP/image-20190819150731837.png">
 
 
@@ -133,7 +133,7 @@
 
 
 
-  <title> | 小白君的博客</title>
+  <title>SpringAOP | 小白君的博客</title>
   
 
 
@@ -267,7 +267,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline"></h1>
+          <h1 class="post-title" itemprop="name headline">SpringAOP</h1>
         
 
         <div class="post-meta">
@@ -279,7 +279,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-19T15:03:11+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-19T14:46:18+08:00">
                 2019-08-19
               </time>
             
@@ -328,6 +328,7 @@
 <li>通过继承的方式实现纵向抽取</li>
 </ul>
 <p>但是，我们现在的办法不行：即使抽取成类还是会出现重复的代码，因为这些逻辑(开始、结束、提交事务)<strong>依附在我们业务类的方法逻辑中</strong>！</p>
+<a id="more"></a>
 <p><img src="/2019/08/19/SpringAOP/image-20190819150731837.png" alt="image-20190819150731837"></p>
 <p>现在纵向抽取的方式不行了，AOP的理念：就是将<strong>分散在各个业务逻辑代码中相同的代码通过横向切割的方式</strong>抽取到一个独立的模块中！</p>
 <p><img src="/2019/08/19/SpringAOP/image-20190819150839531.png" alt="image-20190819150839531"></p>
@@ -414,6 +415,12 @@
     
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Spring/" rel="tag"><i class="fa fa-tag"></i> Spring</a>
+          
+        </div>
       
 
       
