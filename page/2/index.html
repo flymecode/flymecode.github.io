@@ -242,6 +242,177 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/03/redis实现分布式锁/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ma Xu">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小白君的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/08/03/redis实现分布式锁/" itemprop="url">redis实现分布式锁</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-03T21:54:48+08:00">
+                2019-08-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="1-单机Redis实现分布式锁"><a href="#1-单机Redis实现分布式锁" class="headerlink" title="1.单机Redis实现分布式锁"></a>1.单机Redis实现分布式锁</h2><h3 id="1-1获取锁"><a href="#1-1获取锁" class="headerlink" title="1.1获取锁"></a>1.1获取锁</h3><p>获取锁的过程很简单，客户端向Redis发送命令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SET resource_name my_random_value NX PX 30000</span><br></pre></td></tr></table></figure>
+<p><code>my_random_value</code>是由客户端生成的一个随机字符串，它要保证在足够长的一段时间内在所有客户端的所有获取锁的请求中都是唯一的。 NX表示只有当<code>resource_name</code>对应的key值不存在的时候才能SET成功。这保证了只有第一个请求的客户端才能获得锁，而其它客户端在锁被释放之前都无法获得锁。 PX 30000表示这个锁有一个30秒的自动过期时间。</p>
+<h3 id="1-2-释放锁"><a href="#1-2-释放锁" class="headerlink" title="1.2 释放锁"></a>1.2 释放锁</h3><figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> redis.call(<span class="string">"get"</span>,KEYS[<span class="number">1</span>]) == ARGV[<span class="number">1</span>] <span class="keyword">then</span></span><br><span class="line">    <span class="keyword">return</span> redis.call(<span class="string">"del"</span>,KEYS[<span class="number">1</span>])</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<p>之前获取锁的时候生成的<code>my_random_value</code>作为参数传到Lua脚本里面，作为：<code>ARGV[1]</code>,而 <code>resource_name</code>作为<code>KEYS[1]</code>。Lua脚本可以保证操作的原子性。</p>
+<h3 id="1-3-关于单点Redis实现分布式锁的讨论"><a href="#1-3-关于单点Redis实现分布式锁的讨论" class="headerlink" title="1.3 关于单点Redis实现分布式锁的讨论"></a>1.3 关于单点Redis实现分布式锁的讨论</h3><p>网络上有文章说用如下命令获取锁:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SETNX resource_name my_random_value</span><br><span class="line">EXPIRE resource_name 30</span><br></pre></td></tr></table></figure>
+<p>由于这两个命令不是原子的。如果客户端在执行完<code>SETNX</code>后<code>crash</code>了，那么就没有机会执行<code>EXPIRE</code>了，导致它一直持有这个锁，其他的客户端就永远获取不到这个锁了。</p>
+<ul>
+<li>为什么<code>my_random_value</code>要设置成随机值? 保证了一个客户端释放的锁是自己持有的那个锁。如若不然，可能出现锁不安全的情况。</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">客户端1获取锁成功。</span><br><span class="line">客户端1在某个操作上阻塞了很长时间。</span><br><span class="line">过期时间到了，锁自动释放了。</span><br><span class="line">客户端2获取到了对应同一个资源的锁。</span><br><span class="line">客户端1从阻塞中恢复过来，释放掉了客户端2持有的锁。</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+<ul>
+<li>用 SETNX获取锁 网上大量文章说用如下命令获取锁：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SETNX lock.foo &lt;current Unix time + lock timeout + 1&gt;</span><br></pre></td></tr></table></figure>
+<p>原文在Redis对SETNX的官网说明，Redis官网文档建议用Set命令来代替，主要原因是SETNX不支持超时时间的设置。</p>
+<p>在开发中 RedisTemplate 为我们封装了 Set 命令</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">    * 如果key不存在，set key and expire key</span></span><br><span class="line"><span class="comment">    *</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param</span> key</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param</span> value</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param</span> expire</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">setAndExpireIfAbsent</span><span class="params">(<span class="keyword">final</span> String key, <span class="keyword">final</span> Serializable value, <span class="keyword">final</span> <span class="keyword">long</span> expire)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">       Boolean result = (Boolean) RedisTemplateHolder.execute(<span class="keyword">new</span> Statement() &#123;</span><br><span class="line">           <span class="meta">@Override</span></span><br><span class="line">           <span class="function"><span class="keyword">public</span> Object <span class="title">prepare</span><span class="params">(RedisTemplate redisTemplate)</span> </span>&#123;</span><br><span class="line">               <span class="keyword">return</span> redisTemplate.execute(<span class="keyword">new</span> RedisCallback&lt;Boolean&gt;() &#123;</span><br><span class="line">                   <span class="meta">@Override</span></span><br><span class="line">                   <span class="function"><span class="keyword">public</span> Boolean <span class="title">doInRedis</span><span class="params">(RedisConnection connection)</span> <span class="keyword">throws</span> DataAccessException </span>&#123;</span><br><span class="line">                       Object obj = connection.execute(<span class="string">"set"</span>, serialize(key), serialize(value), SafeEncoder.encode(<span class="string">"NX"</span>), SafeEncoder.encode(<span class="string">"EX"</span>), Protocol.toByteArray(expire));</span><br><span class="line">                       <span class="keyword">return</span> obj != <span class="keyword">null</span>;</span><br><span class="line">                   &#125;</span><br><span class="line">               &#125;);</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;, redisTemplate);</span><br><span class="line"></span><br><span class="line">       <span class="keyword">return</span> result;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<h2 id="2-Redis集群实现分布式锁"><a href="#2-Redis集群实现分布式锁" class="headerlink" title="2.Redis集群实现分布式锁"></a>2.Redis集群实现分布式锁</h2><p>上面的讨论中我们有一个非常重要的假设：Redis是单点的。如果Redis是集群模式，我们考虑如下场景:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">客户端1从Master获取了锁。</span><br><span class="line">Master宕机了，存储锁的key还没有来得及同步到Slave上。</span><br><span class="line">Slave升级为Master。</span><br><span class="line">客户端2从新的Master获取到了对应同一个资源的锁。</span><br><span class="line">客户端1和客户端2同时持有了同一个资源的锁，锁不再具有安全性。</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+<p>就此问题，Redis作者antirez写了RedLock算法来解决这种问题。</p>
+<h3 id="2-1-RedLock获取锁"><a href="#2-1-RedLock获取锁" class="headerlink" title="2.1 RedLock获取锁"></a>2.1 RedLock获取锁</h3><ul>
+<li>获取当前时间。</li>
+<li>按顺序依次向N个Redis节点执行获取锁的操作。这个获取操作跟前面基于单Redis节点的获取锁的过程相同，包含随机字符串my_random_value，也包含过期时间(比如PX 30000，即锁的有效时间)。为了保证在某个Redis节点不可用的时候算法能够继续运行，这个获取锁的操作还有一个超时时间(time out)，它要远小于锁的有效时间（几十毫秒量级）。客户端在向某个Redis节点获取锁失败以后，应该立即尝试下一个Redis节点。</li>
+<li>计算整个获取锁的过程总共消耗了多长时间，计算方法是用当前时间减去第1步记录的时间。如果客户端从大多数Redis节点（&gt;= N/2+1）成功获取到了锁，并且获取锁总共消耗的时间没有超过锁的有效时间(lock validity time)，那么这时客户端才认为最终获取锁成功；否则，认为最终获取锁失败。</li>
+<li>如果最终获取锁成功了，那么这个锁的有效时间应该重新计算，它等于最初的锁的有效时间减去第3步计算出来的获取锁消耗的时间。</li>
+<li>如果最终获取锁失败了（可能由于获取到锁的Redis节点个数少于N/2+1，或者整个获取锁的过程消耗的时间超过了锁的最初有效时间），那么客户端应该立即向所有Redis节点发起释放锁的操作（即前面介绍的单机Redis Lua脚本释放锁的方法）。</li>
+</ul>
+<h3 id="2-2-RedLock释放锁"><a href="#2-2-RedLock释放锁" class="headerlink" title="2.2 RedLock释放锁"></a>2.2 RedLock释放锁</h3><p>客户端向所有Redis节点发起释放锁的操作，不管这些节点当时在获取锁的时候成功与否。</p>
+<h3 id="2-3-关于RedLock的问题讨论"><a href="#2-3-关于RedLock的问题讨论" class="headerlink" title="2.3 关于RedLock的问题讨论"></a>2.3 关于RedLock的问题讨论</h3><ul>
+<li>如果有节点发生崩溃重启 假设一共有5个Redis节点：A, B, C, D, E。设想发生了如下的事件序列：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">客户端1成功锁住了A, B, C，获取锁成功（但D和E没有锁住）。</span><br><span class="line">节点C崩溃重启了，但客户端1在C上加的锁没有持久化下来，丢失了。</span><br><span class="line">节点C重启后，客户端2锁住了C, D, E，获取锁成功。</span><br><span class="line">客户端1和客户端2同时获得了锁。</span><br></pre></td></tr></table></figure>
+<p>为了应对这一问题，antirez又提出了延迟重启(delayed restarts)的概念。也就是说，一个节点崩溃后，先不立即重启它，而是等待一段时间再重启，这段时间应该大于锁的有效时间(lock validity time)。这样的话，这个节点在重启前所参与的锁都会过期，它在重启后就不会对现有的锁造成影响。</p>
+<ul>
+<li>如果客户端长期阻塞导致锁过期</li>
+</ul>
+<p><img src="/2019/08/03/redis实现分布式锁/Users/maxu/hexo/source/_posts/redis实现分布式锁/WX20190813-220656@2x.png" alt></p>
+<p>解释一下这个时序图，客户端1在获得锁之后发生了很长时间的GC pause，在此期间，它获得的锁过期了，而客户端2获得了锁。当客户端1从GC pause中恢复过来的时候，它不知道自己持有的锁已经过期了，它依然向共享资源（上图中是一个存储服务）发起了写数据请求，而这时锁实际上被客户端2持有，因此两个客户端的写请求就有可能冲突（锁的互斥作用失效了）。</p>
+<p>如何解决这个问题呢?引入了fencing token的概念：</p>
+<p><img src="/2019/08/03/redis实现分布式锁/Users/maxu/hexo/source/_posts/redis实现分布式锁/WX20190813-220732@2x.png" alt="img"></p>
+<p>客户端1先获取到的锁，因此有一个较小的fencing token，等于33，而客户端2后获取到的锁，有一个较大的fencing token，等于34。客户端1从GC pause中恢复过来之后，依然是向存储服务发送访问请求，但是带了fencing token = 33。存储服务发现它之前已经处理过34的请求，所以会拒绝掉这次33的请求。这样就避免了冲突。</p>
+<p>但是其实这已经超出了Redis实现分布式锁的范围，单纯用Redis没有命令来实现生成Token。</p>
+<ul>
+<li>时钟跳跃问题 假设有5个Redis节点A, B, C, D, E。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">客户端1从Redis节点A, B, C成功获取了锁（多数节点）。由于网络问题，与D和E通信失败。</span><br><span class="line">节点C上的时钟发生了向前跳跃，导致它上面维护的锁快速过期。</span><br><span class="line">客户端2从Redis节点C, D, E成功获取了同一个资源的锁（多数节点）。</span><br><span class="line">客户端1和客户端2现在都认为自己持有了锁。</span><br><span class="line">这个问题用Redis实现分布式锁暂时无解。而生产环境这种情况是存在的。</span><br></pre></td></tr></table></figure>
+<p>结论 Redis并不能实现严格意义上的分布式锁。但是这并不意味着上面讨论的方案一无是处。如果你的应用场景为了效率(efficiency)，协调各个客户端避免做重复的工作，即使锁失效了，只是可能把某些操作多做一遍而已，不会产生其它的不良后果。但是如果你的应用场景是为了正确性(correctness)，那么用Redis实现分布式锁并不合适，会存在各种各样的问题，且解决起来就很复杂，为了正确性，需要使用zab、raft共识算法，或者使用带有事务的数据库来实现严格意义上的分布式锁。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+	<div>
+	  
+	</div>
+	
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/12/threadlocal内存泄漏/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1420,493 +1591,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/10/redis/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Ma Xu">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="小白君的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/05/10/redis/" itemprop="url">Redis 学习</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-10T08:14:55+08:00">
-                2019-05-10
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h2><h3 id="String"><a href="#String" class="headerlink" title="String"></a>String</h3><ul>
-<li><p>比如说 ，我想知道什么时候封锁一个IP地址。Incrby命令</p>
-</li>
-<li><p>计数器，可以对String进行自增自减运算，从而实现计数器功能。</p>
-<p>Redis这种内存数据库模型的读写性能非常高，很适合存储频繁的读写计数量</p>
-</li>
-</ul>
-<h3 id="Hash"><a href="#Hash" class="headerlink" title="Hash"></a>Hash</h3><ul>
-<li>存储用户信息（id，name，age）</li>
-<li>Hset(key,field,value)</li>
-<li>Hset(userKey,id,101)</li>
-<li>Hset(userKey,name,admin)</li>
-<li>Hset(userKey,age,23)</li>
-<li>Hget(userKey,id)</li>
-<li>Hset(userKey,id,102)</li>
-</ul>
-<h3 id="为什么不使用String-类型来存储？"><a href="#为什么不使用String-类型来存储？" class="headerlink" title="为什么不使用String 类型来存储？"></a>为什么不使用String 类型来存储？</h3><ul>
-<li>Set(userKey,用信息的字符串)</li>
-<li>Get(userKey)</li>
-<li>不建议使用String 类型</li>
-</ul>
-<h3 id="List"><a href="#List" class="headerlink" title="List"></a>List</h3><ul>
-<li>实现最新消息的排行，还可以利用List的push命令，将任务存在list集合中，同时使用另一个命令，将任务从集合中取出[pop]。</li>
-<li>List是一个双向链表的结构，可以模拟消息队列。不过最好使用RabbitMQ【电商中的秒杀就可以采用这种方式来完成一个秒杀活动】</li>
-</ul>
-<h3 id="Set"><a href="#Set" class="headerlink" title="Set"></a>Set</h3><ul>
-<li>特殊之处：可以自动排重。比如说微博中将每个人的好友存在集合(Set)中，这样求两个人的共通好友的操作。我们只需要求交集即可。</li>
-</ul>
-<h3 id="ZSet"><a href="#ZSet" class="headerlink" title="ZSet"></a>ZSet</h3><ul>
-<li>以某一个条件为权重，进行排序。</li>
-<li>京东：商品详情的时候，都会有一个综合排名，还可以按照价格进行排名。</li>
-</ul>
-<h2 id="数据结构"><a href="#数据结构" class="headerlink" title="数据结构"></a>数据结构</h2><h3 id="字典"><a href="#字典" class="headerlink" title="字典"></a>字典</h3><ul>
-<li><p>dictht 是一个散列表的结构，使用拉链法保存哈希冲突。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">dictht</span> &#123;</span></span><br><span class="line">    dictEntry **table;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">long</span> size;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">long</span> sizemask;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">long</span> used;</span><br><span class="line">&#125; dictht;</span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">dictEntry</span> &#123;</span></span><br><span class="line">    <span class="keyword">void</span> *key;</span><br><span class="line">    <span class="keyword">union</span> &#123;</span><br><span class="line">        <span class="keyword">void</span> *val;</span><br><span class="line">        <span class="keyword">uint64_t</span> u64;</span><br><span class="line">        <span class="keyword">int64_t</span> s64;</span><br><span class="line">        <span class="keyword">double</span> d;</span><br><span class="line">    &#125; v;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">dictEntry</span> *<span class="title">next</span>;</span></span><br><span class="line">&#125; dictEntry;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Redis的字典dict中包含两个dictht，这是为了方便进行rehash操作。在扩容的时候，讲一个dictht上的键值对rehash到另外一个dictht上面，完成之后释放空间并交换两个dictht的角色。</p>
-</li>
-<li><p>rehash操作不是一次性完成的，而是采用渐进的方式，这是为了避免一次行执行过多的rehash操作给服务器带来过大的负担。</p>
-</li>
-<li><p>渐进式rehash通过记录dict的rehashidx完成，它从0开始，然后每执行一次rehash都会递增。例如在一次rehash中，把dict[0] rehash到dict[1],这一次会把dict[0] 上table[rehashidx] 的键值对rehash到dict[1]上，dict[0]的table[rehashidx]指向null,并令rehashidx++。</p>
-</li>
-<li><p>在rehash期间，每次对字典执行添加、删除、查找或者更新操作时候，都会执行一次渐进式rehash。</p>
-</li>
-<li><p>渐进式rehash会导致字典中的数据分散在两个dictht上，因此对字典的查找操作也需要到对应的dictht去执行。</p>
-</li>
-</ul>
-<h3 id="跳跃表"><a href="#跳跃表" class="headerlink" title="跳跃表"></a>跳跃表</h3><p>是有序集合的底层实现之一。跳跃表是基于多指针有序链表实现的，可以看成多个有序链表。在查找时，从上层指针开始查找，找到对应的区间之后再到下一层去查找。与红黑树相比，跳跃表有以下的有点：</p>
-<ul>
-<li>插入速度非常的快速，因为不需要进行旋转操作维护平衡性</li>
-<li>更容易实现</li>
-<li>支持无锁操作</li>
-</ul>
-<h2 id="数据持久化"><a href="#数据持久化" class="headerlink" title="数据持久化"></a>数据持久化</h2><h3 id="RDB"><a href="#RDB" class="headerlink" title="RDB"></a>RDB</h3><p>在指定的时间间隔内的内存中的所有数据以快照的方式写入磁盘，恢复时就将快照文件直接读到内存中</p>
-<p>会创建一个子进程来进行持久化，先将数据写入一个临时文件中，等持久化都结束之再用这个临时文件替换上次的持久化文件，在整个过程中主进程是不进行IO操做的</p>
-<p>优点：</p>
-<ul>
-<li>节省磁盘空间恢复速度快 </li>
-</ul>
-<p>缺点：</p>
-<ul>
-<li>比较浪费性能,最后一次持久化之后的数据可能丢失，如果数据量很大，保存快照的时间会很长。</li>
-<li>redis 中的更新次数只是一个阈值，不是绝对的更新次数，由 serverCorn 来检查是在特定的时间内满足大于等于设定的数值。</li>
-</ul>
-<h3 id="AOF"><a href="#AOF" class="headerlink" title="AOF"></a>AOF</h3><p>将写命令添加到AOF文件的末尾</p>
-<p>优点：</p>
-<ul>
-<li>备份机制稳定，丢失数据概率更低，可读的日志文本  </li>
-</ul>
-<p>缺点：</p>
-<ul>
-<li>文件体积大，占用更多的磁盘空间，每次读写都是同步的，有一定的性能压力。</li>
-<li>恢复速度比较慢</li>
-</ul>
-<p>使用AOF持久化开启的时候，文件的载入优先于RDB文件</p>
-<p>使用AOF持久化需要设置同步选项，从而确保写命令什么时候会同步到磁盘文件上。这是因为对文件进行写入并不会马上将内容同步到磁盘上，而是先存储到缓冲区，然后由操作系统决定什么时候同步到磁盘。</p>
-<p>always每个写命令都会同步，会严重降低服务起的性能。</p>
-<p>everysec每秒同步一次，选项比较合适，可以保证系统崩溃的时候只会丢失一秒左右的数据，并且Redis每秒执行一次同步对服务器性能几乎没有任何影响。</p>
-<p>no 让操作系统来决定什么时候同步，不能给服务器带来很大的提升，而且也会增大系统崩溃时候数据丢失。</p>
-<p>随着服务器的写命令的增对，AOF文件会越来越大，Redis提供了一种AOF重写的特性，能够去除AOF文件中冗余的写命令。</p>
-<p>AOF持久化功能的实现分为命令的追加，文件写入，文件同步，执行的写命令首先被追加在服务器的 aof_buf 缓冲池区的末尾。</p>
-<p>Redis 的服务进程就是一个事件循环，这个循环中文件事件负责接受客户端发来命令，并返回响应的命令恢复。时间事件是定时运行一些函数。因为服务器在处理文本事件的时候，可能会执行写命令，并使得一些内容被添加到缓冲区中，所以在服务器每次结束一个循环之前，都会考虑调用 flushAppendOnlyFile 函数是不是要将 aof_buf 中的内容写入和保存到 AOF 文件中。flushAppendOnlyFile 函数的行文会根据服务器配置的 appednfsync 选项的值来决定。</p>
-<p>服务器首先会将 aof_buf 中的内容写入到 OS Cache 中，然后再进行同步，从OS Cache 中同步到本地磁盘文件中。</p>
-<p>AOF 文件载入的时候，Redis 服务器首先创建一个 fake client 客户端，来从 AOF 文件中循环取出写命令进行执行。</p>
-<p>AOF 重写为了解决文件体积膨胀的问题，创建一个新的 AOF 文件来替代现有的 AOF 文件，新旧两个 AOF 文件所保存的数据库状态相同，但是新的 AOF 文件不会包含任何浪费冗余的命令。AOF 文件重写并不需要对现有的 AOF</p>
-<p>文件进行读取，分析，写入的操作，这个功能是通过对读取服务器当前数据库状态来实现的。首先从数据库中读取现有键值对现在的值，然后用一条写命令去记录键值对，代替之前记录这个键值对的多条命令，这就是 AOF 重写功能的实现原理。</p>
-<p>Redis 是单线程来处理客户端的请求，如果重写函数进行大量写入操作的时候会长时间阻塞，这时候服务器无法处理客户端的发来的命令请求，所以决定将重写函数放在一个子进程中去处理，一方面子进程在重写的时候，父进程可以继续处理命令。</p>
-<p>子进程带有服务器进程的数据副本，使用子进程而不是线程，可以避免使用锁的情况下保证数据的安全。</p>
-<p>但是子进程进行处理的时候，父进程还在执行命令，可能对现有的数据库状态进行修改。从而使得数据库状态和重写后的状态不一致。所以在 Redis 中设置了一个 AOF 重写缓冲池，这个缓冲池在服务器创建子进程的时候使用，当Redis 服务器执行完一个写命令之后，会同时将这个写命令发送给 AOF 缓冲区 </p>
-<h2 id="事务"><a href="#事务" class="headerlink" title="事务"></a>事务</h2><p>一个事务包含了多个写命令，服务器在执行事务期间，不会改去执行其他客户端的请求。</p>
-<p>事务中的多个写命令被一次性的发送给服务器，而不是一条一条的发送，这种方式被称为流水线，它可以减少客户端与服务端之间的网络通信次数从而提升性能。</p>
-<p>Redis最简单的事务实现方式是使用 MULT I和 EXEC 命令将事务包围起来。</p>
-<h2 id="事件"><a href="#事件" class="headerlink" title="事件"></a>事件</h2><p>Redis服务器是一个事件驱动程序。 文本事件和时间时间</p>
-<p>文件事件和时间时间是合作关系，服务器会轮流处理这两种事件。  </p>
-<p><img src="/2019/05/10/redis/../image\%5CGit%5CTTMS%5CMX-Notes%5Cimage%5C1556174428530.png" alt="1556174428530"></p>
-<h3 id="文件事件"><a href="#文件事件" class="headerlink" title="文件事件"></a>文件事件</h3><p>服务器通过套接字与客户端或者其他服务器进行通信，文件事件就是对套接字操作的抽象。</p>
-<p>Redis基于Reactor 模式开发了自己的网路事件处理器，使用I/O多路复用程序来同时监听多个套接字，并将到达的事件传送给文件事件分派器，文件分派器会根据套接字产生的事件类型调用相应的事件处理器。</p>
-<p>尽管多个文件事件可以并发的出现，但是在底层这些事件被顺序的放入一个队列中，顺序、同步的执行。</p>
-<p>I/O 多路复用器可以监听多个套接字的可读和可写事件。如果一个套接字又可读又可写的话，那么服务器将先读套接字，后写套接字。</p>
-<p> <img src="/2019/05/10/redis/E:/Git\TTMS\MX-Notes\image\1555763956536.png" alt="1555763956536"></p>
-<h3 id="时间事件"><a href="#时间事件" class="headerlink" title="时间事件"></a>时间事件</h3><p>服务器有一些操作需要在给定的时间点执行，时间事件是对类定时的操作抽象。</p>
-<p>时间事件又分为：</p>
-<ul>
-<li>定时事件：是让一段程序在指定的时间之内执行一次</li>
-<li>周期性事件：是让一段程序每隔指定时间就执行一次</li>
-</ul>
-<p>Redis将所有时间事件都放在一个无序链表中，通过遍历整个链表查找出已到达的时间事件，并调用相应事件处理器。</p>
-<p>服务器一般情况下只执行 serverCron 函数一个时间事件。并且这个事件是周期性事件。</p>
-<h2 id="复制"><a href="#复制" class="headerlink" title="复制"></a>复制</h2><p>通过使用slaveof host port 命令来让一个服务器成为另一服务器的从服务器。</p>
-<p>一个从服务器只能有一个主服务器，并且不支持主从复制。</p>
-<h2 id="连接过程"><a href="#连接过程" class="headerlink" title="连接过程"></a>连接过程</h2><ol>
-<li>主服务器创建快照文件，发送给从服务器，并在发送期间使用缓冲去记录执行的写命令，快照文件发送完毕之后，开始向从服务器发送存储缓冲区中的写命令。</li>
-<li>从服务器丢弃旧的数据，载入主服务器发来的快照文件，之后从服务器开始接受主服务器发来的写命令。</li>
-<li>主服务器每次执行一次写命令，就向从服务器发送相同的写命令。</li>
-</ol>
-<h3 id="主从链"><a href="#主从链" class="headerlink" title="主从链"></a>主从链</h3><p>随着负载的不断上升，主服务器可能无法很快的更新从服务器，或者重新连接和重新同步从服务器将导致系统超载。为了解决这个问题我们可以建立一个中间层来分担主服务器的复制工作。中间服务层的服务器是最上层的从服务器，又是最下层服务器的主服务器。</p>
-<h3 id="Sentinel"><a href="#Sentinel" class="headerlink" title="Sentinel"></a>Sentinel</h3><p>哨兵监听集群中的服务器，并在主服务器进入下线状态时，自动从从服务器中选择新的主服务器。</p>
-<p>w</p>
-<h2 id="分片"><a href="#分片" class="headerlink" title="分片"></a>分片</h2><p>假设有 4 个 Redis 实例 R0，R1，R2，R3，还有很多表示用户的键 user:1，user:2，… ，有不同的方式来选择一个指定的键存储在哪个实例中。</p>
-<ul>
-<li>最简单的方式是范围分片，例如用户 id 从 0~1000 的存储到实例 R0 中，用户 id 从 1001~2000 的存储到实例 R1 中，等等。但是这样需要维护一张映射范围表，维护操作代价很高。</li>
-<li>还有一种方式是哈希分片，使用 CRC32 哈希函数将键转换为一个数字，再对实例数量求模就能知道应该存储的实例。</li>
-</ul>
-<p>根据执行分片的位置，可以分为三种分片方式：</p>
-<ul>
-<li>客户端分片：客户端使用一致性哈希等算法决定键应当分布到哪个节点。</li>
-<li>代理分片：将客户端请求发送到代理上，由代理转发请求到正确的节点上。</li>
-<li>服务器分片：Redis Cluster。</li>
-</ul>
-<h2 id="键的过期时间"><a href="#键的过期时间" class="headerlink" title="键的过期时间"></a>键的过期时间</h2><p>Redis可以为每个键设置过期时间，每当键过期时，会自动删除该键。</p>
-<p>对于散列表这种容器，只能为整个键设置过期时间，而不能为键里面的单个元素设置过期时间。</p>
-<h2 id="数据淘汰策略"><a href="#数据淘汰策略" class="headerlink" title="数据淘汰策略"></a>数据淘汰策略</h2><p>可以设置内存最大使用量，当内存使用量超出时，会施行数据淘汰策略。</p>
-<p>Redis 具体有 6 种淘汰策略：</p>
-<table>
-<thead>
-<tr>
-<th>策略</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>volatile-lru</td>
-<td>从已设置过期时间的数据集中挑选最近最少使用的数据淘汰</td>
-</tr>
-<tr>
-<td>volatile-ttl</td>
-<td>从已设置过期时间的数据集中挑选将要过期的数据淘汰</td>
-</tr>
-<tr>
-<td>volatile-random</td>
-<td>从已设置过期时间的数据集中任意选择数据淘汰</td>
-</tr>
-<tr>
-<td>allkeys-lru</td>
-<td>从所有数据集中挑选最近最少使用的数据淘汰</td>
-</tr>
-<tr>
-<td>allkeys-random</td>
-<td>从所有数据集中任意选择数据进行淘汰</td>
-</tr>
-<tr>
-<td>noeviction</td>
-<td>禁止驱逐数据</td>
-</tr>
-</tbody>
-</table>
-<p>作为内存数据，处于对性能和内存消耗的考虑，Redis的淘汰算法实际实现上并非针对所有的key,而是抽样一小部分并且从中选出被淘汰的key</p>
-<p>使用redis缓存数据时候，为了提高缓存命中率，需要保证缓存数据都是热点数据。可以将内存最大使用量设置为热点数据占用的内存量，然后启用allkeys-lru淘汰策略，将最近少的数据淘汰。</p>
-<h2 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h2><p>缓存穿透</p>
-<p>​    缓存穿透是指查询一个数据库一定不存的数据。正常的使用缓存流程大致是，数据查询先查询缓存，如果key不存或者key已经过期，在对数据库进行查询，并把查询到的对象放入缓存中。如果数据库查询对象为空，则不放进缓存。</p>
-<p><img src="/2019/05/10/redis/E:/Git\TTMS\MX-Notes\image\u=3117417475,1030280178&amp;fm=173&amp;app=49&amp;f=JPEG.jpg" alt="img"></p>
-<p>如果出现这个情况，如果传入的参数为-1，会是怎么样呢？这个-1，就是一定不存的对象，就会每次都去查询数据库，而每次查询都是空，每次由都不会进行缓存。如果有恶意攻击，对数据库造成压力，甚至会压垮数据库。即便是采用UUID，也很容易找到一个不存的Key，进行攻击。</p>
-<p>解决方式：</p>
-<ul>
-<li>采用缓存空值的方式，如果从数据库查询到对象为空，也放入缓存，只是设定的缓存过期时间较短，比如设置为60秒。</li>
-</ul>
-<p><img src="/2019/05/10/redis/E:/Git\TTMS\MX-Notes\image\u=779177724,27899716&amp;fm=173&amp;app=49&amp;f=JPEG.jpg" alt="img"></p>
-<ul>
-<li><p>布隆过滤器</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">getByKey</span><span class="params">(String key)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 通过key获取value</span></span><br><span class="line">    String value = redisService.get(key);</span><br><span class="line">    <span class="keyword">if</span> (StringUtil.isEmpty(value)) &#123;</span><br><span class="line">        <span class="keyword">if</span> (bloomFilter.mightContain(key)) &#123;</span><br><span class="line">            value = userService.getById(key);</span><br><span class="line">            redisService.set(key, value);</span><br><span class="line">            <span class="keyword">return</span> value;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> value;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>  对所有可能查询的参数以hash形式存储，在控制层先进行校验，不符合则丢弃。还有最常见的则是采用布隆过滤器，将所有可能存在的数据哈希到一个足够大的bitmap中，一个一定不存在的数据会被这个bitmap拦截掉，从而避免了对底层存储系统的查询压力。</p>
-<h3 id="缓存雪崩"><a href="#缓存雪崩" class="headerlink" title="缓存雪崩"></a>缓存雪崩</h3><p>​    缓存雪崩，是指在某一段时间，缓存集中过期失效。</p>
-<p>​    产生雪崩的原因之一，就是一段时间集中放入缓存，如果缓存集中过期，在缓存上都无法命中数据，所有的查询都落在数据库上，对数据库而言，就会产生周期性的压力波峰。</p>
-<p>解决方案：</p>
-<ul>
-<li>对不同类别，缓存不同的周期，在同一类别上的商品上加上一个随机因子，这样就可以分散的缓存过期时间，而且，热门类目的商品缓存时间长一点，冷门类目的商品缓存时间短一点，也能节省缓存服务的资源。</li>
-<li>做二级缓存，或者双缓存策略。A1为原始缓存，A2为拷贝缓存，A1失效时，可以访问A2，A1缓存失效时间设置为短期，A2设置为长期。</li>
-<li>在缓存失效后，通过加锁或者队列来控制读数据库写缓存的线程数量。比如对某个key只允许一个线程查询数据和写缓存，其他线程等待</li>
-</ul>
-<p>其实集中过期，倒不是非常致命，比较致命的缓存雪崩，是缓存服务器某个节点宕机或断网。因为自然形成的缓存雪崩，一定是在某个时间段集中创建缓存，那么那个时候数据库能顶住压力，这个时候，数据库也是可以顶住压力的。无非就是对数据库产生周期性的压力而已。而缓存服务节点的宕机，对数据库服务器造成的压力是不可预知的，很有可能瞬间就把数据库压垮。</p>
-<h3 id="缓存击穿"><a href="#缓存击穿" class="headerlink" title="缓存击穿"></a>缓存击穿</h3><ul>
-<li><p>缓存击穿，是指一个key非常热点，在不停的扛着大并发，大并发集中对这一个点进行访问，当这个key在失效的瞬间，持续的大并发就穿破缓存，直接请求数据库，就像在屏障上开了一个洞。</p>
-</li>
-<li><h6 id="对于这样的热点数据，我们可以把他们呢设置为永不过期就好。"><a href="#对于这样的热点数据，我们可以把他们呢设置为永不过期就好。" class="headerlink" title="对于这样的热点数据，我们可以把他们呢设置为永不过期就好。"></a>对于这样的热点数据，我们可以把他们呢设置为永不过期就好。</h6></li>
-</ul>
-<h3 id="为何用Redis而不用map做缓存？"><a href="#为何用Redis而不用map做缓存？" class="headerlink" title="为何用Redis而不用map做缓存？"></a>为何用Redis而不用map做缓存？</h3><p>缓存分为本地缓存和分布式缓存。以java为例，使用自带的map或者guava实现的本地缓存，最主要的特点是轻量快速，生命周期随着JVM的销毁而结束，并且在多个实例的情况下，每个实例都需要保存一份缓存，缓存不具有一致性。</p>
-<p>使用redis称为分布式缓存，在多个实例的情况下，各个实例公用一份缓存数据，缓存具有一致性。缺点是需要保持redis服务的高可用，整个程序架构上复杂。</p>
-<p>redis可以独立部署，这样网站代码更新后redis缓存的数据还在，本地内存每次网站更新都会释放掉数据存到redis中，多个项目间可以共享缓存数据，如果是本地内存是无法跨项目共享的。</p>
-<p>本地缓存不容易查看，以及修改redis有丰富的工具来进行管理。</p>
-<p>redis可以用更大的内存空间做缓存，map不行，一般JVM也就分几个G的数据就够大了。</p>
-<p>redis的缓存可以持久化，map是内存对象，程序一重新启动就没有了</p>
-<p>redis可以处理每秒百万级的并发，是专业的缓存服务，map只是一个普通的对象</p>
-<p>redis缓存有过期的机制，map本身没有此功能。</p>
-<p>redis有丰富的API,map简单</p>
-<p>redis可以实现分布式部署，只要涉及到多台进程啥的，map就实现不了</p>
-<p>redis有很多数据结构，方便操作。</p>
-<p>如果你缓存的东西太多，容易让JVM挂掉。</p>
-<p>reids是C语言写的，稳定性和性能更好。</p>
-<h2 id="Client"><a href="#Client" class="headerlink" title="Client"></a>Client</h2><ul>
-<li><p>服务器状态接口是使用clients 链表来凝结起来多个客户端状态，新添加的客户端状态会被放到链表的尾部。</p>
-</li>
-<li><p>客户端状态的 flags 属性使用不同的标志来表示客户端的角色，以及客户端的状态。</p>
-</li>
-<li><p>输入缓冲区记录了客户端发送的命令请求，这个缓冲区的大小不能超过 1GB</p>
-</li>
-<li><p>客户端有两个输入缓冲区，用来保存服务端对命令的响应。一个是可变的，另外一个是不可变的。</p>
-</li>
-</ul>
-<h3 id="分布式锁"><a href="#分布式锁" class="headerlink" title="分布式锁"></a>分布式锁</h3><p>​    <strong>set key value [ex seconds] [px milliseconds] [nx | xx]</strong></p>
-<ul>
-<li>ex second：设置键的过期时间</li>
-<li>px milliseconds：设置键的过期时间为 milliseconds 毫秒</li>
-<li>nx：只有键不存在时候，才对键进行设置操作</li>
-<li>xx：只在键已经存在时候，才对键进行设置操作</li>
-<li>set 操作成功完成时，返回 OK ,否则返回 nil</li>
-</ul>
-<h3 id="SDS-和-C-字符串的区别"><a href="#SDS-和-C-字符串的区别" class="headerlink" title="SDS 和 C 字符串的区别"></a>SDS 和 C 字符串的区别</h3><table>
-<thead>
-<tr>
-<th style="text-align:left">C 字符串</th>
-<th style="text-align:left">SDS</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left">获取字符串长度的复杂度为 O(N) 。</td>
-<td style="text-align:left">获取字符串长度的复杂度为 O(1) 。</td>
-</tr>
-<tr>
-<td style="text-align:left">API 是不安全的，可能会造成缓冲区溢出。</td>
-<td style="text-align:left">API 是安全的，不会造成缓冲区溢出。</td>
-</tr>
-<tr>
-<td style="text-align:left">修改字符串长度 <code>N</code> 次必然需要执行 <code>N</code> 次内存重分配。</td>
-<td style="text-align:left">修改字符串长度 <code>N</code> 次最多需要执行 <code>N</code> 次内存重分配。</td>
-</tr>
-<tr>
-<td style="text-align:left">只能保存文本数据。</td>
-<td style="text-align:left">可以保存文本或者二进制数据。</td>
-</tr>
-<tr>
-<td style="text-align:left">可以使用所有 <code>&lt;string.h&gt;</code> 库中的函数。</td>
-<td style="text-align:left">可以使用一部分 <code>&lt;string.h&gt;</code> 库中的函数。</td>
-</tr>
-</tbody>
-</table>
-<p>根据传统， C 语言使用长度为 <code>N+1</code> 的字符数组来表示长度为 <code>N</code> 的字符串， 并且字符数组的最后一个元素总是空字符 <code>&#39;\0&#39;</code> 。</p>
-<p>比如说， 图 2-3 就展示了一个值为 <code>&quot;Redis&quot;</code> 的 C 字符串</p>
-<p><img src="/2019/05/10/redis/E:/Git\TTMS\MX-Notes\image\graphviz-cd9ca0391fd6ab95a2c5b48d5f5fbd0da2db1cab.png" alt="digraph {}"></p>
-<p>C 语言使用的这种简单的字符串表示方式， 并不能满足 Redis 对字符串在安全性、效率、以及功能方面的要求， 本节接下来的内容将详细对比 C 字符串和 SDS 之间的区别， 并说明 SDS 比 C 字符串更适用于 Redis 的原因。</p>
-<h2 id="常数复杂度获取字符串长度"><a href="#常数复杂度获取字符串长度" class="headerlink" title="常数复杂度获取字符串长度"></a>常数复杂度获取字符串长度</h2><p>因为 C 字符串并不记录自身的长度信息， 所以为了获取一个 C 字符串的长度， 程序必须遍历整个字符串， 对遇到的每个字符进行计数， 直到遇到代表字符串结尾的空字符为止， 这个操作的复杂度为 O(N) 。</p>
-<p>举个例子， 图 2-4 展示了程序计算一个 C 字符串长度的过程。</p>
-<p><img src="/2019/05/10/redis/E:/Git\TTMS\MX-Notes\image\graphviz-15702f3018be5f9c38705fe1a3c3179cfc7ce208.png" alt="digraph {      rankdir = TB;      node [shape = record];      str [label = &quot; &lt;1&gt; &#39;R&#39; | &lt;2&gt; &#39;e&#39; | &lt;3&gt; &#39;d&#39; | &lt;4&gt; &#39;i&#39; | &lt;5&gt; &#39;s&#39; | &lt;6&gt; &#39;\\0&#39; &quot;];      node [shape = plaintext];      p1 [label = &quot;len = 1&quot;];      p1 -&gt; str:1;  }"></p>
-<p><img src="/2019/05/10/redis/E:/Git\TTMS\MX-Notes\image\graphviz-11db45788777fdf62308ab859e5e4418276616b1.png" alt="digraph {      rankdir = TB;      node [shape = record];      str [label = &quot; &lt;1&gt; &#39;R&#39; | &lt;2&gt; &#39;e&#39; | &lt;3&gt; &#39;d&#39; | &lt;4&gt; &#39;i&#39; | &lt;5&gt; &#39;s&#39; | &lt;6&gt; &#39;\\0&#39; &quot;];      node [shape = plaintext];      p2 [label = &quot;len = 2&quot;];      p2 -&gt; str:2;  }"></p>
-<p><img src="/2019/05/10/redis/E:/Git\TTMS\MX-Notes\image\graphviz-22f91c392200e20da51ad61306765bee1d874a13.png" alt="digraph {      rankdir = TB;      node [shape = record];      str [label = &quot; &lt;1&gt; &#39;R&#39; | &lt;2&gt; &#39;e&#39; | &lt;3&gt; &#39;d&#39; | &lt;4&gt; &#39;i&#39; | &lt;5&gt; &#39;s&#39; | &lt;6&gt; &#39;\\0&#39; &quot;];      node [shape = plaintext];      p3 [label = &quot;len = 3&quot;];      p3 -&gt; str:3;  }"></p>
-<p><img src="/2019/05/10/redis/E:/Git\TTMS\MX-Notes\image\graphviz-ff4aa6ea06fabe2bdf8f26325bca6a02fa480da8.png" alt="digraph {      rankdir = TB;      node [shape = record];      str [label = &quot; &lt;1&gt; &#39;R&#39; | &lt;2&gt; &#39;e&#39; | &lt;3&gt; &#39;d&#39; | &lt;4&gt; &#39;i&#39; | &lt;5&gt; &#39;s&#39; | &lt;6&gt; &#39;\\0&#39; &quot;];      node [shape = plaintext];      p4 [label = &quot;len = 4&quot;];      p4 -&gt; str:4;  }"></p>
-<p><img src="/2019/05/10/redis/E:/Git\TTMS\MX-Notes\image\graphviz-59da530d8d0f16ce3eff95e285460b9ea5a0f389.png" alt="digraph {      rankdir = TB;      node [shape = record];      str [label = &quot; &lt;1&gt; &#39;R&#39; | &lt;2&gt; &#39;e&#39; | &lt;3&gt; &#39;d&#39; | &lt;4&gt; &#39;i&#39; | &lt;5&gt; &#39;s&#39; | &lt;6&gt; &#39;\\0&#39; &quot;];      node [shape = plaintext];      p5 [label = &quot;len = 5&quot;];      p5 -&gt; str:5;  }"></p>
-<p><img src="/2019/05/10/redis/E:/Git\TTMS\MX-Notes\image\graphviz-e505478b940695671030146e66d6b3b292e7ae8c.png" alt="digraph {      label = &quot;\n 图 2-4    计算 C 字符串长度的过程&quot;;      rankdir = TB;      node [shape = record];      str [label = &quot; &lt;1&gt; &#39;R&#39; | &lt;2&gt; &#39;e&#39; | &lt;3&gt; &#39;d&#39; | &lt;4&gt; &#39;i&#39; | &lt;5&gt; &#39;s&#39; | &lt;6&gt; &#39;\\0&#39; &quot;];      node [shape = plaintext];      p6 [label = &quot;发现空字符 \n 停止计数 \n 字符串的长度为 5 字节&quot;];      p6 -&gt; str:6;  }"></p>
-<p>和 C 字符串不同， 因为 SDS 在 <code>len</code> 属性中记录了 SDS 本身的长度， 所以获取一个 SDS 长度的复杂度仅为 O(1) 。</p>
-<p>举个例子， 对于图 2-5 所示的 SDS 来说， 程序只要访问 SDS 的 <code>len</code> 属性， 就可以立即知道 SDS 的长度为 <code>5</code> 字节：</p>
-<p><img src="/2019/05/10/redis/E:/Git\TTMS\MX-Notes\image\graphviz-dbd2f4d49a9f495f18093129393569f93e645529.png" alt="digraph {      label = &quot;\n 图 2-5    五字节长的 SDS&quot;;      rankdir = LR;      node [shape = record];      //      sdshdr [label = &quot;sdshdr | free \n 0 | len \n 5 | &lt;buf&gt; buf&quot;];      buf [label = &quot;{ &#39;R&#39; | &#39;e&#39; | &#39;d&#39; | &#39;i&#39; | &#39;s&#39; | &#39;\\0&#39; }&quot;];      //      sdshdr:buf -&gt; buf;  }"></p>
-<p>又比如说， 对于图 2-6 展示的 SDS 来说， 程序只要访问 SDS 的 <code>len</code> 属性， 就可以立即知道 SDS 的长度为 <code>11</code> 字节。</p>
-<p><img src="/2019/05/10/redis/E:/Git\TTMS\MX-Notes\image\graphviz-33b39668e26fa63350b177c13b38f201fcebb6c4.png" alt="digraph {      label = &quot;\n 图 2-6    十一字节长的 SDS&quot;;      rankdir = LR;      node [shape = record];      //      sdshdr [label = &quot;sdshdr | free \n 0 | len \n 11 | &lt;buf&gt; buf&quot;];      buf [label = &quot;{ &#39;h&#39; | &#39;e&#39; | &#39;l&#39; | &#39;l&#39; | &#39;o&#39; | &#39; &#39; | &#39;w&#39; | &#39;o&#39; | &#39;r&#39; | &#39;l&#39; | &#39;d&#39; | &#39;\\0&#39; }&quot;];      //      sdshdr:buf -&gt; buf;  }"></p>
-<p>设置和更新 SDS 长度的工作是由 SDS 的 API 在执行时自动完成的， 使用 SDS 无须进行任何手动修改长度的工作。</p>
-<p>通过使用 SDS 而不是 C 字符串， Redis 将获取字符串长度所需的复杂度从 O(N) 降低到了 O(1) ， 这确保了获取字符串长度的工作不会成为 Redis 的性能瓶颈。</p>
-<p>比如说， 因为字符串键在底层使用 SDS 来实现， 所以即使我们对一个非常长的字符串键反复执行 STRLEN 命令， 也不会对系统性能造成任何影响， 因为 STRLEN 命令的复杂度仅为 O(1) 。</p>
-<h2 id="杜绝缓冲区溢出"><a href="#杜绝缓冲区溢出" class="headerlink" title="杜绝缓冲区溢出"></a>杜绝缓冲区溢出</h2><p>除了获取字符串长度的复杂度高之外， C 字符串不记录自身长度带来的另一个问题是容易造成缓冲区溢出（buffer overflow）。</p>
-<p>举个例子， <code>&lt;string.h&gt;/strcat</code> 函数可以将 <code>src</code> 字符串中的内容拼接到 <code>dest</code> 字符串的末尾：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">char</span> *<span class="title">strcat</span><span class="params">(<span class="keyword">char</span> *dest, <span class="keyword">const</span> <span class="keyword">char</span> *src)</span></span>;</span><br></pre></td></tr></table></figure>
-<p>因为 C 字符串不记录自身的长度， 所以 <code>strcat</code> 假定用户在执行这个函数时， 已经为 <code>dest</code> 分配了足够多的内存， 可以容纳 <code>src</code> 字符串中的所有内容， 而一旦这个假定不成立时， 就会产生缓冲区溢出。</p>
-<p>举个例子， 假设程序里有两个在内存中紧邻着的 C 字符串 <code>s1</code> 和 <code>s2</code> ， 其中 <code>s1</code> 保存了字符串 <code>&quot;Redis&quot;</code> ， 而 <code>s2</code> 则保存了字符串 <code>&quot;MongoDB&quot;</code> ， 如图 2-7 所示。</p>
-<p><img src="/2019/05/10/redis/E:/Git\TTMS\MX-Notes\image\graphviz-7daf86931b270e1f4bacf20e3f56ebcb2fc7e08e.png" alt="digraph {      label = &quot;\n 图 2-7    在内存中紧邻的两个 C 字符串&quot;;      rankdir = TB;      //      node [shape = record];      memory [label = &quot; ... | &lt;s1&gt; &#39;R&#39; | &#39;e&#39; | &#39;d&#39; | &#39;i&#39; | &#39;s&#39; | &#39;\\0&#39; | &lt;s2&gt; &#39;M&#39; | &#39;o&#39; | &#39;n&#39; | &#39;g&#39; | &#39;o&#39; | &#39;D&#39; | &#39;B&#39; | &#39;\\0&#39; | ... &quot;];      //      node [shape = plaintext];      s1 -&gt; memory:s1;      s2 -&gt; memory:s2;  }"></p>
-<p>如果一个程序员决定通过执行：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">strcat(s1, &quot; Cluster&quot;);</span><br></pre></td></tr></table></figure>
-<p>将 <code>s1</code> 的内容修改为 <code>&quot;Redis Cluster&quot;</code> ， 但粗心的他却忘了在执行 <code>strcat</code> 之前为 <code>s1</code> 分配足够的空间， 那么在 <code>strcat</code> 函数执行之后， <code>s1</code> 的数据将溢出到 <code>s2</code> 所在的空间中， 导致 <code>s2</code> 保存的内容被意外地修改， 如图 2-8 所示。</p>
-<p><img src="/2019/05/10/redis/E:/Git\TTMS\MX-Notes\image\graphviz-2ff855d462d63f935deedb05c0d6447ed4b44bb3.png" alt="digraph {      label = &quot;\n 图 2-8    s1 的内容溢出到了 s2 所在的位置上&quot;;      rankdir = TB;      //      node [shape = record];      memory [label = &quot; ... | &lt;s1&gt; &#39;R&#39; | &#39;e&#39; | &#39;d&#39; | &#39;i&#39; | &#39;s&#39; | &#39; &#39; | &lt;s2&gt; &#39;C&#39; | &#39;l&#39; | &#39;u&#39; | &#39;s&#39; | &#39;t&#39; | &#39;e&#39; | &#39;r&#39; | &#39;\\0&#39; | ... &quot;];      //      node [shape = plaintext];      s1 -&gt; memory:s1;      s2 -&gt; memory:s2;  }"></p>
-<p>与 C 字符串不同， SDS 的空间分配策略完全杜绝了发生缓冲区溢出的可能性： 当 SDS API 需要对 SDS 进行修改时， API 会先检查 SDS 的空间是否满足修改所需的要求， 如果不满足的话， API 会自动将 SDS 的空间扩展至执行修改所需的大小， 然后才执行实际的修改操作， 所以使用 SDS 既不需要手动修改 SDS 的空间大小， 也不会出现前面所说的缓冲区溢出问题。</p>
-<p>举个例子， SDS 的 API 里面也有一个用于执行拼接操作的 <code>sdscat</code> 函数， 它可以将一个 C 字符串拼接到给定 SDS 所保存的字符串的后面， 但是在执行拼接操作之前， <code>sdscat</code> 会先检查给定 SDS 的空间是否足够， 如果不够的话， <code>sdscat</code> 就会先扩展 SDS 的空间， 然后才执行拼接操作。</p>
-<p>比如说， 如果我们执行：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sdscat(s, <span class="string">" Cluster"</span>);</span><br></pre></td></tr></table></figure>
-<p>其中 SDS 值 <code>s</code> 如图 2-9 所示， 那么 <code>sdscat</code> 将在执行拼接操作之前检查 <code>s</code> 的长度是否足够， 在发现 <code>s</code> 目前的空间不足以拼接 <code>&quot; Cluster&quot;</code> 之后， <code>sdscat</code> 就会先扩展 <code>s</code> 的空间， 然后才执行拼接 <code>&quot; Cluster&quot;</code> 的操作， 拼接操作完成之后的 SDS 如图 2-10 所示。</p>
-<p><img src="/2019/05/10/redis/E:/Git\TTMS\MX-Notes\image\graphviz-87e1f7dda1bde2b3dd53c143a12a3a12ec1949b7.png" alt="digraph {      label = &quot;\n 图 2-9    sdscat 执行之前的 SDS&quot;;      rankdir = LR;      node [shape = record];      //      sdshdr [label = &quot;sdshdr | free \n 0 | len \n 5 | &lt;buf&gt; buf&quot;];      buf [label = &quot;{ &#39;R&#39; | &#39;e&#39; | &#39;d&#39; | &#39;i&#39; | &#39;s&#39; | &#39;\\0&#39; }&quot;];      //      sdshdr:buf -&gt; buf;  }"></p>
-<p><img src="/2019/05/10/redis/E:/Git\TTMS\MX-Notes\image\graphviz-a52da469a2a921623086793193a2d35eb1fed716.png" alt="digraph {      label = &quot;\n 图 2-10    sdscat 执行之后的 SDS&quot;;      rankdir = LR;      node [shape = record];      //      sdshdr [label = &quot;sdshdr | free \n 13 | len \n 13 | &lt;buf&gt; buf&quot;];      buf [label = &quot;{ &#39;R&#39; | &#39;e&#39; | &#39;d&#39; | &#39;i&#39; | &#39;s&#39; | &#39; &#39; | &#39;C&#39; | &#39;l&#39; | &#39;u&#39; | &#39;s&#39; | &#39;t&#39; | &#39;e&#39; | &#39;r&#39;| &#39;\\0&#39; | ... }&quot;];      //      sdshdr:buf -&gt; buf;  }"></p>
-<p>注意图 2-10 所示的 SDS ： <code>sdscat</code> 不仅对这个 SDS 进行了拼接操作， 它还为 SDS 分配了 <code>13</code> 字节的未使用空间， 并且拼接之后的字符串也正好是 <code>13</code> 字节长， 这种现象既不是 bug 也不是巧合， 它和 SDS 的空间分配策略有关， 接下来的小节将对这一策略进行说明。</p>
-<h2 id="减少修改字符串时带来内存重分配次数"><a href="#减少修改字符串时带来内存重分配次数" class="headerlink" title="减少修改字符串时带来内存重分配次数"></a>减少修改字符串时带来内存重分配次数</h2><p>正如前两个小节所说， 因为 C 字符串并不记录自身的长度， 所以对于一个包含了 <code>N</code> 个字符的 C 字符串来说， 这个 C 字符串的底层实现总是一个 <code>N+1</code> 个字符长的数组（额外的一个字符空间用于保存空字符）。</p>
-<p>因为 C 字符串的长度和底层数组的长度之间存在着这种关联性， 所以每次增长或者缩短一个 C 字符串， 程序都总要对保存这个 C 字符串的数组进行一次内存重分配操作：</p>
-<ul>
-<li>如果程序执行的是增长字符串的操作， 比如拼接操作（append）， 那么在执行这个操作之前， 程序需要先通过内存重分配来扩展底层数组的空间大小 —— 如果忘了这一步就会产生缓冲区溢出。</li>
-<li>如果程序执行的是缩短字符串的操作， 比如截断操作（trim）， 那么在执行这个操作之后， 程序需要通过内存重分配来释放字符串不再使用的那部分空间 —— 如果忘了这一步就会产生内存泄漏。</li>
-</ul>
-<p>举个例子， 如果我们持有一个值为 <code>&quot;Redis&quot;</code> 的 C 字符串 <code>s</code> ， 那么为了将 <code>s</code> 的值改为 <code>&quot;Redis Cluster&quot;</code> ， 在执行：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">strcat</span>(s, <span class="string">" Cluster"</span>);</span><br></pre></td></tr></table></figure>
-<p>之前， 我们需要先使用内存重分配操作， 扩展 <code>s</code> 的空间。</p>
-<p>之后， 如果我们又打算将 <code>s</code> 的值从 <code>&quot;Redis Cluster&quot;</code> 改为 <code>&quot;Redis Cluster Tutorial&quot;</code> ， 那么在执行：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">strcat</span>(s, <span class="string">" Tutorial"</span>);</span><br></pre></td></tr></table></figure>
-<p>之前， 我们需要再次使用内存重分配扩展 <code>s</code> 的空间， 诸如此类。</p>
-<p>因为内存重分配涉及复杂的算法， 并且可能需要执行系统调用， 所以它通常是一个比较耗时的操作：</p>
-<ul>
-<li>在一般程序中， 如果修改字符串长度的情况不太常出现， 那么每次修改都执行一次内存重分配是可以接受的。</li>
-<li>但是 Redis 作为数据库， 经常被用于速度要求严苛、数据被频繁修改的场合， 如果每次修改字符串的长度都需要执行一次内存重分配的话， 那么光是执行内存重分配的时间就会占去修改字符串所用时间的一大部分， 如果这种修改频繁地发生的话， 可能还会对性能造成影响。</li>
-</ul>
-<p>为了避免 C 字符串的这种缺陷， SDS 通过未使用空间解除了字符串长度和底层数组长度之间的关联： 在 SDS 中， <code>buf</code> 数组的长度不一定就是字符数量加一， 数组里面可以包含未使用的字节， 而这些字节的数量就由 SDS 的 <code>free</code> 属性记录。</p>
-<p>通过未使用空间， SDS 实现了空间预分配和惰性空间释放两种优化策略。</p>
-<h3 id="空间预分配"><a href="#空间预分配" class="headerlink" title="空间预分配"></a>空间预分配</h3><p>空间预分配用于优化 SDS 的字符串增长操作： 当 SDS 的 API 对一个 SDS 进行修改， 并且需要对 SDS 进行空间扩展的时候， 程序不仅会为 SDS 分配修改所必须要的空间， 还会为 SDS 分配额外的未使用空间。</p>
-<p>其中， 额外分配的未使用空间数量由以下公式决定：</p>
-<ul>
-<li>如果对 SDS 进行修改之后， SDS 的长度（也即是 <code>len</code> 属性的值）将小于 <code>1 MB</code> ， 那么程序分配和 <code>len</code> 属性同样大小的未使用空间， 这时 SDS <code>len</code> 属性的值将和 <code>free</code> 属性的值相同。 举个例子， 如果进行修改之后， SDS 的 <code>len</code> 将变成 <code>13</code> 字节， 那么程序也会分配 <code>13</code>字节的未使用空间， SDS 的 <code>buf</code> 数组的实际长度将变成 <code>13 + 13 + 1 = 27</code> 字节（额外的一字节用于保存空字符）。</li>
-<li>如果对 SDS 进行修改之后， SDS 的长度将大于等于 <code>1 MB</code> ， 那么程序会分配 <code>1 MB</code> 的未使用空间。 举个例子， 如果进行修改之后， SDS 的 <code>len</code> 将变成 <code>30 MB</code> ， 那么程序会分配 <code>1 MB</code> 的未使用空间， SDS 的 <code>buf</code> 数组的实际长度将为 <code>30 MB + 1 MB + 1 byte</code> 。</li>
-</ul>
-<p>通过空间预分配策略， Redis 可以减少连续执行字符串增长操作所需的内存重分配次数。</p>
-<p>举个例子， 对于图 2-11 所示的 SDS 值 <code>s</code> 来说， 如果我们执行：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sdscat(s, <span class="string">" Cluster"</span>);</span><br></pre></td></tr></table></figure>
-<p>那么 <code>sdscat</code> 将执行一次内存重分配操作， 将 SDS 的长度修改为 <code>13</code> 字节， 并将 SDS 的未使用空间同样修改为 <code>13</code> 字节， 如图 2-12 所示。</p>
-<p><img src="/2019/05/10/redis/E:/Git\TTMS\MX-Notes\image\graphviz-75c915b3f40fc1586e518b42830a3d8ba4119cf7.png" alt="digraph {      label = &quot;\n 图 2-11    执行 sdscat 之前的 SDS&quot;;      rankdir = LR;      node [shape = record];      //      sdshdr [label = &quot;sdshdr | free \n 0 | len \n 5 | &lt;buf&gt; buf&quot;];      buf [label = &quot;{ &#39;R&#39; | &#39;e&#39; | &#39;d&#39; | &#39;i&#39; | &#39;s&#39; | &#39;\\0&#39; }&quot;];      //      sdshdr:buf -&gt; buf;  }"></p>
-<p><img src="/2019/05/10/redis/E:/Git\TTMS\MX-Notes\image\graphviz-42ee54f9997d36b2b8ffb0ab75dce2fd509882db.png" alt="digraph {      label = &quot;\n 图 2-12    执行 sdscat 之后的 SDS&quot;;      rankdir = LR;      node [shape = record];      //      sdshdr [label = &quot;sdshdr | free \n 13 | len \n 13 | &lt;buf&gt; buf&quot;];      buf [label = &quot;{ &#39;R&#39; | &#39;e&#39; | &#39;d&#39; | &#39;i&#39; | &#39;s&#39; | &#39; &#39; | &#39;C&#39; | &#39;l&#39; | &#39;u&#39; | &#39;s&#39; | &#39;t&#39; | &#39;e&#39; | &#39;r&#39;| &#39;\\0&#39; | ... }&quot;];      //      sdshdr:buf -&gt; buf;  }"></p>
-<p>如果这时， 我们再次对 <code>s</code> 执行：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sdscat(s, <span class="string">" Tutorial"</span>);</span><br></pre></td></tr></table></figure>
-<p>那么这次 <code>sdscat</code> 将不需要执行内存重分配： 因为未使用空间里面的 <code>13</code> 字节足以保存 <code>9</code> 字节的 <code>&quot; Tutorial&quot;</code> ， 执行 <code>sdscat</code> 之后的 SDS 如图 2-13 所示。</p>
-<p><img src="/2019/05/10/redis/E:/Git\TTMS\MX-Notes\image\graphviz-3398fdf9cc2ab046814e2721f69cc4ed97f043ab.png" alt="digraph {      label = &quot;\n 图 2-13    再次执行 sdscat 之后的 SDS&quot;;      rankdir = LR;      node [shape = record];      //      sdshdr [label = &quot;sdshdr | free \n 4 | len \n 22 | &lt;buf&gt; buf&quot;];      //buf [label = &quot;{ &#39;R&#39; | &#39;e&#39; | &#39;d&#39; | &#39;i&#39; | &#39;s&#39; | &#39; &#39; | &#39;C&#39; | &#39;l&#39; | &#39;u&#39; | &#39;s&#39; | &#39;t&#39; | &#39;e&#39; | &#39;r&#39;| &#39; &#39; | &#39;T&#39; | &#39;u&#39; | &#39;t&#39; | &#39;o&#39; | &#39;r&#39; | &#39;i&#39; | &#39;a&#39; | &#39;l&#39; | &#39;\\0&#39; | ... }&quot;];     buf [label = &quot;{ &#39;R&#39; | &#39;e&#39; | &#39;d&#39; | &#39;i&#39; | &#39;s&#39; | ... | &#39; &#39; | &#39;T&#39; | &#39;u&#39; | &#39;t&#39; | &#39;o&#39; | &#39;r&#39; | &#39;i&#39; | &#39;a&#39; | &#39;l&#39; | &#39;\\0&#39; | ... }&quot;];      //      sdshdr:buf -&gt; buf;  }"></p>
-<p>在扩展 SDS 空间之前， SDS API 会先检查未使用空间是否足够， 如果足够的话， API 就会直接使用未使用空间， 而无须执行内存重分配。</p>
-<p>通过这种预分配策略， SDS 将连续增长 <code>N</code> 次字符串所需的内存重分配次数从必定 <code>N</code> 次降低为最多 <code>N</code> 次。</p>
-<h3 id="惰性空间释放"><a href="#惰性空间释放" class="headerlink" title="惰性空间释放"></a>惰性空间释放</h3><p>惰性空间释放用于优化 SDS 的字符串缩短操作： 当 SDS 的 API 需要缩短 SDS 保存的字符串时， 程序并不立即使用内存重分配来回收缩短后多出来的字节， 而是使用 <code>free</code> 属性将这些字节的数量记录起来， 并等待将来使用。</p>
-<p>举个例子， <code>sdstrim</code> 函数接受一个 SDS 和一个 C 字符串作为参数， 从 SDS 左右两端分别移除所有在 C 字符串中出现过的字符。</p>
-<p>比如对于图 2-14 所示的 SDS 值 <code>s</code> 来说， 执行：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sdstrim(s, <span class="string">"XY"</span>);   <span class="comment">// 移除 SDS 字符串中的所有 'X' 和 'Y'</span></span><br></pre></td></tr></table></figure>
-<p>会将 SDS 修改成图 2-15 所示的样子。</p>
-<p><img src="/2019/05/10/redis/E:/Git\TTMS\MX-Notes\image\graphviz-e0b39c48a2c522f5f7802f1e325b5cb25ac92579.png" alt="digraph {      label = &quot;\n 图 2-14    执行 sdstrim 之前的 SDS&quot;;      rankdir = LR;      node [shape = record];      //      sdshdr [label = &quot;sdshdr | free \n 0 | len \n 11 | &lt;buf&gt; buf&quot;];      buf [label = &quot; { &#39;X&#39; | &#39;Y&#39; | &#39;X&#39; | &#39;X&#39; | &#39;Y&#39; | &#39;a&#39; | &#39;b&#39; | &#39;c&#39; | &#39;X&#39; | &#39;Y&#39; | &#39;Y&#39; | &#39;\\0&#39; } &quot;];      //      sdshdr:buf -&gt; buf;  }"></p>
-<p><img src="/2019/05/10/redis/E:/Git\TTMS\MX-Notes\image\graphviz-c58adbc4441b5622084daeee71c0cb306db28741.png" alt="digraph {      label = &quot;\n 图 2-15    执行 sdstrim 之后的 SDS&quot;;      rankdir = LR;      node [shape = record];      //      sdshdr [label = &quot;sdshdr | free \n 8 | len \n 3 | &lt;buf&gt; buf&quot;];      buf [label = &quot; { &#39;a&#39; | &#39;b&#39; | &#39;c&#39; | &#39;\\0&#39; | &lt;1&gt; | &lt;2&gt; | &lt;3&gt; | &lt;4&gt; | &lt;5&gt; | &lt;6&gt; | &lt;7&gt; | &lt;8&gt; } &quot;];      //      sdshdr:buf -&gt; buf;  }"></p>
-<p>注意执行 <code>sdstrim</code> 之后的 SDS 并没有释放多出来的 <code>8</code> 字节空间， 而是将这 <code>8</code> 字节空间作为未使用空间保留在了 SDS 里面， 如果将来要对 SDS 进行增长操作的话， 这些未使用空间就可能会派上用场。</p>
-<p>举个例子， 如果现在对 <code>s</code> 执行：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sdscat(s, <span class="string">" Redis"</span>);</span><br></pre></td></tr></table></figure>
-<p>那么完成这次 <code>sdscat</code> 操作将不需要执行内存重分配： 因为 SDS 里面预留的 <code>8</code> 字节空间已经足以拼接 <code>6</code> 个字节长的 <code>&quot; Redis&quot;</code> ， 如图 2-16 所示。</p>
-<p><img src="/2019/05/10/redis/E:/Git\TTMS\MX-Notes\image\graphviz-d518d01875adb59245dce35983eab3528f2e59ea.png" alt="digraph {      label = &quot;\n 图 2-16    执行 sdscat 之后的的 SDS&quot;;      rankdir = LR;      node [shape = record];      //      sdshdr [label = &quot;sdshdr | free \n 2 | len \n 9 | &lt;buf&gt; buf&quot;];      buf [label = &quot; { &#39;a&#39; | &#39;b&#39; | &#39;c&#39; | &#39; &#39; | &#39;R&#39; | &#39;e&#39; | &#39;d&#39; | &#39;i&#39; | &#39;s&#39; | &#39;\\0&#39; | &lt;1&gt; | &lt;2&gt; } &quot;];      //      sdshdr:buf -&gt; buf;  }"></p>
-<p>通过惰性空间释放策略， SDS 避免了缩短字符串时所需的内存重分配操作， 并为将来可能有的增长操作提供了优化。</p>
-<p>与此同时， SDS 也提供了相应的 API ， 让我们可以在有需要时， 真正地释放 SDS 里面的未使用空间， 所以不用担心惰性空间释放策略会造成内存浪费。</p>
-<h2 id="二进制安全"><a href="#二进制安全" class="headerlink" title="二进制安全"></a>二进制安全</h2><p>C 字符串中的字符必须符合某种编码（比如 ASCII）， 并且除了字符串的末尾之外， 字符串里面不能包含空字符， 否则最先被程序读入的空字符将被误认为是字符串结尾 —— 这些限制使得 C 字符串只能保存文本数据， 而不能保存像图片、音频、视频、压缩文件这样的二进制数据。</p>
-<p>举个例子， 如果有一种使用空字符来分割多个单词的特殊数据格式， 如图 2-17 所示， 那么这种格式就不能使用 C 字符串来保存， 因为 C 字符串所用的函数只会识别出其中的 <code>&quot;Redis&quot;</code> ， 而忽略之后的 <code>&quot;Cluster&quot;</code> 。</p>
-<p><img src="/2019/05/10/redis/E:/Git\TTMS\MX-Notes\image\graphviz-0fcb9185ccc066e9f298c00d8fd272f52cd1e43d.png" alt="digraph {      label = &quot;\n 图 2-17    使用空字符来分割单词的特殊数据格式&quot;;      node [shape = record];      content [label = &quot; &#39;R&#39; | &#39;e&#39; | &#39;d&#39; | &#39;i&#39; | &#39;s&#39; | &#39;\\0&#39; | &#39;C&#39; | &#39;l&#39; | &#39;u&#39; | &#39;s&#39; | &#39;t&#39; | &#39;e&#39; | &#39;r&#39; | &#39;\\0&#39; &quot;];  }"></p>
-<p>虽然数据库一般用于保存文本数据， 但使用数据库来保存二进制数据的场景也不少见， 因此， 为了确保 Redis 可以适用于各种不同的使用场景， SDS 的 API 都是二进制安全的（binary-safe）： 所有 SDS API 都会以处理二进制的方式来处理 SDS 存放在 <code>buf</code> 数组里的数据， 程序不会对其中的数据做任何限制、过滤、或者假设 —— 数据在写入时是什么样的， 它被读取时就是什么样。</p>
-<p>这也是我们将 SDS 的 <code>buf</code> 属性称为字节数组的原因 —— Redis 不是用这个数组来保存字符， 而是用它来保存一系列二进制数据。</p>
-<p>比如说， 使用 SDS 来保存之前提到的特殊数据格式就没有任何问题， 因为 SDS 使用 <code>len</code> 属性的值而不是空字符来判断字符串是否结束， 如图 2-18 所示。</p>
-<p><img src="/2019/05/10/redis/E:/Git\TTMS\MX-Notes\image\graphviz-a34fffb686d81038f6bafbca7be99831df8b3e6b.png" alt="digraph {      label = &quot;\n 图 2-18    保存了特殊数据格式的 SDS&quot;;      rankdir = LR;      node [shape = record];      //      sdshdr [label = &quot;sdshdr | free \n 0 | len \n 14 | &lt;buf&gt; buf&quot;];      buf [label = &quot; { &#39;R&#39; | &#39;e&#39; | &#39;d&#39; | &#39;i&#39; | &#39;s&#39; | &#39;\\0&#39; | &#39;C&#39; | &#39;l&#39; | &#39;u&#39; | &#39;s&#39; | &#39;t&#39; | &#39;e&#39; | &#39;r&#39; | &#39;\\0&#39; | &#39;\\0&#39; } &quot;];      //      sdshdr:buf -&gt; buf;  }"></p>
-<p>通过使用二进制安全的 SDS ， 而不是 C 字符串， 使得 Redis 不仅可以保存文本数据， 还可以保存任意格式的二进制数据。</p>
-<h2 id="兼容部分-C-字符串函数"><a href="#兼容部分-C-字符串函数" class="headerlink" title="兼容部分 C 字符串函数"></a>兼容部分 C 字符串函数</h2><p>虽然 SDS 的 API 都是二进制安全的， 但它们一样遵循 C 字符串以空字符结尾的惯例： 这些 API 总会将 SDS 保存的数据的末尾设置为空字符， 并且总会在为 <code>buf</code> 数组分配空间时多分配一个字节来容纳这个空字符， 这是为了让那些保存文本数据的 SDS 可以重用一部分 <code>&lt;string.h&gt;</code> 库定义的函数。</p>
-<p><img src="/2019/05/10/redis/E:/Git\TTMS\MX-Notes\image\graphviz-82a01911a9b47725ee97416aac875752fa3bdd2b.png" alt="digraph {      label = &quot;\n 图 2-19    一个保存着文本数据的 SDS&quot;;      rankdir = LR;      node [shape = record];      //      sdshdr [label = &quot;sdshdr | free \n 0 | len \n 11 | &lt;buf&gt; buf&quot;];      buf [label = &quot;{ &#39;h&#39; | &#39;e&#39; | &#39;l&#39; | &#39;l&#39; | &#39;o&#39; | &#39; &#39; | &#39;R&#39; | &#39;e&#39; | &#39;d&#39; | &#39;i&#39; | &#39;s&#39; | &#39;\\0&#39; }&quot;];      //      sdshdr:buf -&gt; buf;  }"></p>
-<p>举个例子， 如图 2-19 所示， 如果我们有一个保存文本数据的 SDS 值 <code>sds</code> ， 那么我们就可以重用 <code>&lt;string.h&gt;/strcasecmp</code> 函数， 使用它来对比 SDS 保存的字符串和另一个 C 字符串：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">strcasecmp(sds-&gt;buf, <span class="string">"hello world"</span>);</span><br></pre></td></tr></table></figure>
-<p>这样 Redis 就不用自己专门去写一个函数来对比 SDS 值和 C 字符串值了。</p>
-<p>与此类似， 我们还可以将一个保存文本数据的 SDS 作为 <code>strcat</code> 函数的第二个参数， 将 SDS 保存的字符串追加到一个 C 字符串的后面：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">strcat</span>(c_string, sds-&gt;buf);</span><br></pre></td></tr></table></figure>
-<p>这样 Redis 就不用专门编写一个将 SDS 字符串追加到 C 字符串之后的函数了。</p>
-<p>通过遵循 C 字符串以空字符结尾的惯例， SDS 可以在有需要时重用 <code>&lt;string.h&gt;</code> 函数库， 从而避免了不必要的代码重复。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-	<div>
-	  
-	</div>
-	
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1957,7 +1641,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-count">38</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1970,7 +1654,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-count">18</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

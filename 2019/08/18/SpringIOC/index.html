@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="网络,">
+  <meta name="keywords" content="Spring,">
 
 
 
@@ -81,18 +81,18 @@
 
 
 
-<meta name="description" content="当我们在浏览器上输入 www.xxx.com 然后回车，回车这一瞬间到底发生了什么？ 首先是域名解析，然后是建立 TCP 三次握手，建立 TCP 连接之后发起 HTTP 请求，服务器响应请求，浏览器获得 HTML 代码，浏览器解析 HTML 代码，并请求 HTML 代码中的资源，浏览器开始对页面进行渲染将页面呈现给用户。 域名解析 首先浏览器会搜索自身的 DNS 缓存，如果有该条目，如果没有过期则">
-<meta name="keywords" content="网络">
+<meta name="description" content="IoC(Inversion of Control)控制反转，包含了两个方面：一、控制。二、反转  我们可以简单认为：  控制指的是：当前对象对内部成员的控制权。 反转指的是：这种控制权不由当前对象管理了，由其他(类,第三方容器)来管理。  使用IOC的好处：  不用自己组装，拿来就用。 享受单例的好处，效率高，不浪费空间。 便于单元测试，方便切换mock组件。 便于进行AOP操作，对于使用者是透">
+<meta name="keywords" content="Spring">
 <meta property="og:type" content="article">
-<meta property="og:title" content="一次完整的http请求过程">
-<meta property="og:url" content="http://yoursite.com/2019/05/11/一次完整的http请求过程/index.html">
+<meta property="og:title" content="SpringIOC">
+<meta property="og:url" content="http://yoursite.com/2019/08/18/SpringIOC/index.html">
 <meta property="og:site_name" content="小白君的博客">
-<meta property="og:description" content="当我们在浏览器上输入 www.xxx.com 然后回车，回车这一瞬间到底发生了什么？ 首先是域名解析，然后是建立 TCP 三次握手，建立 TCP 连接之后发起 HTTP 请求，服务器响应请求，浏览器获得 HTML 代码，浏览器解析 HTML 代码，并请求 HTML 代码中的资源，浏览器开始对页面进行渲染将页面呈现给用户。 域名解析 首先浏览器会搜索自身的 DNS 缓存，如果有该条目，如果没有过期则">
+<meta property="og:description" content="IoC(Inversion of Control)控制反转，包含了两个方面：一、控制。二、反转  我们可以简单认为：  控制指的是：当前对象对内部成员的控制权。 反转指的是：这种控制权不由当前对象管理了，由其他(类,第三方容器)来管理。  使用IOC的好处：  不用自己组装，拿来就用。 享受单例的好处，效率高，不浪费空间。 便于单元测试，方便切换mock组件。 便于进行AOP操作，对于使用者是透">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-08-11T05:25:14.657Z">
+<meta property="og:updated_time" content="2019-08-19T08:20:53.046Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="一次完整的http请求过程">
-<meta name="twitter:description" content="当我们在浏览器上输入 www.xxx.com 然后回车，回车这一瞬间到底发生了什么？ 首先是域名解析，然后是建立 TCP 三次握手，建立 TCP 连接之后发起 HTTP 请求，服务器响应请求，浏览器获得 HTML 代码，浏览器解析 HTML 代码，并请求 HTML 代码中的资源，浏览器开始对页面进行渲染将页面呈现给用户。 域名解析 首先浏览器会搜索自身的 DNS 缓存，如果有该条目，如果没有过期则">
+<meta name="twitter:title" content="SpringIOC">
+<meta name="twitter:description" content="IoC(Inversion of Control)控制反转，包含了两个方面：一、控制。二、反转  我们可以简单认为：  控制指的是：当前对象对内部成员的控制权。 反转指的是：这种控制权不由当前对象管理了，由其他(类,第三方容器)来管理。  使用IOC的好处：  不用自己组装，拿来就用。 享受单例的好处，效率高，不浪费空间。 便于单元测试，方便切换mock组件。 便于进行AOP操作，对于使用者是透">
 
 
 
@@ -122,13 +122,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/05/11/一次完整的http请求过程/">
+  <link rel="canonical" href="http://yoursite.com/2019/08/18/SpringIOC/">
 
 
 
 
 
-  <title>一次完整的http请求过程 | 小白君的博客</title>
+  <title>SpringIOC | 小白君的博客</title>
   
 
 
@@ -245,7 +245,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/11/一次完整的http请求过程/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/18/SpringIOC/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Ma Xu">
@@ -262,7 +262,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">一次完整的http请求过程</h1>
+          <h1 class="post-title" itemprop="name headline">SpringIOC</h1>
         
 
         <div class="post-meta">
@@ -274,8 +274,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-11T21:55:48+08:00">
-                2019-05-11
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-18T10:46:18+08:00">
+                2019-08-18
               </time>
             
 
@@ -312,16 +312,70 @@
       
 
       
-        <p>当我们在浏览器上输入 <a href="http://www.xxx.com" target="_blank" rel="noopener">www.xxx.com</a> 然后回车，回车这一瞬间到底发生了什么？</p>
-<p>首先是域名解析，然后是建立 TCP 三次握手，建立 TCP 连接之后发起 HTTP 请求，服务器响应请求，浏览器获得 HTML 代码，浏览器解析 HTML 代码，并请求 HTML 代码中的资源，浏览器开始对页面进行渲染将页面呈现给用户。</p>
-<h2 id="域名解析"><a href="#域名解析" class="headerlink" title="域名解析"></a>域名解析</h2><ul>
-<li>首先浏览器会搜索自身的 DNS 缓存，如果有该条目，如果没有过期则返回。</li>
-<li>如果浏览器缓存中没有找到，此时会查找操作系统本地 DNS 缓存，查看方式 ipconfig/displaydns。</li>
-<li>如果操作系统的 DNS 缓存没有查找到则开始读取 host 文件的缓存，如果有则解析成功。</li>
-<li>如果 host 文件中没有找到则计算机发起一个 DNS 的系统调用，向本地配置的 DNS 服务器发送一个域名解析的请求，运营商的 DNS 服务器首先会查找本地缓存，如果有则解析成功，如果没有则 DNS 服务器会代替我们浏览器发起迭代的请求，首先想根域名，然后从右向左，逐一进行请求。</li>
+        <blockquote>
+<p>IoC(Inversion of Control)控制反转，包含了两个方面：一、控制。二、反转</p>
+</blockquote>
+<p>我们可以简单认为：</p>
+<ul>
+<li>控制指的是：<strong>当前对象对内部成员的控制权</strong>。</li>
+<li>反转指的是：这种控制权<strong>不由当前对象管理</strong>了，由其他(类,第三方容器)来管理。</li>
 </ul>
-<p>浏览器拿到 index.html 文件后，就开始解析其中的 html 代码，遇到 js/css/image 等静态资源时，就向服务器端去请求下载（会使用多线程下载，每个浏览器的线程数不一样），这个时候就用上 keep-alive 特性了，建立一次HTTP连接，可以请求多个资源，下载资源的顺序就是按照代码里的顺序，但是由于每个资源大小不一样，而浏览器又多线程请求请求资源，所以从下图看出，这里显示的顺序并不一定是代码里面的顺序。</p>
-<p>浏览器在请求静态资源时（在未过期的情况下），向服务器端发起一个 http 请求（询问自从上一次修改时间到现在有没有对资源进行修改），如果服务器端返回304状态码（告诉浏览器服务器端没有修改），那么浏览器会直接读取本地的该资源的缓存文件。</p>
+<p>使用IOC的好处：</p>
+<ol>
+<li>不用自己组装，拿来就用。</li>
+<li>享受单例的好处，效率高，不浪费空间。</li>
+<li>便于单元测试，方便切换mock组件。</li>
+<li>便于进行AOP操作，对于使用者是透明的。</li>
+<li>统一配置，便于修改</li>
+</ol>
+<a id="more"></a>
+<h2 id="IOC原理"><a href="#IOC原理" class="headerlink" title="IOC原理"></a>IOC原理</h2><h3 id="IOC容器其实就是一个大工厂，它用来管理我们所有的对象以及依赖关系"><a href="#IOC容器其实就是一个大工厂，它用来管理我们所有的对象以及依赖关系" class="headerlink" title="IOC容器其实就是一个大工厂，它用来管理我们所有的对象以及依赖关系"></a>IOC容器其实就是一个大工厂，它用来管理我们所有的对象以及依赖关系</h3><ul>
+<li>原理就是通过Java的<strong>反射技术</strong>来实现的！通过反射我们可以获取类的所有信息(成员变量、类名等等等)！</li>
+<li>再通过配置文件(xml)或者注解来<strong>描述</strong>类与类之间的关系</li>
+<li>我们就可以通过这些配置信息和反射技术来<strong>构建</strong>出对应的对象和依赖关系</li>
+</ul>
+<h3 id="Spring-IOC容器是怎么实现对象的创建和依赖的："><a href="#Spring-IOC容器是怎么实现对象的创建和依赖的：" class="headerlink" title="Spring IOC容器是怎么实现对象的创建和依赖的："></a>Spring IOC容器是怎么实现对象的创建和依赖的：</h3><ol>
+<li>根据Bean配置信息在容器内部创建Bean定义注册表</li>
+<li>根据注册表加载、实例化bean、建立Bean与Bean之间的依赖关系</li>
+<li>将这些准备就绪的Bean放到Map缓存池中，等待应用程序调用</li>
+</ol>
+<h3 id="Spring容器-Bean工厂-可简单分成两种："><a href="#Spring容器-Bean工厂-可简单分成两种：" class="headerlink" title="Spring容器(Bean工厂)可简单分成两种："></a>Spring容器(Bean工厂)可简单分成两种：</h3><ul>
+<li><p>BeanFactory</p>
+</li>
+<li><ul>
+<li>这是最基础、面向Spring的</li>
+</ul>
+</li>
+<li><p>ApplicationContext</p>
+</li>
+<li><ul>
+<li>这是在BeanFactory基础之上，面向使用Spring框架的开发者。提供了一系列的功能！</li>
+</ul>
+</li>
+</ul>
+<p>几乎所有的应用场合<strong>都是</strong>使用ApplicationContext！</p>
+<p>简要总结：</p>
+<ul>
+<li>BeanDefinitionReader<strong>读取Resource所指向的配置文件资源</strong>，然后解析配置文件。配置文件中每一个<code>&lt;bean&gt;</code>解析成一个<strong>BeanDefinition对象</strong>，并<strong>保存</strong>到BeanDefinitionRegistry中；</li>
+<li>容器扫描BeanDefinitionRegistry中的BeanDefinition；调用InstantiationStrategy<strong>进行Bean实例化的工作</strong>；使用<strong>BeanWrapper完成Bean属性的设置</strong>工作；</li>
+<li>单例Bean缓存池：Spring 在DefaultSingletonBeanRegistry类中提供了一个用于缓存单实例 Bean 的<strong>缓存器</strong>，它是一个用HashMap实现的缓存器，单实例的Bean<strong>以beanName为键保存在这个HashMap</strong>中。</li>
+</ul>
+<h3 id="依赖注入方式"><a href="#依赖注入方式" class="headerlink" title="依赖注入方式"></a>依赖注入方式</h3><p>依赖注入的方式有3种方式：</p>
+<ul>
+<li><strong>属性注入</strong>–&gt;通过<code>setter()</code>方法注入</li>
+<li>构造函数注入</li>
+<li>工厂方法注入</li>
+</ul>
+<h3 id="一个接口两个实现类，怎么在调用的时候优先调用某个实现类呢？"><a href="#一个接口两个实现类，怎么在调用的时候优先调用某个实现类呢？" class="headerlink" title="一个接口两个实现类，怎么在调用的时候优先调用某个实现类呢？"></a>一个接口两个实现类，怎么在调用的时候优先调用某个实现类呢？</h3><ul>
+<li><p>使用<code>@Primary</code>注解设置为<strong>首选</strong>的注入Bean</p>
+</li>
+<li><p>使用<code>@Qualifier</code>注解设置<strong>特定名称的Bean</strong>来限定注入！</p>
+</li>
+<li><ul>
+<li>也可以使用自定义的注解来标识  </li>
+</ul>
+</li>
+</ul>
 
       
     </div>
@@ -348,7 +402,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/网络/" rel="tag"><i class="fa fa-tag"></i> 网络</a>
+            <a href="/tags/Spring/" rel="tag"><i class="fa fa-tag"></i> Spring</a>
           
         </div>
       
@@ -361,8 +415,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/05/11/事务的隔离级别和传播机制/" rel="next" title="事务的隔离级别和传播机制">
-                <i class="fa fa-chevron-left"></i> 事务的隔离级别和传播机制
+              <a href="/2019/08/16/LinkedList介绍/" rel="next" title="LinkedList介绍">
+                <i class="fa fa-chevron-left"></i> LinkedList介绍
               </a>
             
           </div>
@@ -371,8 +425,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/05/12/JVM优化/" rel="prev" title="JVM优化">
-                JVM优化 <i class="fa fa-chevron-right"></i>
+              <a href="/2019/08/19/SpringAOP/" rel="prev" title>
+                 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -503,7 +557,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#域名解析"><span class="nav-number">1.</span> <span class="nav-text">域名解析</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#IOC原理"><span class="nav-number">1.</span> <span class="nav-text">IOC原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#IOC容器其实就是一个大工厂，它用来管理我们所有的对象以及依赖关系"><span class="nav-number">1.1.</span> <span class="nav-text">IOC容器其实就是一个大工厂，它用来管理我们所有的对象以及依赖关系</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Spring-IOC容器是怎么实现对象的创建和依赖的："><span class="nav-number">1.2.</span> <span class="nav-text">Spring IOC容器是怎么实现对象的创建和依赖的：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Spring容器-Bean工厂-可简单分成两种："><span class="nav-number">1.3.</span> <span class="nav-text">Spring容器(Bean工厂)可简单分成两种：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#依赖注入方式"><span class="nav-number">1.4.</span> <span class="nav-text">依赖注入方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#一个接口两个实现类，怎么在调用的时候优先调用某个实现类呢？"><span class="nav-number">1.5.</span> <span class="nav-text">一个接口两个实现类，怎么在调用的时候优先调用某个实现类呢？</span></a></li></ol></li></ol></div>
             
 
           </div>
