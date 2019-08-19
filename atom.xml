@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2019-08-16T09:06:26.045Z</updated>
+  <updated>2019-08-19T07:43:04.767Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,28 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title></title>
+    <link href="http://yoursite.com/2019/08/19/SpringAOP/"/>
+    <id>http://yoursite.com/2019/08/19/SpringAOP/</id>
+    <published>2019-08-19T07:03:11.336Z</published>
+    <updated>2019-08-19T07:43:04.767Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="AOP概述"><a href="#AOP概述" class="headerlink" title="AOP概述"></a>AOP概述</h2><p>AOP称为面向切面编程，那我们怎么理解面向切面编程？</p><p>我们学Java面向对象的时候，如果代码重复了怎么办啊？可以分成下面几个步骤：</p><ul><li>抽取成方法</li><li>抽取类</li></ul><p>抽取成类的方式我们称之为：<strong>纵向抽取</strong></p><ul><li>通过继承的方式实现纵向抽取</li></ul><p>但是，我们现在的办法不行：即使抽取成类还是会出现重复的代码，因为这些逻辑(开始、结束、提交事务)<strong>依附在我们业务类的方法逻辑中</strong>！</p><p><img src="/2019/08/19/SpringAOP/image-20190819150731837.png" alt="image-20190819150731837"></p><p>现在纵向抽取的方式不行了，AOP的理念：就是将<strong>分散在各个业务逻辑代码中相同的代码通过横向切割的方式</strong>抽取到一个独立的模块中！</p><p><img src="/2019/08/19/SpringAOP/image-20190819150839531.png" alt="image-20190819150839531"></p><p>上面的图也很清晰了，将重复性的逻辑代码横切出来其实很容易(我们简单可认为就是封装成一个类就好了)，但我们要将这些<strong>被我们横切出来的逻辑代码融合到业务逻辑中</strong>，来完成和之前(没抽取前)一样的功能！这就是AOP首要解决的问题了！</p><h2 id="Spring-AOP原理"><a href="#Spring-AOP原理" class="headerlink" title="Spring AOP原理"></a>Spring AOP原理</h2><p>被我们横切出来的逻辑代码融合到业务逻辑中，来完成和之前(没抽取前)一样的功能</p><p>Spring AOP构建在动态代理基础之上，因此，<strong>Spring对AOP的支持局限于方法拦截</strong>。</p><p>在Java中动态代理有<strong>两种</strong>方式：</p><ul><li><p>JDK动态代理</p></li><li><p>CGLib动态代理</p><p><img src="/2019/08/19/SpringAOP/image-20190819151005879.png" alt="image-20190819151005879"></p></li></ul><p>JDK动态代理是需要实现某个接口了，而我们类未必全部会有接口，于是CGLib代理就有了~~</p><ul><li>CGLib代理其生成的动态代理对象是目标类的子类</li><li>Spring AOP<strong>默认是使用JDK动态代理</strong>，如果代理的类<strong>没有接口则会使用CGLib代理</strong>。</li></ul><p>那么JDK代理和CGLib代理我们该用哪个呢？？在《精通Spring4.x 企业应用开发实战》给出了建议：</p><ul><li>如果是<strong>单例的我们最好使用CGLib代理</strong>，如果是多例的我们最好使用JDK代理</li></ul><p>原因：</p><ul><li>JDK在创建代理对象时的性能要高于CGLib代理，而生成代理对象的运行性能却比CGLib的低。</li><li>如果是单例的代理，推荐使用CGLib</li></ul><p>看到这里我们就应该知道什么是Spring AOP(面向切面编程)了：<strong>将相同逻辑的重复代码横向抽取出来，使用动态代理技术将这些重复代码织入到目标对象方法中，实现和原来一样的功能</strong>。</p><ul><li>这样一来，我们就在<strong>写业务时只关心业务代码</strong>，而不用关心与业务无关的代码</li></ul><h2 id="AOP的术语"><a href="#AOP的术语" class="headerlink" title="AOP的术语"></a>AOP的术语</h2><p><strong>连接点</strong>(Join point)：</p><ul><li><strong>能够被拦截的地方</strong>：Spring AOP是基于动态代理的，所以是方法拦截的。每个成员方法都可以称之为连接点</li></ul><p><strong>切点</strong>(Poincut)：</p><ul><li><strong>具体定位的连接点</strong>：上面也说了，每个方法都可以称之为连接点，我们<strong>具体定位到某一个方法就成为切点</strong>。</li></ul><p><strong>增强/通知</strong>(Advice)：</p><ul><li>表示添加到切点的一段逻辑代码，并定位连接点的方位信息。<ul><li>简单来说就定义了是干什么的，具体是在哪干</li><li>Spring AOP提供了5种Advice类型给我们：前置、后置、返回、异常、环绕给我们使用！</li></ul></li></ul><p><strong>织入</strong>(Weaving)：</p><ul><li>将<code>增强/通知</code>添加到目标类的具体连接点上的过程。</li></ul><p><strong>引入/引介</strong>(Introduction)：</p><ul><li><code>引入/引介</code>允许我们<strong>向现有的类添加新方法或属性</strong>。是一种<strong>特殊</strong>的增强！</li></ul><p><strong>切面</strong>(Aspect)：</p><ul><li>切面由切点和<code>增强/通知</code>组成，它既包括了横切逻辑的定义、也包括了连接点的定义。</li></ul><p>在《Spring 实战 (第4版)》给出的</p><p>通知/增强包含了需要用于多个应用对象的横切行为；连接点是程序执行过程中能够应用通知的所有点；切点定义了通知/增强被应用的具体位置。其中关键的是切点定义了哪些连接点会得到通知/增强。</p><p><img src="/2019/08/19/SpringAOP/image-20190819152914835.png" alt="image-20190819152914835"></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;AOP概述&quot;&gt;&lt;a href=&quot;#AOP概述&quot; class=&quot;headerlink&quot; title=&quot;AOP概述&quot;&gt;&lt;/a&gt;AOP概述&lt;/h2&gt;&lt;p&gt;AOP称为面向切面编程，那我们怎么理解面向切面编程？&lt;/p&gt;
+&lt;p&gt;我们学Java面向对象的时候，如果代码重复了怎么
+      
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>LinkedList介绍</title>
@@ -59,9 +81,9 @@
     <link href="http://yoursite.com/2019/08/14/%E9%9D%A2%E8%AF%95%E6%80%BB%E7%BB%93/"/>
     <id>http://yoursite.com/2019/08/14/面试总结/</id>
     <published>2019-08-14T11:07:36.000Z</published>
-    <updated>2019-08-14T11:10:23.686Z</updated>
+    <updated>2019-08-16T09:56:45.335Z</updated>
     
-    <content type="html"><![CDATA[<h4 id="Spring-AOP-实现机制"><a href="#Spring-AOP-实现机制" class="headerlink" title="Spring AOP 实现机制"></a>Spring AOP 实现机制</h4><h4 id="Mybatis-缓存"><a href="#Mybatis-缓存" class="headerlink" title="Mybatis 缓存"></a>Mybatis 缓存</h4><h4 id="LinkedHashMap-使用场景"><a href="#LinkedHashMap-使用场景" class="headerlink" title="LinkedHashMap 使用场景"></a>LinkedHashMap 使用场景</h4><h4 id="Redis数据结构底层实现"><a href="#Redis数据结构底层实现" class="headerlink" title="Redis数据结构底层实现"></a>Redis数据结构底层实现</h4><h4 id="Innodb-怎么保证事务"><a href="#Innodb-怎么保证事务" class="headerlink" title="Innodb 怎么保证事务"></a>Innodb 怎么保证事务</h4>]]></content>
+    <content type="html"><![CDATA[<h4 id="Spring-AOP-实现机制"><a href="#Spring-AOP-实现机制" class="headerlink" title="Spring AOP 实现机制"></a>Spring AOP 实现机制</h4><h4 id="Mybatis-缓存"><a href="#Mybatis-缓存" class="headerlink" title="Mybatis 缓存"></a>Mybatis 缓存</h4><h4 id="Redis数据结构底层实现"><a href="#Redis数据结构底层实现" class="headerlink" title="Redis数据结构底层实现"></a>Redis数据结构底层实现</h4><h4 id="Innodb-怎么保证事务"><a href="#Innodb-怎么保证事务" class="headerlink" title="Innodb 怎么保证事务"></a>Innodb 怎么保证事务</h4>]]></content>
     
     <summary type="html">
     
@@ -445,26 +467,6 @@
     
     
       <category term="redis" scheme="http://yoursite.com/tags/redis/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>进程和线程</title>
-    <link href="http://yoursite.com/2019/05/10/%E8%BF%9B%E7%A8%8B%E5%92%8C%E7%BA%BF%E7%A8%8B/"/>
-    <id>http://yoursite.com/2019/05/10/进程和线程/</id>
-    <published>2019-05-09T16:23:53.000Z</published>
-    <updated>2019-08-11T05:25:14.658Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="进程的切换过程"><a href="#进程的切换过程" class="headerlink" title="进程的切换过程"></a>进程的切换过程</h2><p>用户态发生系统调用进入内核态</p><h2 id="进程和线程的区别"><a href="#进程和线程的区别" class="headerlink" title="进程和线程的区别"></a>进程和线程的区别</h2><ul><li>进程是资源分配的最小单位，线程是 CUP 调度的最小单位。</li><li>所有与进程相关的资源都被记录在 PCB 中。</li><li>进程是抢占处理机的调度单位，线程属于某个进程，共享其资源</li><li>线程只由堆栈寄存器、程序计数器和 TCB 组成</li><li>线程不能看做独立的应用，而进程可看做独立应用</li><li>进程有独立的地址空间，相互影响，线程只是进程的不同执行路径</li><li>线程没有独立的地址空间，多进程的程序比多线程程序健壮</li><li>进程的切换比线程切换开销大</li></ul><h2 id="进程的通信实现"><a href="#进程的通信实现" class="headerlink" title="进程的通信实现"></a>进程的通信实现</h2><ul><li><p>管道</p><p>半双工，速度慢，容量有限，只能父子间通信</p></li><li><p>命名管道</p></li><li><p>FIFO</p><p>任何进程间都能通信，速度慢</p></li><li><p>信号量</p><p>不能传递复杂消息，只能同步</p></li><li><p>共享内存</p><p>能够很容易控制容量，速度快</p></li></ul><h2 id="线程的通信实现"><a href="#线程的通信实现" class="headerlink" title="线程的通信实现"></a>线程的通信实现</h2><ul><li><p><strong>wait/notify机制</strong></p><p><strong>wait : </strong>让当前线程释放对象锁，并进入阻塞状态。</p><p><strong>notify :</strong>唤醒一个正在等待相应对象锁的线程，使其进入同步队列，以便在当前线程释放锁后竞争所，进而得到 CPU 的执行。在执行 notify 方法之后，当前线程并不能马上释放锁对象，呈 wait 状态的线程也并不能马上获取该对象锁，只有执行 notify 方法的线程退出 synchronized 代码块/方法后,当前线程才会释放锁，而呈 wait 状态的线程才会去竞争锁。</p><p><strong>notityAll :</strong>唤醒所有正在等待相应对象锁的线程。</p></li><li><p><strong>Condition</strong></p><p><strong>await</strong></p><p><strong>singal</strong></p><p><strong>singalAll</strong></p></li><li><p><strong>生产者消费者模型</strong></p></li><li><p><strong>管道 PipedOutStream/PipedInputStream</strong></p></li><li><p><strong>Join</strong></p><p>假如在main线程中调用thread.join方法，则main线程会等待thread线程执行完毕或者等待一定的时间。join 是调用 wait 方法实现，同样会让宿主线程交出 CPU 的执行权限，会让线程释放对一个对象持有的锁，如果调用了 join 方法，必须捕获 InterruptedException 异常或者将该异常向上层抛出。</p></li></ul>]]></content>
-    
-    <summary type="html">
-    
-      学习关于进程和线程的相关知识点
-    
-    </summary>
-    
-    
-      <category term="操作系统" scheme="http://yoursite.com/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
     
   </entry>
   

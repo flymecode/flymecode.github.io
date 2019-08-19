@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="mysql,">
+  <meta name="keywords" content="Hexo, NexT">
 
 
 
@@ -81,18 +81,23 @@
 
 
 
-<meta name="description" content="1. 独立的列在进行查询时，索引列不能是表达式的一部分，也不能是函数的参数，否则无法使用索引。 例如下面的查询不能使用 actor_id 列的索引： 1SELECT actor_id FROM sakila.actor WHERE actor_id + 1 = 5; 2. 多列索引在需要使用多个列作为条件进行查询时，使用多列索引比使用多个单列索引性能更好。例如下面的语句中，最好把 actor_id">
-<meta name="keywords" content="mysql">
+<meta name="description" content="AOP概述AOP称为面向切面编程，那我们怎么理解面向切面编程？ 我们学Java面向对象的时候，如果代码重复了怎么办啊？可以分成下面几个步骤：  抽取成方法 抽取类  抽取成类的方式我们称之为：纵向抽取  通过继承的方式实现纵向抽取  但是，我们现在的办法不行：即使抽取成类还是会出现重复的代码，因为这些逻辑(开始、结束、提交事务)依附在我们业务类的方法逻辑中！  现在纵向抽取的方式不行了，AOP的理">
+<meta name="keywords" content="sdaf">
 <meta property="og:type" content="article">
-<meta property="og:title" content="再探索引-索引优化">
-<meta property="og:url" content="http://yoursite.com/2019/08/13/再探索引/index.html">
+<meta property="og:title" content="小白君的博客">
+<meta property="og:url" content="http://yoursite.com/2019/08/19/SpringAOP/index.html">
 <meta property="og:site_name" content="小白君的博客">
-<meta property="og:description" content="1. 独立的列在进行查询时，索引列不能是表达式的一部分，也不能是函数的参数，否则无法使用索引。 例如下面的查询不能使用 actor_id 列的索引： 1SELECT actor_id FROM sakila.actor WHERE actor_id + 1 = 5; 2. 多列索引在需要使用多个列作为条件进行查询时，使用多列索引比使用多个单列索引性能更好。例如下面的语句中，最好把 actor_id">
+<meta property="og:description" content="AOP概述AOP称为面向切面编程，那我们怎么理解面向切面编程？ 我们学Java面向对象的时候，如果代码重复了怎么办啊？可以分成下面几个步骤：  抽取成方法 抽取类  抽取成类的方式我们称之为：纵向抽取  通过继承的方式实现纵向抽取  但是，我们现在的办法不行：即使抽取成类还是会出现重复的代码，因为这些逻辑(开始、结束、提交事务)依附在我们业务类的方法逻辑中！  现在纵向抽取的方式不行了，AOP的理">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-08-13T08:33:33.707Z">
+<meta property="og:image" content="http://yoursite.com/2019/08/19/SpringAOP/image-20190819150731837.png">
+<meta property="og:image" content="http://yoursite.com/2019/08/19/SpringAOP/image-20190819150839531.png">
+<meta property="og:image" content="http://yoursite.com/2019/08/19/SpringAOP/image-20190819151005879.png">
+<meta property="og:image" content="http://yoursite.com/2019/08/19/SpringAOP/image-20190819152914835.png">
+<meta property="og:updated_time" content="2019-08-19T07:43:04.767Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="再探索引-索引优化">
-<meta name="twitter:description" content="1. 独立的列在进行查询时，索引列不能是表达式的一部分，也不能是函数的参数，否则无法使用索引。 例如下面的查询不能使用 actor_id 列的索引： 1SELECT actor_id FROM sakila.actor WHERE actor_id + 1 = 5; 2. 多列索引在需要使用多个列作为条件进行查询时，使用多列索引比使用多个单列索引性能更好。例如下面的语句中，最好把 actor_id">
+<meta name="twitter:title" content="小白君的博客">
+<meta name="twitter:description" content="AOP概述AOP称为面向切面编程，那我们怎么理解面向切面编程？ 我们学Java面向对象的时候，如果代码重复了怎么办啊？可以分成下面几个步骤：  抽取成方法 抽取类  抽取成类的方式我们称之为：纵向抽取  通过继承的方式实现纵向抽取  但是，我们现在的办法不行：即使抽取成类还是会出现重复的代码，因为这些逻辑(开始、结束、提交事务)依附在我们业务类的方法逻辑中！  现在纵向抽取的方式不行了，AOP的理">
+<meta name="twitter:image" content="http://yoursite.com/2019/08/19/SpringAOP/image-20190819150731837.png">
 
 
 
@@ -122,13 +127,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/08/13/再探索引/">
+  <link rel="canonical" href="http://yoursite.com/2019/08/19/SpringAOP/">
 
 
 
 
 
-  <title>再探索引-索引优化 | 小白君的博客</title>
+  <title> | 小白君的博客</title>
   
 
 
@@ -245,7 +250,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/13/再探索引/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/19/SpringAOP/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Ma Xu">
@@ -262,7 +267,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">再探索引-索引优化</h1>
+          <h1 class="post-title" itemprop="name headline"></h1>
         
 
         <div class="post-meta">
@@ -274,8 +279,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-13T00:41:13+08:00">
-                2019-08-13
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-19T15:03:11+08:00">
+                2019-08-19
               </time>
             
 
@@ -312,34 +317,80 @@
       
 
       
-        <h3 id="1-独立的列"><a href="#1-独立的列" class="headerlink" title="1. 独立的列"></a>1. 独立的列</h3><p>在进行查询时，索引列不能是表达式的一部分，也不能是函数的参数，否则无法使用索引。</p>
-<p>例如下面的查询不能使用 actor_id 列的索引：</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> actor_id <span class="keyword">FROM</span> sakila.actor <span class="keyword">WHERE</span> actor_id + <span class="number">1</span> = <span class="number">5</span>;</span><br></pre></td></tr></table></figure>
-<h3 id="2-多列索引"><a href="#2-多列索引" class="headerlink" title="2. 多列索引"></a>2. 多列索引</h3><p>在需要使用多个列作为条件进行查询时，使用多列索引比使用多个单列索引性能更好。例如下面的语句中，最好把 actor_id 和 film_id 设置为多列索引。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT film_id, actor_ id FROM sakila.film_actor WHERE actor_id = 1 AND film_id = 1;</span><br></pre></td></tr></table></figure>
-<h3 id="3-索引列的顺序"><a href="#3-索引列的顺序" class="headerlink" title="3. 索引列的顺序"></a>3. 索引列的顺序</h3><p>让选择性最强的索引列放在前面。</p>
-<p>索引的选择性是指：不重复的索引值和记录总数的比值。最大值为 1，此时每个记录都有唯一的索引与其对应。选择性越高，每个记录的区分度越高，查询效率也越高。</p>
-<p>例如下面显示的结果中 customer_id 的选择性比 staff_id 更高，因此最好把 customer_id 列放在多列索引的前面。</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">COUNT</span>(<span class="keyword">DISTINCT</span> staff_id)/<span class="keyword">COUNT</span>(*) <span class="keyword">AS</span> staff_id_selectivity,</span><br><span class="line"><span class="keyword">COUNT</span>(<span class="keyword">DISTINCT</span> customer_id)/<span class="keyword">COUNT</span>(*) <span class="keyword">AS</span> customer_id_selectivity,</span><br><span class="line"><span class="keyword">COUNT</span>(*)</span><br><span class="line"><span class="keyword">FROM</span> payment;</span><br></pre></td></tr></table></figure>
-<h3 id="4-前缀索引"><a href="#4-前缀索引" class="headerlink" title="4. 前缀索引"></a>4. 前缀索引</h3><p>对于 BLOB、TEXT 和 VARCHAR 类型的列，必须使用前缀索引，只索引开始的部分字符。</p>
-<p>前缀长度的选取需要根据索引选择性来确定。</p>
-<h3 id="5-覆盖索引"><a href="#5-覆盖索引" class="headerlink" title="5. 覆盖索引"></a>5. 覆盖索引</h3><p>索引包含所有需要查询的字段的值。</p>
-<p>具有以下优点：</p>
+        <h2 id="AOP概述"><a href="#AOP概述" class="headerlink" title="AOP概述"></a>AOP概述</h2><p>AOP称为面向切面编程，那我们怎么理解面向切面编程？</p>
+<p>我们学Java面向对象的时候，如果代码重复了怎么办啊？可以分成下面几个步骤：</p>
 <ul>
-<li>索引通常远小于数据行的大小，只读取索引能大大减少数据访问量。</li>
-<li>一些存储引擎（例如 MyISAM）在内存中只缓存索引，而数据依赖于操作系统来缓存。因此，只访问索引可以不使用系统调用（通常比较费时）。</li>
-<li>对于 InnoDB 引擎，若辅助索引能够覆盖查询，则无需访问主索引。</li>
+<li>抽取成方法</li>
+<li>抽取类</li>
 </ul>
-<h2 id="索引的优点"><a href="#索引的优点" class="headerlink" title="索引的优点"></a>索引的优点</h2><ul>
-<li>大大减少了服务器需要扫描的数据行数。</li>
-<li>帮助服务器避免进行排序和分组，以及避免创建临时表（B+Tree 索引是有序的，可以用于 ORDER BY 和 GROUP BY 操作。临时表主要是在排序和分组过程中创建，不需要排序和分组，也就不需要创建临时表）。</li>
-<li>将随机 I/O 变为顺序 I/O（B+Tree 索引是有序的，会将相邻的数据都存储在一起）。</li>
+<p>抽取成类的方式我们称之为：<strong>纵向抽取</strong></p>
+<ul>
+<li>通过继承的方式实现纵向抽取</li>
 </ul>
-<h2 id="索引的使用条件"><a href="#索引的使用条件" class="headerlink" title="索引的使用条件"></a>索引的使用条件</h2><ul>
-<li>对于非常小的表、大部分情况下简单的全表扫描比建立索引更高效；</li>
-<li>对于中到大型的表，索引就非常有效；</li>
-<li>但是对于特大型的表，建立和维护索引的代价将会随之增长。这种情况下，需要用到一种技术可以直接区分出需要查询的一组数据，而不是一条记录一条记录地匹配，例如可以使用分区技术。</li>
+<p>但是，我们现在的办法不行：即使抽取成类还是会出现重复的代码，因为这些逻辑(开始、结束、提交事务)<strong>依附在我们业务类的方法逻辑中</strong>！</p>
+<p><img src="/2019/08/19/SpringAOP/image-20190819150731837.png" alt="image-20190819150731837"></p>
+<p>现在纵向抽取的方式不行了，AOP的理念：就是将<strong>分散在各个业务逻辑代码中相同的代码通过横向切割的方式</strong>抽取到一个独立的模块中！</p>
+<p><img src="/2019/08/19/SpringAOP/image-20190819150839531.png" alt="image-20190819150839531"></p>
+<p>上面的图也很清晰了，将重复性的逻辑代码横切出来其实很容易(我们简单可认为就是封装成一个类就好了)，但我们要将这些<strong>被我们横切出来的逻辑代码融合到业务逻辑中</strong>，来完成和之前(没抽取前)一样的功能！这就是AOP首要解决的问题了！</p>
+<h2 id="Spring-AOP原理"><a href="#Spring-AOP原理" class="headerlink" title="Spring AOP原理"></a>Spring AOP原理</h2><p>被我们横切出来的逻辑代码融合到业务逻辑中，来完成和之前(没抽取前)一样的功能</p>
+<p>Spring AOP构建在动态代理基础之上，因此，<strong>Spring对AOP的支持局限于方法拦截</strong>。</p>
+<p>在Java中动态代理有<strong>两种</strong>方式：</p>
+<ul>
+<li><p>JDK动态代理</p>
+</li>
+<li><p>CGLib动态代理</p>
+<p><img src="/2019/08/19/SpringAOP/image-20190819151005879.png" alt="image-20190819151005879"></p>
+</li>
 </ul>
+<p>JDK动态代理是需要实现某个接口了，而我们类未必全部会有接口，于是CGLib代理就有了~~</p>
+<ul>
+<li>CGLib代理其生成的动态代理对象是目标类的子类</li>
+<li>Spring AOP<strong>默认是使用JDK动态代理</strong>，如果代理的类<strong>没有接口则会使用CGLib代理</strong>。</li>
+</ul>
+<p>那么JDK代理和CGLib代理我们该用哪个呢？？在《精通Spring4.x 企业应用开发实战》给出了建议：</p>
+<ul>
+<li>如果是<strong>单例的我们最好使用CGLib代理</strong>，如果是多例的我们最好使用JDK代理</li>
+</ul>
+<p>原因：</p>
+<ul>
+<li>JDK在创建代理对象时的性能要高于CGLib代理，而生成代理对象的运行性能却比CGLib的低。</li>
+<li>如果是单例的代理，推荐使用CGLib</li>
+</ul>
+<p>看到这里我们就应该知道什么是Spring AOP(面向切面编程)了：<strong>将相同逻辑的重复代码横向抽取出来，使用动态代理技术将这些重复代码织入到目标对象方法中，实现和原来一样的功能</strong>。</p>
+<ul>
+<li>这样一来，我们就在<strong>写业务时只关心业务代码</strong>，而不用关心与业务无关的代码</li>
+</ul>
+<h2 id="AOP的术语"><a href="#AOP的术语" class="headerlink" title="AOP的术语"></a>AOP的术语</h2><p><strong>连接点</strong>(Join point)：</p>
+<ul>
+<li><strong>能够被拦截的地方</strong>：Spring AOP是基于动态代理的，所以是方法拦截的。每个成员方法都可以称之为连接点</li>
+</ul>
+<p><strong>切点</strong>(Poincut)：</p>
+<ul>
+<li><strong>具体定位的连接点</strong>：上面也说了，每个方法都可以称之为连接点，我们<strong>具体定位到某一个方法就成为切点</strong>。</li>
+</ul>
+<p><strong>增强/通知</strong>(Advice)：</p>
+<ul>
+<li>表示添加到切点的一段逻辑代码，并定位连接点的方位信息。<ul>
+<li>简单来说就定义了是干什么的，具体是在哪干</li>
+<li>Spring AOP提供了5种Advice类型给我们：前置、后置、返回、异常、环绕给我们使用！</li>
+</ul>
+</li>
+</ul>
+<p><strong>织入</strong>(Weaving)：</p>
+<ul>
+<li>将<code>增强/通知</code>添加到目标类的具体连接点上的过程。</li>
+</ul>
+<p><strong>引入/引介</strong>(Introduction)：</p>
+<ul>
+<li><code>引入/引介</code>允许我们<strong>向现有的类添加新方法或属性</strong>。是一种<strong>特殊</strong>的增强！</li>
+</ul>
+<p><strong>切面</strong>(Aspect)：</p>
+<ul>
+<li>切面由切点和<code>增强/通知</code>组成，它既包括了横切逻辑的定义、也包括了连接点的定义。</li>
+</ul>
+<p>在《Spring 实战 (第4版)》给出的</p>
+<p>通知/增强包含了需要用于多个应用对象的横切行为；连接点是程序执行过程中能够应用通知的所有点；切点定义了通知/增强被应用的具体位置。其中关键的是切点定义了哪些连接点会得到通知/增强。</p>
+<p><img src="/2019/08/19/SpringAOP/image-20190819152914835.png" alt="image-20190819152914835"></p>
 
       
     </div>
@@ -364,12 +415,6 @@
 
     <footer class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/tags/mysql/" rel="tag"><i class="fa fa-tag"></i> mysql</a>
-          
-        </div>
-      
 
       
       
@@ -379,8 +424,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/08/12/关于CMS的Young-GC/" rel="next" title="关于CMS的Young GC">
-                <i class="fa fa-chevron-left"></i> 关于CMS的Young GC
+              <a href="/2019/08/16/LinkedList介绍/" rel="next" title="LinkedList介绍">
+                <i class="fa fa-chevron-left"></i> LinkedList介绍
               </a>
             
           </div>
@@ -388,10 +433,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/08/13/分布式锁/" rel="prev" title="分布式锁">
-                分布式锁 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -521,7 +562,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-独立的列"><span class="nav-number">1.</span> <span class="nav-text">1. 独立的列</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-多列索引"><span class="nav-number">2.</span> <span class="nav-text">2. 多列索引</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-索引列的顺序"><span class="nav-number">3.</span> <span class="nav-text">3. 索引列的顺序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-前缀索引"><span class="nav-number">4.</span> <span class="nav-text">4. 前缀索引</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-覆盖索引"><span class="nav-number">5.</span> <span class="nav-text">5. 覆盖索引</span></a></li></ol><li class="nav-item nav-level-2"><a class="nav-link" href="#索引的优点"><span class="nav-number"></span> <span class="nav-text">索引的优点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#索引的使用条件"><span class="nav-number"></span> <span class="nav-text">索引的使用条件</span></a></li></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#AOP概述"><span class="nav-number">1.</span> <span class="nav-text">AOP概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Spring-AOP原理"><span class="nav-number">2.</span> <span class="nav-text">Spring AOP原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AOP的术语"><span class="nav-number">3.</span> <span class="nav-text">AOP的术语</span></a></li></ol></div>
             
 
           </div>

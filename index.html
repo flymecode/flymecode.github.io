@@ -242,6 +242,202 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/19/SpringAOP/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ma Xu">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小白君的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/08/19/SpringAOP/" itemprop="url">未命名</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-19T15:03:11+08:00">
+                2019-08-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="AOP概述"><a href="#AOP概述" class="headerlink" title="AOP概述"></a>AOP概述</h2><p>AOP称为面向切面编程，那我们怎么理解面向切面编程？</p>
+<p>我们学Java面向对象的时候，如果代码重复了怎么办啊？可以分成下面几个步骤：</p>
+<ul>
+<li>抽取成方法</li>
+<li>抽取类</li>
+</ul>
+<p>抽取成类的方式我们称之为：<strong>纵向抽取</strong></p>
+<ul>
+<li>通过继承的方式实现纵向抽取</li>
+</ul>
+<p>但是，我们现在的办法不行：即使抽取成类还是会出现重复的代码，因为这些逻辑(开始、结束、提交事务)<strong>依附在我们业务类的方法逻辑中</strong>！</p>
+<p><img src="/2019/08/19/SpringAOP/image-20190819150731837.png" alt="image-20190819150731837"></p>
+<p>现在纵向抽取的方式不行了，AOP的理念：就是将<strong>分散在各个业务逻辑代码中相同的代码通过横向切割的方式</strong>抽取到一个独立的模块中！</p>
+<p><img src="/2019/08/19/SpringAOP/image-20190819150839531.png" alt="image-20190819150839531"></p>
+<p>上面的图也很清晰了，将重复性的逻辑代码横切出来其实很容易(我们简单可认为就是封装成一个类就好了)，但我们要将这些<strong>被我们横切出来的逻辑代码融合到业务逻辑中</strong>，来完成和之前(没抽取前)一样的功能！这就是AOP首要解决的问题了！</p>
+<h2 id="Spring-AOP原理"><a href="#Spring-AOP原理" class="headerlink" title="Spring AOP原理"></a>Spring AOP原理</h2><p>被我们横切出来的逻辑代码融合到业务逻辑中，来完成和之前(没抽取前)一样的功能</p>
+<p>Spring AOP构建在动态代理基础之上，因此，<strong>Spring对AOP的支持局限于方法拦截</strong>。</p>
+<p>在Java中动态代理有<strong>两种</strong>方式：</p>
+<ul>
+<li><p>JDK动态代理</p>
+</li>
+<li><p>CGLib动态代理</p>
+<p><img src="/2019/08/19/SpringAOP/image-20190819151005879.png" alt="image-20190819151005879"></p>
+</li>
+</ul>
+<p>JDK动态代理是需要实现某个接口了，而我们类未必全部会有接口，于是CGLib代理就有了~~</p>
+<ul>
+<li>CGLib代理其生成的动态代理对象是目标类的子类</li>
+<li>Spring AOP<strong>默认是使用JDK动态代理</strong>，如果代理的类<strong>没有接口则会使用CGLib代理</strong>。</li>
+</ul>
+<p>那么JDK代理和CGLib代理我们该用哪个呢？？在《精通Spring4.x 企业应用开发实战》给出了建议：</p>
+<ul>
+<li>如果是<strong>单例的我们最好使用CGLib代理</strong>，如果是多例的我们最好使用JDK代理</li>
+</ul>
+<p>原因：</p>
+<ul>
+<li>JDK在创建代理对象时的性能要高于CGLib代理，而生成代理对象的运行性能却比CGLib的低。</li>
+<li>如果是单例的代理，推荐使用CGLib</li>
+</ul>
+<p>看到这里我们就应该知道什么是Spring AOP(面向切面编程)了：<strong>将相同逻辑的重复代码横向抽取出来，使用动态代理技术将这些重复代码织入到目标对象方法中，实现和原来一样的功能</strong>。</p>
+<ul>
+<li>这样一来，我们就在<strong>写业务时只关心业务代码</strong>，而不用关心与业务无关的代码</li>
+</ul>
+<h2 id="AOP的术语"><a href="#AOP的术语" class="headerlink" title="AOP的术语"></a>AOP的术语</h2><p><strong>连接点</strong>(Join point)：</p>
+<ul>
+<li><strong>能够被拦截的地方</strong>：Spring AOP是基于动态代理的，所以是方法拦截的。每个成员方法都可以称之为连接点</li>
+</ul>
+<p><strong>切点</strong>(Poincut)：</p>
+<ul>
+<li><strong>具体定位的连接点</strong>：上面也说了，每个方法都可以称之为连接点，我们<strong>具体定位到某一个方法就成为切点</strong>。</li>
+</ul>
+<p><strong>增强/通知</strong>(Advice)：</p>
+<ul>
+<li>表示添加到切点的一段逻辑代码，并定位连接点的方位信息。<ul>
+<li>简单来说就定义了是干什么的，具体是在哪干</li>
+<li>Spring AOP提供了5种Advice类型给我们：前置、后置、返回、异常、环绕给我们使用！</li>
+</ul>
+</li>
+</ul>
+<p><strong>织入</strong>(Weaving)：</p>
+<ul>
+<li>将<code>增强/通知</code>添加到目标类的具体连接点上的过程。</li>
+</ul>
+<p><strong>引入/引介</strong>(Introduction)：</p>
+<ul>
+<li><code>引入/引介</code>允许我们<strong>向现有的类添加新方法或属性</strong>。是一种<strong>特殊</strong>的增强！</li>
+</ul>
+<p><strong>切面</strong>(Aspect)：</p>
+<ul>
+<li>切面由切点和<code>增强/通知</code>组成，它既包括了横切逻辑的定义、也包括了连接点的定义。</li>
+</ul>
+<p>在《Spring 实战 (第4版)》给出的</p>
+<p>通知/增强包含了需要用于多个应用对象的横切行为；连接点是程序执行过程中能够应用通知的所有点；切点定义了通知/增强被应用的具体位置。其中关键的是切点定义了哪些连接点会得到通知/增强。</p>
+<p><img src="/2019/08/19/SpringAOP/image-20190819152914835.png" alt="image-20190819152914835"></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+	<div>
+	  
+	</div>
+	
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/16/LinkedList介绍/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -580,7 +776,7 @@
       
         
           
-            <h4 id="Spring-AOP-实现机制"><a href="#Spring-AOP-实现机制" class="headerlink" title="Spring AOP 实现机制"></a>Spring AOP 实现机制</h4><h4 id="Mybatis-缓存"><a href="#Mybatis-缓存" class="headerlink" title="Mybatis 缓存"></a>Mybatis 缓存</h4><h4 id="LinkedHashMap-使用场景"><a href="#LinkedHashMap-使用场景" class="headerlink" title="LinkedHashMap 使用场景"></a>LinkedHashMap 使用场景</h4><h4 id="Redis数据结构底层实现"><a href="#Redis数据结构底层实现" class="headerlink" title="Redis数据结构底层实现"></a>Redis数据结构底层实现</h4><h4 id="Innodb-怎么保证事务"><a href="#Innodb-怎么保证事务" class="headerlink" title="Innodb 怎么保证事务"></a>Innodb 怎么保证事务</h4>
+            <h4 id="Spring-AOP-实现机制"><a href="#Spring-AOP-实现机制" class="headerlink" title="Spring AOP 实现机制"></a>Spring AOP 实现机制</h4><h4 id="Mybatis-缓存"><a href="#Mybatis-缓存" class="headerlink" title="Mybatis 缓存"></a>Mybatis 缓存</h4><h4 id="Redis数据结构底层实现"><a href="#Redis数据结构底层实现" class="headerlink" title="Redis数据结构底层实现"></a>Redis数据结构底层实现</h4><h4 id="Innodb-怎么保证事务"><a href="#Innodb-怎么保证事务" class="headerlink" title="Innodb 怎么保证事务"></a>Innodb 怎么保证事务</h4>
           
         
       
@@ -1484,134 +1680,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/12/threadlocal内存泄漏/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Ma Xu">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="小白君的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/07/12/threadlocal内存泄漏/" itemprop="url">threadlocal内存泄漏</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-12T15:30:29+08:00">
-                2019-07-12
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="ThreadLocal-原理"><a href="#ThreadLocal-原理" class="headerlink" title="ThreadLocal 原理"></a>ThreadLocal 原理</h2><p>由于ThreadLocalMap的key是弱引用，而Value是强引用。这就导致了一个问题，ThreadLocal在没有外部对象强引用时，发生GC时弱引用Key会被回收，而Value不会回收，如果创建ThreadLocal的线程一直持续运行，那么这个Entry对象中的value就有可能一直得不到回收，发生内存泄露。</p>
-<p><img src="/2019/07/12/threadlocal内存泄漏/F352F038-78E0-4AD0-A817-DC807B20E808.png" alt="F352F038-78E0-4AD0-A817-DC807B20E808"></p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/07/12/threadlocal内存泄漏/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-	<div>
-	  
-	</div>
-	
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1662,7 +1730,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">36</span>
+                  <span class="site-state-item-count">37</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
