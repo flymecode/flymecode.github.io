@@ -133,14 +133,14 @@
     <link href="http://yoursite.com/2019/08/15/%E5%B9%B6%E5%8F%91%E4%B8%8B%E6%98%AF%E5%85%88%E6%93%8D%E4%BD%9C%E6%95%B0%E6%8D%AE%E5%BA%93%E8%BF%98%E6%98%AF%E5%85%88%E6%93%8D%E4%BD%9C%E7%BC%93%E5%AD%98/"/>
     <id>http://yoursite.com/2019/08/15/并发下是先操作数据库还是先操作缓存/</id>
     <published>2019-08-15T03:54:49.000Z</published>
-    <updated>2019-08-22T08:49:09.310Z</updated>
+    <updated>2019-08-22T08:57:24.993Z</updated>
     
     <summary type="html">
     
     </summary>
     
     
-      <category term="MySql" scheme="http://yoursite.com/tags/MySql/"/>
+      <category term="mysql" scheme="http://yoursite.com/tags/mysql/"/>
     
   </entry>
   
