@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Mybatis,">
+  <meta name="keywords" content="数据结构,">
 
 
 
@@ -81,22 +81,20 @@
 
 
 
-<meta name="description" content="一级缓存在应用运行过程中，我们有可能在一次数据库会话中，执行多次查询条件完全相同的SQL，MyBatis提供了一级缓存的方案优化这部分场景，如果是相同的SQL语句，会优先命中一级缓存，避免直接对数据库进行查询，提高性能。具体执行过程如下图所示。  每个SqlSession中持有了Executor，每个Executor中有一个LocalCache。当用户发起查询时，MyBatis根据当前执行的语句生">
-<meta name="keywords" content="Mybatis">
+<meta name="description" content="12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970public class Trie &amp;#123;    private class Node &amp;#123;        // 判断是否">
+<meta name="keywords" content="数据结构">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Mybatis缓存">
-<meta property="og:url" content="http://yoursite.com/2019/08/20/Mybatis缓存/index.html">
+<meta property="og:title" content="Trie">
+<meta property="og:url" content="http://yoursite.com/2018/10/05/Trie/index.html">
 <meta property="og:site_name" content="小白君的博客">
-<meta property="og:description" content="一级缓存在应用运行过程中，我们有可能在一次数据库会话中，执行多次查询条件完全相同的SQL，MyBatis提供了一级缓存的方案优化这部分场景，如果是相同的SQL语句，会优先命中一级缓存，避免直接对数据库进行查询，提高性能。具体执行过程如下图所示。  每个SqlSession中持有了Executor，每个Executor中有一个LocalCache。当用户发起查询时，MyBatis根据当前执行的语句生">
+<meta property="og:description" content="12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970public class Trie &amp;#123;    private class Node &amp;#123;        // 判断是否">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://yoursite.com/2019/08/20/Mybatis缓存/image-20190820165449480.png">
-<meta property="og:image" content="http://yoursite.com/2019/08/20/Mybatis缓存/image-20190820170058613.png">
-<meta property="og:image" content="http://yoursite.com/2019/08/20/Mybatis缓存/image-20190820171955509.png">
-<meta property="og:updated_time" content="2019-08-20T09:22:55.415Z">
+<meta property="og:image" content="http://yoursite.com/2018/10/05/Trie/image-20190820160916226.png">
+<meta property="og:updated_time" content="2019-08-22T08:36:23.863Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Mybatis缓存">
-<meta name="twitter:description" content="一级缓存在应用运行过程中，我们有可能在一次数据库会话中，执行多次查询条件完全相同的SQL，MyBatis提供了一级缓存的方案优化这部分场景，如果是相同的SQL语句，会优先命中一级缓存，避免直接对数据库进行查询，提高性能。具体执行过程如下图所示。  每个SqlSession中持有了Executor，每个Executor中有一个LocalCache。当用户发起查询时，MyBatis根据当前执行的语句生">
-<meta name="twitter:image" content="http://yoursite.com/2019/08/20/Mybatis缓存/image-20190820165449480.png">
+<meta name="twitter:title" content="Trie">
+<meta name="twitter:description" content="12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970public class Trie &amp;#123;    private class Node &amp;#123;        // 判断是否">
+<meta name="twitter:image" content="http://yoursite.com/2018/10/05/Trie/image-20190820160916226.png">
 
 
 
@@ -126,13 +124,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/08/20/Mybatis缓存/">
+  <link rel="canonical" href="http://yoursite.com/2018/10/05/Trie/">
 
 
 
 
 
-  <title>Mybatis缓存 | 小白君的博客</title>
+  <title>Trie | 小白君的博客</title>
   
 
 
@@ -249,7 +247,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/20/Mybatis缓存/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/05/Trie/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Ma Xu">
@@ -266,7 +264,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Mybatis缓存</h1>
+          <h1 class="post-title" itemprop="name headline">Trie</h1>
         
 
         <div class="post-meta">
@@ -278,8 +276,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-20T16:37:26+08:00">
-                2019-08-20
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-05T16:07:30+08:00">
+                2018-10-05
               </time>
             
 
@@ -316,46 +314,8 @@
       
 
       
-        <h2 id="一级缓存"><a href="#一级缓存" class="headerlink" title="一级缓存"></a>一级缓存</h2><p>在应用运行过程中，我们有可能在一次数据库会话中，执行多次查询条件完全相同的SQL，MyBatis提供了一级缓存的方案优化这部分场景，如果是相同的SQL语句，会优先命中一级缓存，避免直接对数据库进行查询，提高性能。具体执行过程如下图所示。</p>
-<p><img src="/2019/08/20/Mybatis缓存/image-20190820165449480.png" alt="image-20190820165449480"></p>
-<p>每个SqlSession中持有了Executor，每个Executor中有一个LocalCache。当用户发起查询时，MyBatis根据当前执行的语句生成<code>MappedStatement</code>，在Local Cache进行查询，如果缓存命中的话，直接返回结果给用户，如果缓存没有命中的话，查询数据库，结果写入<code>Local Cache</code>，最后返回结果给用户。具体实现类的类关系图如下图所示。</p>
-<p><img src="/2019/08/20/Mybatis缓存/image-20190820170058613.png" alt="image-20190820170058613"></p>
-<h3 id="一级缓存配置"><a href="#一级缓存配置" class="headerlink" title="一级缓存配置"></a>一级缓存配置</h3><p>我们来看看如何使用MyBatis一级缓存。开发者只需在MyBatis的配置文件中，添加如下语句，就可以使用一级缓存。共有两个选项，<code>SESSION</code>或者<code>STATEMENT</code>，默认是<code>SESSION</code>级别，即在一个MyBatis会话中执行的所有语句，都会共享这一个缓存。一种是<code>STATEMENT</code>级别，可以理解为缓存只对当前执行的这一个<code>Statement</code>有效。</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">setting</span> <span class="attr">name</span>=<span class="string">"localCacheScope"</span> <span class="attr">value</span>=<span class="string">"SESSION"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><ol>
-<li>MyBatis一级缓存的生命周期和SqlSession一致。</li>
-<li>MyBatis一级缓存内部设计简单，只是一个没有容量限定的HashMap，在缓存的功能性上有所欠缺。</li>
-<li>MyBatis的一级缓存最大范围是SqlSession内部，有多个SqlSession或者分布式的环境下，数据库写操作会引起脏数据，建议设定缓存级别为Statement。</li>
-</ol>
-<h2 id="二级缓存"><a href="#二级缓存" class="headerlink" title="二级缓存"></a>二级缓存</h2><p>在上文中提到的一级缓存中，其最大的共享范围就是一个SqlSession内部，如果多个SqlSession之间需要共享缓存，则需要使用到二级缓存。开启二级缓存后，会使用CachingExecutor装饰Executor，进入一级缓存的查询流程前，先在CachingExecutor进行二级缓存的查询，具体的工作流程如下所示。</p>
-<p><img src="/2019/08/20/Mybatis缓存/image-20190820171955509.png" alt="image-20190820171955509"></p>
-<p>二级缓存开启后，同一个namespace下的所有操作语句，都影响着同一个Cache，即二级缓存被多个SqlSession共享，是一个全局的变量。</p>
-<p>当开启缓存后，数据的查询执行的流程就是 二级缓存 -&gt; 一级缓存 -&gt; 数据库。</p>
-<h3 id="二级缓存配置"><a href="#二级缓存配置" class="headerlink" title="二级缓存配置"></a>二级缓存配置</h3><p>要正确的使用二级缓存，需完成如下配置的。</p>
-<ol>
-<li>在MyBatis的配置文件中开启二级缓存。</li>
-</ol>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">setting</span> <span class="attr">name</span>=<span class="string">"cacheEnabled"</span> <span class="attr">value</span>=<span class="string">"true"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
-<ol>
-<li>在MyBatis的映射XML中配置cache或者 cache-ref 。</li>
-</ol>
-<p>cache标签用于声明这个namespace使用二级缓存，并且可以自定义配置。</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">cache</span>/&gt;</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li><code>type</code>：cache使用的类型，默认是<code>PerpetualCache</code>，这在一级缓存中提到过。</li>
-<li><code>eviction</code>： 定义回收的策略，常见的有FIFO，LRU。</li>
-<li><code>flushInterval</code>： 配置一定时间自动刷新缓存，单位是毫秒。</li>
-<li><code>size</code>： 最多缓存对象的个数。</li>
-<li><code>readOnly</code>： 是否只读，若配置可读写，则需要对应的实体类能够序列化。</li>
-<li><code>blocking</code>： 若缓存中找不到对应的key，是否会一直blocking，直到有对应的数据进入缓存。</li>
-</ul>
-<p><code>cache-ref</code>代表引用别的命名空间的Cache配置，两个命名空间的操作使用的是同一个Cache。</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">cache-ref</span> <span class="attr">namespace</span>=<span class="string">"mapper.StudentMapper"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
-<h3 id="总结-1"><a href="#总结-1" class="headerlink" title="总结"></a>总结</h3><ol>
-<li>MyBatis的二级缓存相对于一级缓存来说，实现了<code>SqlSession</code>之间缓存数据的共享，同时粒度更加的细，能够到<code>namespace</code>级别，通过Cache接口实现类不同的组合，对Cache的可控性也更强。</li>
-<li>MyBatis在多表查询时，极大可能会出现脏数据，有设计上的缺陷，安全使用二级缓存的条件比较苛刻。</li>
-<li>在分布式环境下，由于默认的MyBatis Cache实现都是基于本地的，分布式环境下必然会出现读取到脏数据，需要使用集中式缓存将MyBatis的Cache接口实现，有一定的开发成本，直接使用Redis、Memcached等分布式缓存可能成本更低，安全性也更高。</li>
-</ol>
+        <p><img src="/2018/10/05/Trie/image-20190820160916226.png" alt="image-20190820160916226"></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Trie</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="class"><span class="keyword">class</span> <span class="title">Node</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 判断是否是一个单词，我们不能只依靠叶子节点来判断是否结束</span></span><br><span class="line">        <span class="keyword">boolean</span> isWord;</span><br><span class="line">        <span class="comment">// 边与节点的映射</span></span><br><span class="line">        Map&lt;Character, Node&gt; next;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">Node</span><span class="params">(<span class="keyword">boolean</span> isWord)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.isWord = isWord;</span><br><span class="line">            next = <span class="keyword">new</span> TreeMap&lt;&gt;();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">Node</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">this</span>(<span class="keyword">false</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">private</span> Node root;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> size;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Trie</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        root = <span class="keyword">new</span> Node();</span><br><span class="line">        size = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 获取单词数量</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getSize</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> size;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 向Trie中添加新的单词word</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">add</span><span class="params">(String word)</span> </span>&#123;</span><br><span class="line">        Node cur = root;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; word.length(); i++) &#123;</span><br><span class="line">            <span class="keyword">char</span> c = word.charAt(i);</span><br><span class="line">            <span class="keyword">if</span> (cur.next.get(c) == <span class="keyword">null</span>) &#123;</span><br><span class="line">                cur.next.put(c, <span class="keyword">new</span> Node());</span><br><span class="line">            &#125;</span><br><span class="line">            cur = cur.next.get(c);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (!cur.isWord) &#123;</span><br><span class="line">            cur.isWord = <span class="keyword">true</span>;</span><br><span class="line">            size++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">constains</span><span class="params">(String word)</span> </span>&#123;</span><br><span class="line">        Node cur = root;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; word.length(); i++) &#123;</span><br><span class="line">            <span class="keyword">char</span> c = word.charAt(i);</span><br><span class="line">            <span class="keyword">if</span> (cur.next.get(c) == <span class="keyword">null</span>) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            cur = cur.next.get(c);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 返回这个单词是否包含</span></span><br><span class="line">        <span class="keyword">return</span> cur.isWord;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 查询是否存在Trie中有单词以prefix为前缀</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isPrefix</span><span class="params">(String prefix)</span> </span>&#123;</span><br><span class="line">        Node cur = root;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; prefix.length(); i++) &#123;</span><br><span class="line">            <span class="keyword">char</span> c = prefix.charAt(i);</span><br><span class="line">            <span class="keyword">if</span> (cur.next.get(c) == <span class="keyword">null</span>) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            cur = cur.next.get(c);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -382,7 +342,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Mybatis/" rel="tag"><i class="fa fa-tag"></i> Mybatis</a>
+            <a href="/tags/数据结构/" rel="tag"><i class="fa fa-tag"></i> 数据结构</a>
           
         </div>
       
@@ -395,8 +355,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/08/19/SpringAOP/" rel="next" title="SpringAOP">
-                <i class="fa fa-chevron-left"></i> SpringAOP
+              <a href="/2018/09/27/annotion/" rel="next" title="Java注解">
+                <i class="fa fa-chevron-left"></i> Java注解
               </a>
             
           </div>
@@ -404,6 +364,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/11/13/design/" rel="prev" title="Java设计笔记">
+                Java设计笔记 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -455,17 +419,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -523,22 +478,6 @@
         </div>
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一级缓存"><span class="nav-number">1.</span> <span class="nav-text">一级缓存</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#一级缓存配置"><span class="nav-number">1.1.</span> <span class="nav-text">一级缓存配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">1.2.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二级缓存"><span class="nav-number">2.</span> <span class="nav-text">二级缓存</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#二级缓存配置"><span class="nav-number">2.1.</span> <span class="nav-text">二级缓存配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结-1"><span class="nav-number">2.2.</span> <span class="nav-text">总结</span></a></li></ol></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       
