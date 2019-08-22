@@ -1564,7 +1564,13 @@
             <h1 id="分布式事务"><a href="#分布式事务" class="headerlink" title="分布式事务"></a>分布式事务</h1><p>指事务的操作位于不同的节点上，需要保证事务的 ACID 特性。</p>
 <p>例如在下单场景下，库存和订单如果不在同一个节点上，就涉及分布式事务。</p>
 <p>分布式事务就是指事务的参与者、支持事务的服务器、资源服务器以及事务管理器分别位于不同的分布式系统的不同节点之上。简单的说，就是一次大的操作由不同的小操作组成，这些小的操作分布在不同的服务器上，且属于不同的应用，分布式事务需要保证这些小操作要么全部成功，要么全部失败。本质上来说，分布式事务就是为了<strong>保证不同数据库</strong>的数据一致性。</p>
-<h2 id="分布式事务产生的原因"><a href="#分布式事务产生的原因" class="headerlink" title="分布式事务产生的原因"></a>分布式事务产生的原因</h2><h2 id="2PC"><a href="#2PC" class="headerlink" title="2PC"></a>2PC</h2><p>两阶段提交（Two-phase Commit，2PC），通过引入协调者（Coordinator）来协调参与者的行为，并最终决定这些参与者是否要真正执行事务。</p>
+<h2 id="分布式事务产生的原因"><a href="#分布式事务产生的原因" class="headerlink" title="分布式事务产生的原因"></a>分布式事务产生的原因</h2><p>从上面本地事务来看，我们可以看为两块，一个是service产生多个节点，另一个是resource产生多个节点。</p>
+<h3 id="service多个节点"><a href="#service多个节点" class="headerlink" title="service多个节点"></a>service多个节点</h3><p>随着互联网快速发展，微服务，SOA等服务架构模式正在被大规模的使用，举个简单的例子，一个公司之内，用户的资产可能分为好多个部分，比如余额，积分，优惠券等等。在公司内部有可能积分功能由一个微服务团队维护，优惠券又是另外的团队维护</p>
+<p><img src="/2019/08/11/分布式事务/image-20190822165007299.png" alt="image-20190822165007299"></p>
+<p>这样的话就无法保证积分扣减了之后，优惠券能否扣减成功。</p>
+<h3 id="resource多个节点"><a href="#resource多个节点" class="headerlink" title="resource多个节点"></a>resource多个节点</h3><p>同样的，互联网发展得太快了，我们的Mysql一般来说装千万级的数据就得进行分库分表，对于一个支付宝的转账业务来说，你给的朋友转钱，有可能你的数据库是在北京，而你的朋友的钱是存在上海，所以我们依然无法保证他们能同时成功。</p>
+<p><img src="/2019/08/11/分布式事务/image-20190822165046009.png" alt="image-20190822165046009"></p>
+<h2 id="2PC"><a href="#2PC" class="headerlink" title="2PC"></a>2PC</h2><p>两阶段提交（Two-phase Commit，2PC），通过引入协调者（Coordinator）来协调参与者的行为，并最终决定这些参与者是否要真正执行事务。</p>
 <h3 id="1-运行过程"><a href="#1-运行过程" class="headerlink" title="1. 运行过程"></a>1. 运行过程</h3><h4 id="1-1-准备阶段"><a href="#1-1-准备阶段" class="headerlink" title="1.1 准备阶段"></a>1.1 准备阶段</h4><p>协调者询问参与者事务是否执行成功，参与者发回事务执行结果。</p>
 <p><a href="https://camo.githubusercontent.com/0fb5844101fb14358fb16e1acd74604713a9bbf5/68747470733a2f2f63732d6e6f7465732d313235363130393739362e636f732e61702d6775616e677a686f752e6d7971636c6f75642e636f6d2f34346433333634332d313030342d343361332d623939612d3464363838613038643061312e706e67" target="_blank" rel="noopener"><img src="https://camo.githubusercontent.com/0fb5844101fb14358fb16e1acd74604713a9bbf5/68747470733a2f2f63732d6e6f7465732d313235363130393739362e636f732e61702d6775616e677a686f752e6d7971636c6f75642e636f6d2f34346433333634332d313030342d343361332d623939612d3464363838613038643061312e706e67" alt="img"></a></p>
 <h4 id="1-2-提交阶段"><a href="#1-2-提交阶段" class="headerlink" title="1.2 提交阶段"></a>1.2 提交阶段</h4><p>如果事务在每个参与者上都执行成功，事务协调者发送通知让参与者提交事务；否则，协调者发送通知让参与者回滚事务。</p>
@@ -1682,7 +1688,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-count">20</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
