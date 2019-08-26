@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2019-08-20T09:22:55.415Z</updated>
+  <updated>2019-08-26T06:15:26.773Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>进程间通信方式</title>
+    <link href="http://yoursite.com/2019/08/26/%E8%BF%9B%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1%E6%96%B9%E5%BC%8F/"/>
+    <id>http://yoursite.com/2019/08/26/进程间通信方式/</id>
+    <published>2019-08-26T04:04:51.000Z</published>
+    <updated>2019-08-26T06:15:26.773Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="进程间通信（IPC）介绍"><a href="#进程间通信（IPC）介绍" class="headerlink" title="进程间通信（IPC）介绍"></a>进程间通信（IPC）介绍</h1><p>进程间通信（IPC，InterProcess Communication）是指在不同进程之间传播或交换信息。</p><p>IPC的方式通常有管道（包括无名管道和命名管道）、消息队列、信号量、共享存储、Socket、Streams等。其中 Socket和Streams支持不同主机上的两个进程IPC。</p><p>以Linux中的C语言编程为例。</p><h2 id="管道"><a href="#管道" class="headerlink" title="管道"></a>管道</h2><p>管道，通常指无名管道，是 UNIX 系统IPC最古老的形式。</p><h3 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h3><ul><li>它是半双工的，具有固定的读端和写端。</li><li>它只能用于具有<strong>亲缘关系</strong>的进程之间的通信（也是父子进程或者兄弟进程之间）。</li><li>它可以看成是一种特殊的文件，对于它的读写也可以使用普通的read、write 等函数。但是它不是普通的文件，并不属于其他任何文件系统，并且只存在于内存中。</li></ul><h3 id="原型"><a href="#原型" class="headerlink" title="原型"></a>原型</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span> <span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="number">2</span> <span class="function"><span class="keyword">int</span> <span class="title">pipe</span><span class="params">(<span class="keyword">int</span> fd[<span class="number">2</span>])</span></span>;    <span class="comment">// 返回值：若成功返回0，失败返回-1</span></span><br></pre></td></tr></table></figure><p>当一个管道建立时，它会创建两个文件描述符：fd[0]为读而打开，fd[1]为写而打开。如下图：</p><p><img src="/2019/08/26/进程间通信方式/image-20190826141126633.png" alt="image-20190826141126633"></p><p>要关闭管道只需将这两个文件描述符关闭即可。</p><h3 id="举例"><a href="#举例" class="headerlink" title="举例"></a>举例</h3><p>单个进程中的管道几乎没有任何用处。所以，通常调用 pipe 的进程接着调用 fork，这样就创建了父进程与子进程之间的 IPC 通道。如下图所示：</p><p><img src="/2019/08/26/进程间通信方式/Users/maxu/hexo/source/_posts/进程间通信方式/image-20190826141404697.png" alt="image-20190826141404697"></p><p>Fork 之后的半双工管道</p><p><img src="/2019/08/26/进程间通信方式/Users/maxu/hexo/source/_posts/进程间通信方式/image-20190826141436913.png" alt="image-20190826141436913"></p><p>从父进程到子进程的管道</p><p>若要数据流从父进程流向子进程，则关闭父进程的读端（fd[0]）与子进程的写端（fd[1]）；反之，则可以使数据流从子进程流向父进程。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;进程间通信（IPC）介绍&quot;&gt;&lt;a href=&quot;#进程间通信（IPC）介绍&quot; class=&quot;headerlink&quot; title=&quot;进程间通信（IPC）介绍&quot;&gt;&lt;/a&gt;进程间通信（IPC）介绍&lt;/h1&gt;&lt;p&gt;进程间通信（IPC，InterProcess Communi
+      
+    
+    </summary>
+    
+    
+      <category term="操作系统" scheme="http://yoursite.com/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
+    
+  </entry>
   
   <entry>
     <title>Mybatis缓存</title>
@@ -133,9 +156,16 @@
     <link href="http://yoursite.com/2019/08/15/%E5%B9%B6%E5%8F%91%E4%B8%8B%E6%98%AF%E5%85%88%E6%93%8D%E4%BD%9C%E6%95%B0%E6%8D%AE%E5%BA%93%E8%BF%98%E6%98%AF%E5%85%88%E6%93%8D%E4%BD%9C%E7%BC%93%E5%AD%98/"/>
     <id>http://yoursite.com/2019/08/15/并发下是先操作数据库还是先操作缓存/</id>
     <published>2019-08-15T03:54:49.000Z</published>
-    <updated>2019-08-22T08:57:24.993Z</updated>
+    <updated>2019-08-22T11:13:34.154Z</updated>
+    
+    <content type="html"><![CDATA[<p>你好，我目前就读于西安邮电大学，学习成绩在本专业前百分之二十，大二的时候加入学校实验室，跟学长学姐们一起学习，参加学校举办的项目，去年12月的的时候去网易实习，主要是负责他们大数据平台报表业务的开发工作，在网易中学到了很多的知识，也见识到一个互联网公司的整个项目工作流程。目前在猫眼商业系统部门实习，主要是负责消费码。</p>]]></content>
     
     <summary type="html">
+    
+      
+      
+        &lt;p&gt;你好，我目前就读于西安邮电大学，学习成绩在本专业前百分之二十，大二的时候加入学校实验室，跟学长学姐们一起学习，参加学校举办的项目，去年12月的的时候去网易实习，主要是负责他们大数据平台报表业务的开发工作，在网易中学到了很多的知识，也见识到一个互联网公司的整个项目工作流程。目
+      
     
     </summary>
     
@@ -495,27 +525,6 @@
     
     
       <category term="操作系统" scheme="http://yoursite.com/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>count(1) 和 count(*)的区别</title>
-    <link href="http://yoursite.com/2019/05/13/count-1-%E5%92%8Ccount-%E7%9A%84%E5%8C%BA%E5%88%AB/"/>
-    <id>http://yoursite.com/2019/05/13/count-1-和count-的区别/</id>
-    <published>2019-05-13T09:32:19.000Z</published>
-    <updated>2019-08-11T14:54:15.259Z</updated>
-    
-    <content type="html"><![CDATA[<p>Count 是一种简单的聚合函数，一般也是我们第一个开始学习的聚合函数，那么他们之间究竟有什么区别呢？</p><p>有人说 count(1) 和 count(*) 他们之间有区别，而有的人说他们之间没有区别那么他们之间到底有没有区别呢？</p><a id="more"></a><h2 id="执行结果"><a href="#执行结果" class="headerlink" title="执行结果"></a>执行结果</h2><p>count(1) 和 count(*) 之间没有区别，因为 count(*) 、count(1) 都不会去空值。单count(列名) 就有区别了，因为 count(列名) 回去过滤控制。</p><h2 id="执行效率"><a href="#执行效率" class="headerlink" title="执行效率"></a>执行效率</h2><p>他们之间根据不同情况会有些许区别，MySQL会对count（*）做优化。</p><ol><li>如果列为主键，count(列名)效率优于count(1) </li><li>如果列不为主键，count(1)效率优于count(列名)  </li><li>如果表中存在主键，count(主键列名)效率最优  </li><li>如果表中只有一列，则count(*)效率最优  </li><li>如果表有多列，且不存在主键，则count(1)效率优于count(*)</li></ol>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;Count 是一种简单的聚合函数，一般也是我们第一个开始学习的聚合函数，那么他们之间究竟有什么区别呢？&lt;/p&gt;
-&lt;p&gt;有人说 count(1) 和 count(*) 他们之间有区别，而有的人说他们之间没有区别那么他们之间到底有没有区别呢？&lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="数据库" scheme="http://yoursite.com/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
     
   </entry>
   
