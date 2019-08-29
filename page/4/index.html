@@ -252,138 +252,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/11/一次完整的http请求过程/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Ma Xu">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="小白君的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/05/11/一次完整的http请求过程/" itemprop="url">一次完整的http请求过程</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-11T21:55:48+08:00">
-                2019-05-11
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>当我们在浏览器上输入 <a href="http://www.xxx.com" target="_blank" rel="noopener">www.xxx.com</a> 然后回车，回车这一瞬间到底发生了什么？</p>
-<p>首先是域名解析，然后是建立 TCP 三次握手，建立 TCP 连接之后发起 HTTP 请求，服务器响应请求，浏览器获得 HTML 代码，浏览器解析 HTML 代码，并请求 HTML 代码中的资源，浏览器开始对页面进行渲染将页面呈现给用户。</p>
-<h2 id="域名解析"><a href="#域名解析" class="headerlink" title="域名解析"></a>域名解析</h2><ul>
-<li>首先浏览器会搜索自身的 DNS 缓存，如果有该条目，如果没有过期则返回。</li>
-<li>如果浏览器缓存中没有找到，此时会查找操作系统本地 DNS 缓存，查看方式 ipconfig/displaydns。</li>
-<li>如果操作系统的 DNS 缓存没有查找到则开始读取 host 文件的缓存，如果有则解析成功。</li>
-<li>如果 host 文件中没有找到则计算机发起一个 DNS 的系统调用，向本地配置的 DNS 服务器发送一个域名解析的请求，运营商的 DNS 服务器首先会查找本地缓存，如果有则解析成功，如果没有则 DNS 服务器会代替我们浏览器发起迭代的请求，首先想根域名，然后从右向左，逐一进行请求。</li>
-</ul>
-<p>浏览器拿到 index.html 文件后，就开始解析其中的 html 代码，遇到 js/css/image 等静态资源时，就向服务器端去请求下载（会使用多线程下载，每个浏览器的线程数不一样），这个时候就用上 keep-alive 特性了，建立一次HTTP连接，可以请求多个资源，下载资源的顺序就是按照代码里的顺序，但是由于每个资源大小不一样，而浏览器又多线程请求请求资源，所以从下图看出，这里显示的顺序并不一定是代码里面的顺序。</p>
-<p>浏览器在请求静态资源时（在未过期的情况下），向服务器端发起一个 http 请求（询问自从上一次修改时间到现在有没有对资源进行修改），如果服务器端返回304状态码（告诉浏览器服务器端没有修改），那么浏览器会直接读取本地的该资源的缓存文件。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-	<div>
-	  
-	</div>
-	
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/11/事务的隔离级别和传播机制/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1872,6 +1740,179 @@
 
 
     
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/13/design/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ma Xu">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小白君的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/11/13/design/" itemprop="url">Java设计笔记</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-13T00:47:01+08:00">
+                2018-11-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h4 id="一、Controller层"><a href="#一、Controller层" class="headerlink" title="一、Controller层"></a>一、Controller层</h4><ul>
+<li>定义每个模块的restful接口</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="meta">@RequestMapping</span>(value = <span class="string">"/user"</span>, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>只负责控制逻辑与返回响应数据</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> <span class="keyword">new</span> ResponseEntity&lt;&gt;(HttpStatus.OK.toString(), HttpStatus.OK);</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>每个controller添加日志</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Logger logger = LoggerFactory.getLogger(<span class="keyword">this</span>.getClass());</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>将request请求传递给业务层(service)</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">String name = userService.getUserName(Id, request)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>添加一个Template 和一个响应实体ResponseEntity&lt;&gt;将返回的数据放入模板中，然后将模板封装到响应实体之中，最后将相应实体发送给前端</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">UserTemplate user = userService.getUserById(Id, request);</span><br><span class="line">ResponseEntity&lt;&gt;(user, HttpStatus.OK)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>针对不同的请求添加不同的注解</p>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@GetMapping</span>(<span class="string">"/xxx"</span>) <span class="meta">@PosstMapping</span>(<span class="string">"/xxx"</span>) <span class="meta">@PutMapping</span>(<span class="string">"/xxx"</span>)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>使用@PathVariable(value = “id”) 支持Restful</li>
+<li>使用@RequestParam接受Request中的数据 </li>
+<li>使用数据字典，将常量统一保存到指定的类中进行管理。</li>
+</ul>
+<h4 id="二、Service层"><a href="#二、Service层" class="headerlink" title="二、Service层"></a>二、Service层</h4><ul>
+<li><p>分页</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="comment">// SearchVo 封装了查询条件</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> List&lt;User&gt; <span class="title">getList</span><span class="params">(SearchVo searchVo, PageInfo pageInfo)</span> </span>&#123;</span><br><span class="line">    List&lt;User&gt; userList = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">    <span class="comment">// 获取总行数</span></span><br><span class="line">    Integer totalSize = userMapper.getUserCount(searchVo);</span><br><span class="line">    <span class="comment">// 增强鲁棒性</span></span><br><span class="line">    <span class="keyword">if</span> (totalSize == <span class="keyword">null</span> || totalSize == <span class="number">0</span>) &#123;</span><br><span class="line">        pageInfo.setTotalSize(<span class="number">0</span>);</span><br><span class="line">        pageInfo.setPageCount(<span class="number">0</span>);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        pageInfo.setTotalSize(totalSize);</span><br><span class="line">        pageInfo.setPageCount((<span class="keyword">int</span>) Math.ceil((totalSize * <span class="number">1.0</span>) / 		      	  ----(pageInfo.getPageSize() * <span class="number">1.0</span>)));        </span><br><span class="line">        Integer offset = (pageInfo.getPageNo() - <span class="number">1</span>) * pageInfo.getPageSize();</span><br><span class="line">        searchVo.setOffset(offset);</span><br><span class="line">        searchVo.setPageSize(pageInfo.getPageSize());</span><br><span class="line">        <span class="comment">// 查询数据</span></span><br><span class="line">        userList = userMapper.searchUser(searchVo);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> userList;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">StringUtils.isEmpty() <span class="comment">//判断是否为空</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>事务处理</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Transactional</span>(rollbackFor = &#123;Throwable.class, Exception.class&#125;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>如果出现异常向上抛出</p>
+</li>
+<li><p>数据的封装</p>
+</li>
+<li>业务的处理</li>
+</ul>
+<h4 id="三、-Mapper层"><a href="#三、-Mapper层" class="headerlink" title="三、 Mapper层"></a>三、 Mapper层</h4><ul>
+<li>定制sql        </li>
+</ul>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">@SelectProvider</span>(type = BookSQLProvider.class, method = <span class="string">"searchBook"</span>)</span><br><span class="line"><span class="function">Integer <span class="title">getDsDashboardCount</span><span class="params">(SearchVo searchBean)</span></span>;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BookSQLProvider</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">searchBook</span><span class="params">(SearchVo searchBean)</span> </span>&#123;</span><br><span class="line">        StringBuffer sql = <span class="keyword">new</span> StringBuffer(<span class="keyword">new</span> SQL()&#123;&#123;</span><br><span class="line">            SELECT(<span class="string">"count(1)"</span>);</span><br><span class="line">            FROM(<span class="string">"db_book b, db_person p"</span>);</span><br><span class="line">            WHERE(<span class="string">"b.id = p.id"</span>);</span><br><span class="line">            <span class="keyword">if</span> (!StringUtils.isEmpty(searchBean.getDashboardName()))&#123;</span><br><span class="line">                WHERE(<span class="string">"title like '"</span>+searchBean.getDashboardName()+<span class="string">"%'"</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (!StringUtils.isEmpty(searchBean.getCreator())) &#123;</span><br><span class="line">                WHERE(<span class="string">"creator = #&#123;creator&#125;"</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;&#125;.toString());</span><br><span class="line">        <span class="keyword">return</span> sql.toString();</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>CRUD</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Insert</span>(<span class="string">"INSERT INTO dp_report_dashboards (title) VALUES (#&#123;title&#125;)"</span>) <span class="comment">// 关键字大写</span></span><br><span class="line"><span class="meta">@Options</span>(useGeneratedKeys=<span class="keyword">true</span>, keyProperty=<span class="string">"id"</span>) <span class="comment">// 主键自增</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">createDashboard</span><span class="params">(MetaDashboard dashboard)</span></span>;</span><br></pre></td></tr></table></figure>
+<h5 id="注解-Results"><a href="#注解-Results" class="headerlink" title="注解@Results"></a>注解@Results</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Results</span>(&#123;</span><br><span class="line">	<span class="meta">@Result</span>(property = <span class="string">"id"</span>, column = <span class="string">"id"</span>, javaType = Long.class, jdbcType = JdbcType.BIGINT),</span><br><span class="line">    <span class="meta">@Result</span>(property = <span class="string">"book_price"</span>, column = <span class="string">"db_id"</span>, javaType = Long.class, jdbcType = JdbcType.BIGINT),</span><br><span class="line">    <span class="meta">@Result</span>(property = <span class="string">"image"</span>, column = <span class="string">"iamge"</span>, javaType = Image.class,many = <span class="meta">@many</span>(select = <span class="string">"com.mx.mappers.ImageMapper.getImageById"</span>)),</span><br><span class="line"><span class="meta">@Result</span>(</span><br><span class="line">    property = <span class="string">"company_id"</span>, column = <span class="string">"company_id"</span>, javaType = List.class,many = 		<span class="meta">@Many</span>(select =<span class="string">"com.mx.mappers.CompanyMapper.getInfoById"</span>))</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+	<div>
+	  
+	</div>
+	
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
   </section>
 
   
@@ -1935,7 +1976,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-count">19</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
