@@ -81,25 +81,25 @@
 
 
 
-<meta name="description" content="Redis对象Redis对象由redisObject结构体表示。 1`typedef struct redisObject &amp;#123;    unsigned type:4;            // 对象的类型，包括 /* Object types */    unsigned encoding:4;        // 底部为了节省空间，一种type的数据，可以采用不同的存储方式    u">
+<meta name="description" content="Redis对象Redis对象由redisObject结构体表示。 1234567typedef struct redisObject &amp;#123;      unsigned type:4;  // 对象的类型，包括 /* Object types */     unsigned encoding:4;        // 底部为了节省空间，一种type的数据，可以采用不同的存储方式   unsi">
 <meta name="keywords" content="redis">
 <meta property="og:type" content="article">
 <meta property="og:title" content="zset内部实现">
 <meta property="og:url" content="http://yoursite.com/2019/05/19/zset内部实现/index.html">
 <meta property="og:site_name" content="小白君的博客">
-<meta property="og:description" content="Redis对象Redis对象由redisObject结构体表示。 1`typedef struct redisObject &amp;#123;    unsigned type:4;            // 对象的类型，包括 /* Object types */    unsigned encoding:4;        // 底部为了节省空间，一种type的数据，可以采用不同的存储方式    u">
+<meta property="og:description" content="Redis对象Redis对象由redisObject结构体表示。 1234567typedef struct redisObject &amp;#123;      unsigned type:4;  // 对象的类型，包括 /* Object types */     unsigned encoding:4;        // 底部为了节省空间，一种type的数据，可以采用不同的存储方式   unsi">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://yoursite.com/2019/05/19/zset内部实现/image-20190819194956079.png">
-<meta property="og:image" content="http://yoursite.com/2019/05/19/zset内部实现/image-20190819195058724.png">
-<meta property="og:image" content="http://yoursite.com/2019/05/19/zset内部实现/image-20190819195241767.png">
-<meta property="og:image" content="http://yoursite.com/2019/05/19/zset内部实现/image-20190819195433048.png">
-<meta property="og:image" content="http://yoursite.com/2019/05/19/zset内部实现/image-20190819195732579.png">
-<meta property="og:image" content="http://yoursite.com/2019/05/19/zset内部实现/image-20190819195912225.png">
-<meta property="og:updated_time" content="2019-08-19T15:39:51.333Z">
+<meta property="og:image" content="http://pw5y8kqa5.bkt.clouddn.com/image-20190819194956079.png">
+<meta property="og:image" content="http://pw5y8kqa5.bkt.clouddn.com/image-20190819195058724.png">
+<meta property="og:image" content="http://pw5y8kqa5.bkt.clouddn.com/image-20190819195241767.png">
+<meta property="og:image" content="http://pw5y8kqa5.bkt.clouddn.com/image-20190819195433048.png">
+<meta property="og:image" content="http://pw5y8kqa5.bkt.clouddn.com/image-20190819195732579.png">
+<meta property="og:image" content="http://pw5y8kqa5.bkt.clouddn.com/image-20190819195912225.png">
+<meta property="og:updated_time" content="2019-08-29T15:51:00.077Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="zset内部实现">
-<meta name="twitter:description" content="Redis对象Redis对象由redisObject结构体表示。 1`typedef struct redisObject &amp;#123;    unsigned type:4;            // 对象的类型，包括 /* Object types */    unsigned encoding:4;        // 底部为了节省空间，一种type的数据，可以采用不同的存储方式    u">
-<meta name="twitter:image" content="http://yoursite.com/2019/05/19/zset内部实现/image-20190819194956079.png">
+<meta name="twitter:description" content="Redis对象Redis对象由redisObject结构体表示。 1234567typedef struct redisObject &amp;#123;      unsigned type:4;  // 对象的类型，包括 /* Object types */     unsigned encoding:4;        // 底部为了节省空间，一种type的数据，可以采用不同的存储方式   unsi">
+<meta name="twitter:image" content="http://pw5y8kqa5.bkt.clouddn.com/image-20190819194956079.png">
 
 
 
@@ -320,7 +320,7 @@
 
       
         <h3 id="Redis对象"><a href="#Redis对象" class="headerlink" title="Redis对象"></a>Redis对象</h3><p>Redis对象由<code>redisObject</code>结构体表示。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">`<span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">redisObject</span> &#123;</span>    <span class="keyword">unsigned</span> type:<span class="number">4</span>;            <span class="comment">// 对象的类型，包括 /* Object types */    unsigned encoding:4;        // 底部为了节省空间，一种type的数据，可以采用不同的存储方式    unsigned lru:REDIS_LRU_BITS; /* lru time (relative to server.lruclock) */    int refcount;         // 引用计数    void *ptr;&#125; robj;`</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">redisObject</span> &#123;</span>    </span><br><span class="line">  <span class="keyword">unsigned</span> type:<span class="number">4</span>;  <span class="comment">// 对象的类型，包括 /* Object types */   </span></span><br><span class="line">  <span class="keyword">unsigned</span> encoding:<span class="number">4</span>;        <span class="comment">// 底部为了节省空间，一种type的数据，可以采用不同的存储方式 </span></span><br><span class="line">  <span class="keyword">unsigned</span> lru:REDIS_LRU_BITS; <span class="comment">/* lru time (relative to server.lruclock) */</span>   </span><br><span class="line">  <span class="keyword">int</span> refcount;         <span class="comment">// 引用计数    </span></span><br><span class="line">  <span class="keyword">void</span> *ptr;</span><br><span class="line">&#125; robj;</span><br></pre></td></tr></table></figure>
 <ul>
 <li>Redis中的每个键值对的键和值都是一个redisObject。</li>
 <li>共有五种类型的对象：字符串（String）、列表（List）、哈希（Hash）、集合（Set）、有序集合（SortedSet），源码<code>server.h</code>如下定义：</li>
@@ -344,12 +344,12 @@
 <h3 id="zset操作命令"><a href="#zset操作命令" class="headerlink" title="zset操作命令"></a>zset操作命令</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">zadd(key, score, member)：向名称为key的zset中添加元素member，score用于排序。如果该元素已经存在，则根据score更新该元素的顺序。</span><br><span class="line">zrem(key, member) ：删除名称为key的zset中的元素member</span><br><span class="line">zincrby(key, increment, member) ：如果在名称为key的zset中已经存在元素member，则该元素的score增加increment；否则向集合中添加该元素，其score的值为increment</span><br><span class="line">zrank(key, member) ：返回名称为key的zset（元素已按score从小到大排序）中member元素的rank（即index，从<span class="number">0</span>开始），若没有member元素，返回“nil”</span><br><span class="line">zrevrank(key, member) ：返回名称为key的zset（元素已按score从大到小排序）中member元素的rank（即index，从<span class="number">0</span>开始），若没有member元素，返回“nil”</span><br><span class="line">zrange(key, start, end)：返回名称为key的zset（元素已按score从小到大排序）中的index从start到end的所有元素</span><br><span class="line">zrevrange(key, start, end)：返回名称为key的zset（元素已按score从大到小排序）中的index从start到end的所有元素</span><br><span class="line">zrangebyscore(key, min, max)：返回名称为key的zset中score &gt;= min且score &lt;= max的所有元素 zcard(key)：返回名称为key的zset的基数</span><br><span class="line">zscore(key, element)：返回名称为key的zset中元素element的score</span><br><span class="line">zremrangebyrank(key, min, max)：删除名称为key的zset中rank &gt;= min且rank &lt;= max的所有元素 zremrangebyscore(key, min, max) ：删除名称为key的zset中score &gt;= min且score &lt;= max的所有元素</span><br></pre></td></tr></table></figure>
 <h3 id="skiplist介绍"><a href="#skiplist介绍" class="headerlink" title="skiplist介绍"></a><strong>skiplist介绍</strong></h3><p>跳表(skip List)是一种随机化的数据结构，基于并联的链表，实现简单，插入、删除、查找的复杂度均为O(logN)。简单说来跳表也是链表的一种，只不过它在链表的基础上增加了跳跃功能，正是这个跳跃的功能，使得在查找元素时，跳表能够提供O(logN)的时间复杂度。</p>
 <p>先来看一个有序链表，如下图（最左侧的灰色节点表示一个空的头结点）：</p>
-<p><img src="/2019/05/19/zset内部实现/image-20190819194956079.png" alt="image-20190819194956079"></p>
+<p><img src="http://pw5y8kqa5.bkt.clouddn.com/image-20190819194956079.png" alt="image-20190819194956079"></p>
 <p>在这样一个链表中，如果我们要查找某个数据，那么需要从头开始逐个进行比较，直到找到包含数据的那个节点，或者找到第一个比给定数据大的节点为止（没找到）。也就是说，时间复杂度为O(n)。同样，当我们要插入新数据的时候，也要经历同样的查找过程，从而确定插入位置。</p>
 <p>假如我们每相邻两个节点增加一个指针，让指针指向下下个节点，如下图：</p>
-<p><img src="/2019/05/19/zset内部实现/image-20190819195058724.png" alt="image-20190819195058724"></p>
+<p><img src="http://pw5y8kqa5.bkt.clouddn.com/image-20190819195058724.png" alt="image-20190819195058724"></p>
 <p>这样所有新增加的指针连成了一个新的链表，但它包含的节点个数只有原来的一半（上图中是7, 19, 26）。现在当我们想查找数据的时候，可以先沿着这个新链表进行查找。当碰到比待查数据大的节点时，再回到原来的链表中进行查找。比如，我们想查找23，查找的路径是沿着下图中标红的指针所指向的方向进行的：</p>
-<p><img src="/2019/05/19/zset内部实现/image-20190819195241767.png" alt="image-20190819195241767"></p>
+<p><img src="http://pw5y8kqa5.bkt.clouddn.com/image-20190819195241767.png" alt="image-20190819195241767"></p>
 <ul>
 <li>23首先和7比较，再和19比较，比它们都大，继续向后比较。</li>
 <li>但23和26比较的时候，比26要小，因此回到下面的链表（原链表），与22比较。</li>
@@ -357,15 +357,15 @@
 </ul>
 <p>在这个查找过程中，由于新增加的指针，我们不再需要与链表中每个节点逐个进行比较了。需要比较的节点数大概只有原来的一半。</p>
 <p>利用同样的方式，我们可以在上层新产生的链表上，继续为每相邻的两个节点增加一个指针，从而产生第三层链表。如下图：</p>
-<p><img src="/2019/05/19/zset内部实现/image-20190819195433048.png" alt="image-20190819195433048"></p>
+<p><img src="http://pw5y8kqa5.bkt.clouddn.com/image-20190819195433048.png" alt="image-20190819195433048"></p>
 <p>在这个新的三层链表结构上，如果我们还是查找23，那么沿着最上层链表首先要比较的是19，发现23比19大，接下来我们就知道只需要到19的后面去继续查找，从而一下子跳过了19前面的所有节点。可以想象，当链表足够长的时候，这种多层链表的查找方式能让我们跳过很多下层节点，大大加快查找的速度。</p>
 <p><code>skiplist</code>正是受这种多层链表的想法的启发而设计出来的。实际上，按照上面生成链表的方式，上面每一层链表的节点个数，是下面一层的节点个数的一半，这样查找过程就非常类似于一个二分查找，使得查找的时间复杂度可以降低到O(log n)。但是，这种方法在插入数据的时候有很大的问题。新插入一个节点之后，就会打乱上下相邻两层链表上节点个数严格的2:1的对应关系。如果要维持这种对应关系，就必须把新插入的节点后面的所有节点（也包括新插入的节点）重新进行调整，这会让时间复杂度重新蜕化成O(n)。删除数据也有同样的问题。</p>
 <p>skiplist为了避免这一问题，它不要求上下相邻两层链表之间的节点个数有严格的对应关系，而是为每个节点随机出一个层数(level)。比如，一个节点随机出的层数是3，那么就把它链入到第1层到第3层这三层链表中。为了表达清楚，下图展示了如何通过一步步的插入操作从而形成一个skiplist的过程：</p>
-<p><img src="/2019/05/19/zset内部实现/image-20190819195732579.png" alt="image-20190819195732579"></p>
+<p><img src="http://pw5y8kqa5.bkt.clouddn.com/image-20190819195732579.png" alt="image-20190819195732579"></p>
 <p>从上面skiplist的创建和插入过程可以看出，每一个节点的层数（level）是随机出来的，而且新插入一个节点不会影响其它节点的层数。因此，插入操作只需要修改插入节点前后的指针，而不需要对很多节点都进行调整。这就降低了插入操作的复杂度。实际上，这是skiplist的一个很重要的特性，这让它在插入性能上明显优于平衡树的方案。这在后面我们还会提到。</p>
 <p>skiplist，指的就是除了最下面第1层链表之外，它会产生若干层稀疏的链表，这些链表里面的指针故意跳过了一些节点（而且越高层的链表跳过的节点越多）。这就使得我们在查找数据的时候能够先在高层的链表中进行查找，然后逐层降低，最终降到第1层链表来精确地确定数据位置。在这个过程中，我们跳过了一些节点，从而也就加快了查找速度。</p>
 <p>刚刚创建的这个skiplist总共包含4层链表，现在假设我们在它里面依然查找23，下图给出了查找路径：</p>
-<p><img src="/2019/05/19/zset内部实现/image-20190819195912225.png" alt="image-20190819195912225"></p>
+<p><img src="http://pw5y8kqa5.bkt.clouddn.com/image-20190819195912225.png" alt="image-20190819195912225"></p>
 <p>需要注意的是，前面演示的各个节点的插入过程，实际上在插入之前也要先经历一个类似的查找过程，在确定插入位置后，再完成插入操作。</p>
 <p>实际应用中的skiplist每个节点应该包含key和value两部分。前面的描述中我们没有具体区分key和value，但实际上列表中是按照key(score)进行排序的，查找过程也是根据key在比较。</p>
 <p>执行插入操作时计算随机数的过程，是一个很关键的过程，它对skiplist的统计特性有着很重要的影响。这并不是一个普通的服从均匀分布的随机数，它的计算过程如下：</p>
@@ -544,7 +544,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">51</span>
+                  <span class="site-state-item-count">60</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -557,7 +557,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-count">18</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

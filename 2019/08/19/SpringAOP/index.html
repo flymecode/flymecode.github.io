@@ -89,15 +89,15 @@
 <meta property="og:site_name" content="小白君的博客">
 <meta property="og:description" content="AOP概述AOP称为面向切面编程，那我们怎么理解面向切面编程？ 我们学Java面向对象的时候，如果代码重复了怎么办啊？可以分成下面几个步骤：  抽取成方法 抽取类  抽取成类的方式我们称之为：纵向抽取  通过继承的方式实现纵向抽取  但是，我们现在的办法不行：即使抽取成类还是会出现重复的代码，因为这些逻辑(开始、结束、提交事务)依附在我们业务类的方法逻辑中！">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://yoursite.com/2019/08/19/SpringAOP/image-20190819150731837.png">
-<meta property="og:image" content="http://yoursite.com/2019/08/19/SpringAOP/image-20190819150839531.png">
-<meta property="og:image" content="http://yoursite.com/2019/08/19/SpringAOP/image-20190819151005879.png">
-<meta property="og:image" content="http://yoursite.com/2019/08/19/SpringAOP/image-20190819152914835.png">
-<meta property="og:updated_time" content="2019-08-19T08:35:51.292Z">
+<meta property="og:image" content="http://pw5y8kqa5.bkt.clouddn.com/image-20190819150731837.png">
+<meta property="og:image" content="http://pw5y8kqa5.bkt.clouddn.com/image-20190819150839531.png">
+<meta property="og:image" content="http://pw5y8kqa5.bkt.clouddn.com/image-20190819151005879.png">
+<meta property="og:image" content="http://pw5y8kqa5.bkt.clouddn.com/image-20190819152914835.png">
+<meta property="og:updated_time" content="2019-08-29T15:51:00.070Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SpringAOP">
 <meta name="twitter:description" content="AOP概述AOP称为面向切面编程，那我们怎么理解面向切面编程？ 我们学Java面向对象的时候，如果代码重复了怎么办啊？可以分成下面几个步骤：  抽取成方法 抽取类  抽取成类的方式我们称之为：纵向抽取  通过继承的方式实现纵向抽取  但是，我们现在的办法不行：即使抽取成类还是会出现重复的代码，因为这些逻辑(开始、结束、提交事务)依附在我们业务类的方法逻辑中！">
-<meta name="twitter:image" content="http://yoursite.com/2019/08/19/SpringAOP/image-20190819150731837.png">
+<meta name="twitter:image" content="http://pw5y8kqa5.bkt.clouddn.com/image-20190819150731837.png">
 
 
 
@@ -329,9 +329,9 @@
 </ul>
 <p>但是，我们现在的办法不行：即使抽取成类还是会出现重复的代码，因为这些逻辑(开始、结束、提交事务)<strong>依附在我们业务类的方法逻辑中</strong>！</p>
 <a id="more"></a>
-<p><img src="/2019/08/19/SpringAOP/image-20190819150731837.png" alt="image-20190819150731837"></p>
+<p><img src="http://pw5y8kqa5.bkt.clouddn.com/image-20190819150731837.png" alt="image-20190819150731837"></p>
 <p>现在纵向抽取的方式不行了，AOP的理念：就是将<strong>分散在各个业务逻辑代码中相同的代码通过横向切割的方式</strong>抽取到一个独立的模块中！</p>
-<p><img src="/2019/08/19/SpringAOP/image-20190819150839531.png" alt="image-20190819150839531"></p>
+<p><img src="http://pw5y8kqa5.bkt.clouddn.com/image-20190819150839531.png" alt="image-20190819150839531"></p>
 <p>上面的图也很清晰了，将重复性的逻辑代码横切出来其实很容易(我们简单可认为就是封装成一个类就好了)，但我们要将这些<strong>被我们横切出来的逻辑代码融合到业务逻辑中</strong>，来完成和之前(没抽取前)一样的功能！这就是AOP首要解决的问题了！</p>
 <h2 id="Spring-AOP原理"><a href="#Spring-AOP原理" class="headerlink" title="Spring AOP原理"></a>Spring AOP原理</h2><p>被我们横切出来的逻辑代码融合到业务逻辑中，来完成和之前(没抽取前)一样的功能</p>
 <p>Spring AOP构建在动态代理基础之上，因此，<strong>Spring对AOP的支持局限于方法拦截</strong>。</p>
@@ -340,7 +340,7 @@
 <li><p>JDK动态代理</p>
 </li>
 <li><p>CGLib动态代理</p>
-<p><img src="/2019/08/19/SpringAOP/image-20190819151005879.png" alt="image-20190819151005879"></p>
+<p><img src="http://pw5y8kqa5.bkt.clouddn.com/image-20190819151005879.png" alt="image-20190819151005879"></p>
 </li>
 </ul>
 <p>JDK动态代理是需要实现某个接口了，而我们类未必全部会有接口，于是CGLib代理就有了~~</p>
@@ -391,7 +391,7 @@
 </ul>
 <p>在《Spring 实战 (第4版)》给出的</p>
 <p>通知/增强包含了需要用于多个应用对象的横切行为；连接点是程序执行过程中能够应用通知的所有点；切点定义了通知/增强被应用的具体位置。其中关键的是切点定义了哪些连接点会得到通知/增强。</p>
-<p><img src="/2019/08/19/SpringAOP/image-20190819152914835.png" alt="image-20190819152914835"></p>
+<p><img src="http://pw5y8kqa5.bkt.clouddn.com/image-20190819152914835.png" alt="image-20190819152914835"></p>
 
       
     </div>
@@ -520,7 +520,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">51</span>
+                  <span class="site-state-item-count">60</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -533,7 +533,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-count">18</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

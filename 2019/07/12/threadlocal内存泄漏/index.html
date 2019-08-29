@@ -89,12 +89,12 @@
 <meta property="og:site_name" content="小白君的博客">
 <meta property="og:description" content="ThreadLocal 原理由于ThreadLocalMap的key是弱引用，而Value是强引用。这就导致了一个问题，ThreadLocal在没有外部对象强引用时，发生GC时弱引用Key会被回收，而Value不会回收，如果创建ThreadLocal的线程一直持续运行，那么这个Entry对象中的value就有可能一直得不到回收，发生内存泄露。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://yoursite.com/2019/07/12/threadlocal内存泄漏/F352F038-78E0-4AD0-A817-DC807B20E808.png">
-<meta property="og:updated_time" content="2019-08-12T08:10:59.024Z">
+<meta property="og:image" content="http://pw5y8kqa5.bkt.clouddn.com/F352F038-78E0-4AD0-A817-DC807B20E808.png">
+<meta property="og:updated_time" content="2019-08-29T15:51:00.076Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="threadlocal内存泄漏">
 <meta name="twitter:description" content="ThreadLocal 原理由于ThreadLocalMap的key是弱引用，而Value是强引用。这就导致了一个问题，ThreadLocal在没有外部对象强引用时，发生GC时弱引用Key会被回收，而Value不会回收，如果创建ThreadLocal的线程一直持续运行，那么这个Entry对象中的value就有可能一直得不到回收，发生内存泄露。">
-<meta name="twitter:image" content="http://yoursite.com/2019/07/12/threadlocal内存泄漏/F352F038-78E0-4AD0-A817-DC807B20E808.png">
+<meta name="twitter:image" content="http://pw5y8kqa5.bkt.clouddn.com/F352F038-78E0-4AD0-A817-DC807B20E808.png">
 
 
 
@@ -315,7 +315,7 @@
 
       
         <h2 id="ThreadLocal-原理"><a href="#ThreadLocal-原理" class="headerlink" title="ThreadLocal 原理"></a>ThreadLocal 原理</h2><p>由于ThreadLocalMap的key是弱引用，而Value是强引用。这就导致了一个问题，ThreadLocal在没有外部对象强引用时，发生GC时弱引用Key会被回收，而Value不会回收，如果创建ThreadLocal的线程一直持续运行，那么这个Entry对象中的value就有可能一直得不到回收，发生内存泄露。</p>
-<p><img src="/2019/07/12/threadlocal内存泄漏/F352F038-78E0-4AD0-A817-DC807B20E808.png" alt="F352F038-78E0-4AD0-A817-DC807B20E808"></p>
+<p><img src="http://pw5y8kqa5.bkt.clouddn.com/F352F038-78E0-4AD0-A817-DC807B20E808.png" alt="F352F038-78E0-4AD0-A817-DC807B20E808"></p>
 <a id="more"></a>
 <p><strong>ThreadLocal 原理</strong>：每个 Thread 内维护着一个 ThreadLocalMap，它是一个 Map,这个映射表中 Key 为一个弱引用，就是 ThreadLocal 本身，value 就是我们存储的对象。</p>
 <p>也就是说 ThreadLocal 是一个工具，来维护 ThreadLocalMap 来存取数值，注意图上的虚线，它代表一个弱引用，而弱引用的生命周期只能存活在下一次 GC.</p>
@@ -349,7 +349,7 @@
 <ul>
 <li>每次使用完ThreadLocal，都调用它的remove()方法，清除数据。</li>
 </ul>
-<p>在使用线程池的情况下，没有及时清理ThreadLocal，不仅是内存泄漏的问题，更严重的是可能导致业务逻辑出现问题。所以，使用ThreadLocal就跟加锁完要解锁一样，用完就清理。</p>
+<p>在使用线程池的情况下，没有及时清理ThreadLocal，不仅是内存泄漏的问题，更严重的是可能导致业务逻辑出现问题。所以，使用ThreadLocal就跟加锁完要解锁一样，用完就清理。s</p>
 
       
     </div>
@@ -478,7 +478,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">51</span>
+                  <span class="site-state-item-count">60</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -491,7 +491,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-count">18</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

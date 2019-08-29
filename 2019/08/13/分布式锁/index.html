@@ -89,12 +89,12 @@
 <meta property="og:site_name" content="小白君的博客">
 <meta property="og:description" content="分布式锁在单机场景下，可以使用语言的内置锁来实现进程同步。但是在分布式场景下，需要同步的进程可能位于不同的节点上，那么就需要使用分布式锁。 阻塞锁通常使用互斥量来实现：  互斥量为 0 表示有其它进程在使用锁，此时处于锁定状态； 互斥量为 1 表示未锁定状态。  1 和 0 可以用一个整型值表示，也可以用某个数据是否存在表示。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://yoursite.com/2019/08/13/分布式锁/WX20190813-203526@2x.png">
-<meta property="og:updated_time" content="2019-08-13T12:38:13.514Z">
+<meta property="og:image" content="http://pw5y8kqa5.bkt.clouddn.com/WX20190813-203526@2x.png">
+<meta property="og:updated_time" content="2019-08-29T15:51:00.081Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="分布式锁">
 <meta name="twitter:description" content="分布式锁在单机场景下，可以使用语言的内置锁来实现进程同步。但是在分布式场景下，需要同步的进程可能位于不同的节点上，那么就需要使用分布式锁。 阻塞锁通常使用互斥量来实现：  互斥量为 0 表示有其它进程在使用锁，此时处于锁定状态； 互斥量为 1 表示未锁定状态。  1 和 0 可以用一个整型值表示，也可以用某个数据是否存在表示。">
-<meta name="twitter:image" content="http://yoursite.com/2019/08/13/分布式锁/WX20190813-203526@2x.png">
+<meta name="twitter:image" content="http://pw5y8kqa5.bkt.clouddn.com/WX20190813-203526@2x.png">
 
 
 
@@ -339,7 +339,7 @@
 <li>如果锁获取失败，就到每个实例上释放锁。</li>
 </ul>
 <h2 id="Zookeeper-的有序节点"><a href="#Zookeeper-的有序节点" class="headerlink" title="Zookeeper 的有序节点"></a>Zookeeper 的有序节点</h2><h3 id="1-Zookeeper-抽象模型"><a href="#1-Zookeeper-抽象模型" class="headerlink" title="1. Zookeeper 抽象模型"></a>1. Zookeeper 抽象模型</h3><p>Zookeeper 提供了一种树形结构的命名空间，/app1/p_1 节点的父节点为 /app1。</p>
-<p><img src="/2019/08/13/分布式锁/WX20190813-203526@2x.png" alt></p>
+<p><img src="http://pw5y8kqa5.bkt.clouddn.com/WX20190813-203526@2x.png" alt></p>
 <h3 id="2-节点类型"><a href="#2-节点类型" class="headerlink" title="2. 节点类型"></a>2. 节点类型</h3><ul>
 <li>永久节点：不会因为会话结束或者超时而消失；</li>
 <li>临时节点：如果会话结束或者超时就会消失；</li>
@@ -403,8 +403,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/08/14/面试总结/" rel="prev" title="面试总结">
-                面试总结 <i class="fa fa-chevron-right"></i>
+              <a href="/2019/08/15/并发下是先操作数据库还是先操作缓存/" rel="prev" title="并发下是先操作数据库还是先操作缓存">
+                并发下是先操作数据库还是先操作缓存 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -482,7 +482,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">51</span>
+                  <span class="site-state-item-count">60</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -495,7 +495,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-count">18</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

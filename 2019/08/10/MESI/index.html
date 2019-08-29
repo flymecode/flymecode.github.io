@@ -81,13 +81,13 @@
 
 
 
-<meta name="description" content="CPU缓存一致性协议MESICPU高速缓存（Cache Memory）CPU为何要有高速缓存CPU在摩尔定律的指导下以每18个月翻一番的速度在发展，然而内存和硬盘的发展速度远远不及CPU。这就造成了高性能能的内存和硬盘价格及其昂贵。然而CPU的高度运算需要高速的数据。为了解决这个问题，CPU厂商在CPU中内置了少量的高速缓存以解决I\O速度和CPU运算速度之间的不匹配问题。 在CPU访问存储设备时">
+<meta name="description" content="CPU高速缓存（Cache Memory）CPU为何要有高速缓存CPU在摩尔定律的指导下以每18个月翻一番的速度在发展，然而内存和硬盘的发展速度远远不及CPU。这就造成了高性能能的内存和硬盘价格及其昂贵。然而CPU的高度运算需要高速的数据。为了解决这个问题，CPU厂商在CPU中内置了少量的高速缓存以解决I\O速度和CPU运算速度之间的不匹配问题。 在CPU访问存储设备时，无论是存取数据抑或存取指令">
 <meta name="keywords" content="缓存">
 <meta property="og:type" content="article">
-<meta property="og:title" content="MESI">
+<meta property="og:title" content="CPU缓存一致性协议MESI">
 <meta property="og:url" content="http://yoursite.com/2019/08/10/MESI/index.html">
 <meta property="og:site_name" content="小白君的博客">
-<meta property="og:description" content="CPU缓存一致性协议MESICPU高速缓存（Cache Memory）CPU为何要有高速缓存CPU在摩尔定律的指导下以每18个月翻一番的速度在发展，然而内存和硬盘的发展速度远远不及CPU。这就造成了高性能能的内存和硬盘价格及其昂贵。然而CPU的高度运算需要高速的数据。为了解决这个问题，CPU厂商在CPU中内置了少量的高速缓存以解决I\O速度和CPU运算速度之间的不匹配问题。 在CPU访问存储设备时">
+<meta property="og:description" content="CPU高速缓存（Cache Memory）CPU为何要有高速缓存CPU在摩尔定律的指导下以每18个月翻一番的速度在发展，然而内存和硬盘的发展速度远远不及CPU。这就造成了高性能能的内存和硬盘价格及其昂贵。然而CPU的高度运算需要高速的数据。为了解决这个问题，CPU厂商在CPU中内置了少量的高速缓存以解决I\O速度和CPU运算速度之间的不匹配问题。 在CPU访问存储设备时，无论是存取数据抑或存取指令">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/2019/08/10/MESI/WX20190813-233303@2x.png">
 <meta property="og:image" content="http://yoursite.com/2019/08/10/MESI/WX20190813-233623@2x.png">
@@ -97,10 +97,10 @@
 <meta property="og:image" content="http://yoursite.com/2019/08/10/MESI/WX20190813-235225@2x.png">
 <meta property="og:image" content="http://yoursite.com/2019/08/10/MESI/WX20190813-235306@2x.png">
 <meta property="og:image" content="http://yoursite.com/2019/08/10/MESI/WX20190813-235340@2x.png">
-<meta property="og:updated_time" content="2019-08-14T02:20:56.156Z">
+<meta property="og:updated_time" content="2019-08-29T15:51:00.068Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="MESI">
-<meta name="twitter:description" content="CPU缓存一致性协议MESICPU高速缓存（Cache Memory）CPU为何要有高速缓存CPU在摩尔定律的指导下以每18个月翻一番的速度在发展，然而内存和硬盘的发展速度远远不及CPU。这就造成了高性能能的内存和硬盘价格及其昂贵。然而CPU的高度运算需要高速的数据。为了解决这个问题，CPU厂商在CPU中内置了少量的高速缓存以解决I\O速度和CPU运算速度之间的不匹配问题。 在CPU访问存储设备时">
+<meta name="twitter:title" content="CPU缓存一致性协议MESI">
+<meta name="twitter:description" content="CPU高速缓存（Cache Memory）CPU为何要有高速缓存CPU在摩尔定律的指导下以每18个月翻一番的速度在发展，然而内存和硬盘的发展速度远远不及CPU。这就造成了高性能能的内存和硬盘价格及其昂贵。然而CPU的高度运算需要高速的数据。为了解决这个问题，CPU厂商在CPU中内置了少量的高速缓存以解决I\O速度和CPU运算速度之间的不匹配问题。 在CPU访问存储设备时，无论是存取数据抑或存取指令">
 <meta name="twitter:image" content="http://yoursite.com/2019/08/10/MESI/WX20190813-233303@2x.png">
 
 
@@ -137,7 +137,7 @@
 
 
 
-  <title>MESI | 小白君的博客</title>
+  <title>CPU缓存一致性协议MESI | 小白君的博客</title>
   
 
 
@@ -271,7 +271,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">MESI</h1>
+          <h1 class="post-title" itemprop="name headline">CPU缓存一致性协议MESI</h1>
         
 
         <div class="post-meta">
@@ -321,7 +321,7 @@
       
 
       
-        <h1 id="CPU缓存一致性协议MESI"><a href="#CPU缓存一致性协议MESI" class="headerlink" title="CPU缓存一致性协议MESI"></a>CPU缓存一致性协议MESI</h1><h2 id="CPU高速缓存（Cache-Memory）"><a href="#CPU高速缓存（Cache-Memory）" class="headerlink" title="CPU高速缓存（Cache Memory）"></a>CPU高速缓存（Cache Memory）</h2><h3 id="CPU为何要有高速缓存"><a href="#CPU为何要有高速缓存" class="headerlink" title="CPU为何要有高速缓存"></a>CPU为何要有高速缓存</h3><p>CPU在摩尔定律的指导下以每18个月翻一番的速度在发展，然而内存和硬盘的发展速度远远不及CPU。这就造成了高性能能的内存和硬盘价格及其昂贵。然而CPU的高度运算需要高速的数据。为了解决这个问题，CPU厂商在CPU中内置了少量的高速缓存以解决I\O速度和CPU运算速度之间的不匹配问题。</p>
+        <h2 id="CPU高速缓存（Cache-Memory）"><a href="#CPU高速缓存（Cache-Memory）" class="headerlink" title="CPU高速缓存（Cache Memory）"></a>CPU高速缓存（Cache Memory）</h2><h3 id="CPU为何要有高速缓存"><a href="#CPU为何要有高速缓存" class="headerlink" title="CPU为何要有高速缓存"></a>CPU为何要有高速缓存</h3><p>CPU在摩尔定律的指导下以每18个月翻一番的速度在发展，然而内存和硬盘的发展速度远远不及CPU。这就造成了高性能能的内存和硬盘价格及其昂贵。然而CPU的高度运算需要高速的数据。为了解决这个问题，CPU厂商在CPU中内置了少量的高速缓存以解决I\O速度和CPU运算速度之间的不匹配问题。</p>
 <p>在CPU访问存储设备时，无论是存取数据抑或存取指令，都趋于聚集在一片连续的区域中，这就被称为局部性原理。</p>
 <blockquote>
 <p><strong>时间局部性（Temporal Locality）</strong>：如果一个信息项正在被访问，那么在近期它很可能还会被再次访问。</p>
@@ -460,7 +460,7 @@
 <th style="text-align:center">M</th>
 <th style="text-align:center">E</th>
 <th style="text-align:center">S</th>
-<th style="text-align:center"><strong>I</strong></th>
+<th style="text-align:center">I</th>
 </tr>
 </thead>
 <tbody>
@@ -661,7 +661,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">51</span>
+                  <span class="site-state-item-count">60</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -674,7 +674,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-count">18</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -714,7 +714,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#CPU缓存一致性协议MESI"><span class="nav-number">1.</span> <span class="nav-text">CPU缓存一致性协议MESI</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#CPU高速缓存（Cache-Memory）"><span class="nav-number">1.1.</span> <span class="nav-text">CPU高速缓存（Cache Memory）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#CPU为何要有高速缓存"><span class="nav-number">1.1.1.</span> <span class="nav-text">CPU为何要有高速缓存</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#带有高速缓存的CPU执行计算的流程"><span class="nav-number">1.1.2.</span> <span class="nav-text">带有高速缓存的CPU执行计算的流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#目前流行的多级缓存结构"><span class="nav-number">1.1.3.</span> <span class="nav-text">目前流行的多级缓存结构</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多核CPU多级缓存一致性协议MESI"><span class="nav-number">1.2.</span> <span class="nav-text">多核CPU多级缓存一致性协议MESI</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#MESI协议缓存状态"><span class="nav-number">1.2.1.</span> <span class="nav-text">MESI协议缓存状态</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MESI状态转换"><span class="nav-number">1.2.2.</span> <span class="nav-text">MESI状态转换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多核缓存协同操作"><span class="nav-number">1.2.3.</span> <span class="nav-text">多核缓存协同操作</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#单核读取"><span class="nav-number">1.2.3.1.</span> <span class="nav-text">单核读取</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#双核读取"><span class="nav-number">1.2.3.2.</span> <span class="nav-text">双核读取</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#修改数据"><span class="nav-number">1.2.3.3.</span> <span class="nav-text">修改数据</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#同步数据"><span class="nav-number">1.2.3.4.</span> <span class="nav-text">同步数据</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MESI优化和他们引入的问题"><span class="nav-number">1.3.</span> <span class="nav-text">MESI优化和他们引入的问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#CPU切换状态阻塞解决-存储缓存（Store-Bufferes）"><span class="nav-number">1.3.1.</span> <span class="nav-text">CPU切换状态阻塞解决-存储缓存（Store Bufferes）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Store-Bufferes"><span class="nav-number">1.3.1.1.</span> <span class="nav-text">Store Bufferes</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Store-Bufferes的风险"><span class="nav-number">1.3.1.2.</span> <span class="nav-text">Store Bufferes的风险</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#硬件内存模型"><span class="nav-number">1.3.2.</span> <span class="nav-text">硬件内存模型</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#后记"><span class="nav-number">1.4.</span> <span class="nav-text">后记</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#CPU高速缓存（Cache-Memory）"><span class="nav-number">1.</span> <span class="nav-text">CPU高速缓存（Cache Memory）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#CPU为何要有高速缓存"><span class="nav-number">1.1.</span> <span class="nav-text">CPU为何要有高速缓存</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#带有高速缓存的CPU执行计算的流程"><span class="nav-number">1.2.</span> <span class="nav-text">带有高速缓存的CPU执行计算的流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#目前流行的多级缓存结构"><span class="nav-number">1.3.</span> <span class="nav-text">目前流行的多级缓存结构</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多核CPU多级缓存一致性协议MESI"><span class="nav-number">2.</span> <span class="nav-text">多核CPU多级缓存一致性协议MESI</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#MESI协议缓存状态"><span class="nav-number">2.1.</span> <span class="nav-text">MESI协议缓存状态</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MESI状态转换"><span class="nav-number">2.2.</span> <span class="nav-text">MESI状态转换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多核缓存协同操作"><span class="nav-number">2.3.</span> <span class="nav-text">多核缓存协同操作</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#单核读取"><span class="nav-number">2.3.1.</span> <span class="nav-text">单核读取</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#双核读取"><span class="nav-number">2.3.2.</span> <span class="nav-text">双核读取</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#修改数据"><span class="nav-number">2.3.3.</span> <span class="nav-text">修改数据</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#同步数据"><span class="nav-number">2.3.4.</span> <span class="nav-text">同步数据</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MESI优化和他们引入的问题"><span class="nav-number">3.</span> <span class="nav-text">MESI优化和他们引入的问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#CPU切换状态阻塞解决-存储缓存（Store-Bufferes）"><span class="nav-number">3.1.</span> <span class="nav-text">CPU切换状态阻塞解决-存储缓存（Store Bufferes）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Store-Bufferes"><span class="nav-number">3.1.1.</span> <span class="nav-text">Store Bufferes</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Store-Bufferes的风险"><span class="nav-number">3.1.2.</span> <span class="nav-text">Store Bufferes的风险</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#硬件内存模型"><span class="nav-number">3.2.</span> <span class="nav-text">硬件内存模型</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#后记"><span class="nav-number">4.</span> <span class="nav-text">后记</span></a></li></ol></div>
             
 
           </div>
