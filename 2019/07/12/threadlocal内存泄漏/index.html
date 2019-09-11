@@ -90,7 +90,7 @@
 <meta property="og:description" content="ThreadLocal 原理由于ThreadLocalMap的key是弱引用，而Value是强引用。这就导致了一个问题，ThreadLocal在没有外部对象强引用时，发生GC时弱引用Key会被回收，而Value不会回收，如果创建ThreadLocal的线程一直持续运行，那么这个Entry对象中的value就有可能一直得不到回收，发生内存泄露。">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://pw5y8kqa5.bkt.clouddn.com/F352F038-78E0-4AD0-A817-DC807B20E808.png">
-<meta property="og:updated_time" content="2019-08-29T15:51:00.076Z">
+<meta property="og:updated_time" content="2019-09-11T23:37:23.300Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="threadlocal内存泄漏">
 <meta name="twitter:description" content="ThreadLocal 原理由于ThreadLocalMap的key是弱引用，而Value是强引用。这就导致了一个问题，ThreadLocal在没有外部对象强引用时，发生GC时弱引用Key会被回收，而Value不会回收，如果创建ThreadLocal的线程一直持续运行，那么这个Entry对象中的value就有可能一直得不到回收，发生内存泄露。">
@@ -488,7 +488,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">60</span>
+                  <span class="site-state-item-count">67</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -501,7 +501,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-count">21</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
