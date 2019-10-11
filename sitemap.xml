@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/2019/10/11/%E5%BC%82%E5%B8%B8%E4%BD%93%E7%B3%BB/</loc>
+    
+    <lastmod>2019-10-11T06:10:00.302Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/2019/09/09/JDK%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86%E5%86%85%E9%83%A8%E5%AE%9E%E7%8E%B0/</loc>
     
     <lastmod>2019-10-11T03:57:20.807Z</lastmod>
@@ -408,14 +415,14 @@
   </url>
   
   <url>
-    <loc>http://yoursite.com/2018/08/13/Java%E5%9F%BA%E7%A1%80/</loc>
+    <loc>http://yoursite.com/2019/05/12/JVM%E4%BC%98%E5%8C%96/</loc>
     
     <lastmod>2019-09-11T23:37:23.138Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://yoursite.com/2019/05/12/JVM%E4%BC%98%E5%8C%96/</loc>
+    <loc>http://yoursite.com/2018/08/13/Java%E5%9F%BA%E7%A1%80/</loc>
     
     <lastmod>2019-09-11T23:37:23.138Z</lastmod>
     
@@ -436,14 +443,14 @@
   </url>
   
   <url>
-    <loc>http://yoursite.com/2018/08/04/HashTable/</loc>
+    <loc>http://yoursite.com/2019/09/05/HTTP%E7%8A%B6%E6%80%81%E7%A0%81/</loc>
     
     <lastmod>2019-09-11T23:37:23.135Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://yoursite.com/2019/09/05/HTTP%E7%8A%B6%E6%80%81%E7%A0%81/</loc>
+    <loc>http://yoursite.com/2018/08/04/HashTable/</loc>
     
     <lastmod>2019-09-11T23:37:23.135Z</lastmod>
     

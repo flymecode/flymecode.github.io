@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2019-10-11T03:57:20.807Z</updated>
+  <updated>2019-10-11T06:10:00.302Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>异常体系</title>
+    <link href="http://yoursite.com/2019/10/11/%E5%BC%82%E5%B8%B8%E4%BD%93%E7%B3%BB/"/>
+    <id>http://yoursite.com/2019/10/11/异常体系/</id>
+    <published>2019-10-11T06:07:07.000Z</published>
+    <updated>2019-10-11T06:10:00.302Z</updated>
+    
+    <content type="html"><![CDATA[<p><strong>异常的一些基本知识</strong></p><ul><li><strong>异常的架构</strong></li></ul><p>　　异常的继承结构：Throwable为基类，Error和Exception继承Throwable。Error和RuntimeException及其子类成为未检查异常（unchecked），其它异常成为已检查异常（checked）。</p><p><img src="/2019/10/11/异常体系/image-20191011140924190.png" alt="image-20191011140924190"></p><ul><li><strong>Error异常</strong></li></ul><p>　　Error表示程序在运行期间出现了十分严重、不可恢复的错误，在这种情况下应用程序只能中止运行，例如JAVA 虚拟机出现错误。Error是一种unchecked Exception，编译器不会检查Error是否被处理，在程序中不用捕获Error类型的异常。一般情况下，在程序中也不应该抛出Error类型的异常。</p><ul><li><strong>RuntimeException异常</strong></li></ul><p>　　Exception异常包括RuntimeException异常和其他非RuntimeException的异常。<br>　　RuntimeException 是一种Unchecked Exception，即表示编译器不会检查程序是否对RuntimeException作了处理，在程序中不必捕获RuntimException类型的异常，也不必在方法体声明抛出　RuntimeException类。RuntimeException发生的时候，表示程序中出现了编程错误，所以应该找出错误修改程序，而不是去捕获RuntimeException。</p><ul><li><strong>Checked Exception异常</strong></li></ul><p>　　Checked Exception异常，这也是在编程中使用最多的Exception，所有继承自Exception并且不是RuntimeException的异常都是checked Exception，上图中的IOException和ClassNotFoundException。JAVA 语言规定必须对checked Exception作处理，编译器会对此作检查，要么在方法体中声明抛出checked Exception，要么使用catch语句捕获checked Exception进行处理，不然不能通过编译。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;&lt;strong&gt;异常的一些基本知识&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;异常的架构&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;　　异常的继承结构：Throwable为基类，Error和Exception继承Throwable。Error和Runt
+      
+    
+    </summary>
+    
+    
+      <category term="Java" scheme="http://yoursite.com/tags/Java/"/>
+    
+  </entry>
   
   <entry>
     <title>JDK动态代理内部实现</title>
@@ -441,30 +468,6 @@
     
     
       <category term="Spring" scheme="http://yoursite.com/tags/Spring/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>LinkedListMap介绍</title>
-    <link href="http://yoursite.com/2019/08/16/LinkedListMap%E4%BB%8B%E7%BB%8D/"/>
-    <id>http://yoursite.com/2019/08/16/LinkedListMap介绍/</id>
-    <published>2019-08-16T08:32:13.000Z</published>
-    <updated>2019-09-11T23:37:23.151Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>LinkedHashMap继承于HashMap</p><h2 id="应用场景"><a href="#应用场景" class="headerlink" title="应用场景"></a>应用场景</h2><p>HashMap是无序的，当我们希望有顺序地去存储key-value时，就需要使用LinkedHashMap了。</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Map&lt;String, String&gt; hashMap = <span class="keyword">new</span> HashMap&lt;String, String&gt;();</span><br><span class="line">      hashMap.put(<span class="string">"name5"</span>, <span class="string">"value5"</span>);</span><br><span class="line">      hashMap.put(<span class="string">"name6"</span>, <span class="string">"value6"</span>);</span><br><span class="line">      hashMap.put(<span class="string">"name7"</span>, <span class="string">"value7"</span>);</span><br><span class="line">      Set&lt;Map.Entry&lt;String, String&gt;&gt; set = hashMap.entrySet();</span><br><span class="line">      Iterator&lt;Map.Entry&lt;String, String&gt;&gt; iterator = set.iterator();</span><br><span class="line">      <span class="keyword">while</span>(iterator.hasNext()) &#123;</span><br><span class="line">          Map.Entry entry = iterator.next();</span><br><span class="line">          String key = (String) entry.getKey();</span><br><span class="line">          String value = (String) entry.getValue();</span><br><span class="line">          System.out.println(<span class="string">"key:"</span> + key + <span class="string">",value:"</span> + value);</span><br><span class="line">      &#125;</span><br></pre></td></tr></table></figure><p>输出结果</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">key:name6,value:value6</span><br><span class="line">key:name5,value:value5</span><br><span class="line">key:name7,value:value7</span><br></pre></td></tr></table></figure><p>同样的数据，我们再试试LinkedHashMap</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Map&lt;String, String&gt; hashMap = <span class="keyword">new</span> LinkedHashMap&lt;&gt;();</span><br><span class="line">        hashMap.put(<span class="string">"name5"</span>, <span class="string">"value5"</span>);</span><br><span class="line">        hashMap.put(<span class="string">"name6"</span>, <span class="string">"value6"</span>);</span><br><span class="line">        hashMap.put(<span class="string">"name7"</span>, <span class="string">"value7"</span>);</span><br><span class="line">        Set&lt;Map.Entry&lt;String, String&gt;&gt; set = hashMap.entrySet();</span><br><span class="line">        Iterator&lt;Map.Entry&lt;String, String&gt;&gt; iterator = set.iterator();</span><br><span class="line">        <span class="keyword">while</span>(iterator.hasNext()) &#123;</span><br><span class="line">            Map.Entry entry = iterator.next();</span><br><span class="line">            String key = (String) entry.getKey();</span><br><span class="line">            String value = (String) entry.getValue();</span><br><span class="line">            System.out.println(<span class="string">"key:"</span> + key + <span class="string">",value:"</span> + value);</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure><p>输出结果</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">key:name5,value:value5</span><br><span class="line">key:name6,value:value6</span><br><span class="line">key:name7,value:value7</span><br></pre></td></tr></table></figure><p>LinkedHashMap是有序的，且默认为插入顺序。</p><p>LinkedHashMap空参的构造方法。</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">LinkedHashMap</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 调用HashMap的构造方法</span></span><br><span class="line">        <span class="keyword">super</span>();</span><br><span class="line">        <span class="comment">// 这里是指是否基于访问排序，默认为false</span></span><br><span class="line">        accessOrder = <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure><p>这里accessOrder设置为false，表示不是访问顺序而是插入顺序存储的，这也是默认值，表示LinkedHashMap中存储的顺序是按照调用put方法插入的顺序进行排序的。LinkedHashMap也提供了可以设置accessOrder的构造方法。</p><p>在HashMap的构造函数中，调用了init方法，而在HashMap中init方法是空实现，但LinkedHashMap重写了该方法，所以在LinkedHashMap的构造方法里，调用了自身的init方法，init的重写实现如下：</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">    * Called by superclass constructors and pseudoconstructors (clone,</span></span><br><span class="line"><span class="comment">    * readObject) before any entries are inserted into the map.  Initializes</span></span><br><span class="line"><span class="comment">    * the chain.</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">   <span class="meta">@Override</span></span><br><span class="line">   <span class="function"><span class="keyword">void</span> <span class="title">init</span><span class="params">()</span> </span>&#123;</span><br><span class="line">       <span class="comment">// 创建了一个hash=-1，key、value、next都为null的Entry</span></span><br><span class="line">       header = <span class="keyword">new</span> Entry&lt;&gt;(-<span class="number">1</span>, <span class="keyword">null</span>, <span class="keyword">null</span>, <span class="keyword">null</span>);</span><br><span class="line">       <span class="comment">// 让创建的Entry的before和after都指向自身，注意after不是之前提到的next</span></span><br><span class="line">       <span class="comment">// 其实就是创建了一个只有头部节点的双向链表</span></span><br><span class="line">       header.before = header.after = header;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure><p>LinkedHashMap有自己的静态内部类Entry，它继承了HashMap.Node，定义如下:</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Entry</span>&lt;<span class="title">K</span>,<span class="title">V</span>&gt; <span class="keyword">extends</span> <span class="title">HashMap</span>.<span class="title">Node</span>&lt;<span class="title">K</span>,<span class="title">V</span>&gt; </span>&#123;</span><br><span class="line">        Entry&lt;K,V&gt; before, after;</span><br><span class="line">        Entry(<span class="keyword">int</span> hash, K key, V value, Node&lt;K,V&gt; next) &#123;</span><br><span class="line">            <span class="keyword">super</span>(hash, key, value, next);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure><p>所以LinkedHashMap构造函数，主要就是调用HashMap构造函数初始化了一个Entry[] table，然后调用自身的init初始化了一个只有头结点的双向链表。</p><p>总结</p><p>LinkedHashMap 是继承于HashMap，是基于HashMap和双向链表来实现的。</p><p>HashMap无序；LinkedHashMap有序，可分为插入顺序和访问顺序两种。如果是访问顺序，那put和get操作已存在的Entry时，都会把Entry移动到双向链表的表尾(其实是先删除再插入)。</p><p>LinkedHashMap存取数据，还是跟HashMap一样使用的Entry[]的方式，双向链表只是为了保证顺序。</p><p>LinkedHashMap是线程不安全的。</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;p&gt;LinkedHashMap继承于HashMap&lt;/p&gt;
-&lt;h2 id=&quot;应用场景&quot;&gt;&lt;a href=&quot;#应用场景&quot; class=&quot;heade
-      
-    
-    </summary>
-    
-    
-      <category term="Java容器" scheme="http://yoursite.com/tags/Java%E5%AE%B9%E5%99%A8/"/>
     
   </entry>
   

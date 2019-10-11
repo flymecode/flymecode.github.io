@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="JVM,">
+  <meta name="keywords" content="Java,">
 
 
 
@@ -81,18 +81,20 @@
 
 
 
-<meta name="description" content="CMS 收集器​    CMS 收集器是一种最短回收时间为目标的收集器。在重视服务的相应速度，希望系统停顿时间最短，以给用户最好的体验 ​    CMS 收集器，实现的算法是标记-清除算法，整个过程分为：  初始标记 并发标记 重新标记 并发清除  其中初始标记和重新标记需要 STW">
-<meta name="keywords" content="JVM">
+<meta name="description" content="异常的一些基本知识  异常的架构  　　异常的继承结构：Throwable为基类，Error和Exception继承Throwable。Error和RuntimeException及其子类成为未检查异常（unchecked），其它异常成为已检查异常（checked）。   Error异常  　　Error表示程序在运行期间出现了十分严重、不可恢复的错误，在这种情况下应用程序只能中止运行，例如JAV">
+<meta name="keywords" content="Java">
 <meta property="og:type" content="article">
-<meta property="og:title" content="关于CMS的Young GC">
-<meta property="og:url" content="http://yoursite.com/2019/08/12/关于CMS的Young-GC/index.html">
+<meta property="og:title" content="异常体系">
+<meta property="og:url" content="http://yoursite.com/2019/10/11/异常体系/index.html">
 <meta property="og:site_name" content="小白君的博客">
-<meta property="og:description" content="CMS 收集器​    CMS 收集器是一种最短回收时间为目标的收集器。在重视服务的相应速度，希望系统停顿时间最短，以给用户最好的体验 ​    CMS 收集器，实现的算法是标记-清除算法，整个过程分为：  初始标记 并发标记 重新标记 并发清除  其中初始标记和重新标记需要 STW">
+<meta property="og:description" content="异常的一些基本知识  异常的架构  　　异常的继承结构：Throwable为基类，Error和Exception继承Throwable。Error和RuntimeException及其子类成为未检查异常（unchecked），其它异常成为已检查异常（checked）。   Error异常  　　Error表示程序在运行期间出现了十分严重、不可恢复的错误，在这种情况下应用程序只能中止运行，例如JAV">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-09-11T23:37:23.303Z">
+<meta property="og:image" content="http://yoursite.com/2019/10/11/异常体系/image-20191011140924190.png">
+<meta property="og:updated_time" content="2019-10-11T06:10:00.302Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="关于CMS的Young GC">
-<meta name="twitter:description" content="CMS 收集器​    CMS 收集器是一种最短回收时间为目标的收集器。在重视服务的相应速度，希望系统停顿时间最短，以给用户最好的体验 ​    CMS 收集器，实现的算法是标记-清除算法，整个过程分为：  初始标记 并发标记 重新标记 并发清除  其中初始标记和重新标记需要 STW">
+<meta name="twitter:title" content="异常体系">
+<meta name="twitter:description" content="异常的一些基本知识  异常的架构  　　异常的继承结构：Throwable为基类，Error和Exception继承Throwable。Error和RuntimeException及其子类成为未检查异常（unchecked），其它异常成为已检查异常（checked）。   Error异常  　　Error表示程序在运行期间出现了十分严重、不可恢复的错误，在这种情况下应用程序只能中止运行，例如JAV">
+<meta name="twitter:image" content="http://yoursite.com/2019/10/11/异常体系/image-20191011140924190.png">
 
 
 
@@ -122,13 +124,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/08/12/关于CMS的Young-GC/">
+  <link rel="canonical" href="http://yoursite.com/2019/10/11/异常体系/">
 
 
 
 
 
-  <title>关于CMS的Young GC | 小白君的博客</title>
+  <title>异常体系 | 小白君的博客</title>
   
 
 
@@ -255,7 +257,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/12/关于CMS的Young-GC/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/11/异常体系/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Ma Xu">
@@ -272,7 +274,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">关于CMS的Young GC</h1>
+          <h1 class="post-title" itemprop="name headline">异常体系</h1>
         
 
         <div class="post-meta">
@@ -284,8 +286,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-12T14:16:02+08:00">
-                2019-08-12
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-11T14:07:07+08:00">
+                2019-10-11
               </time>
             
 
@@ -322,22 +324,24 @@
       
 
       
-        <h2 id="CMS-收集器"><a href="#CMS-收集器" class="headerlink" title="CMS 收集器"></a>CMS 收集器</h2><p>​    CMS 收集器是一种最短回收时间为目标的收集器。在重视服务的相应速度，希望系统停顿时间最短，以给用户最好的体验</p>
-<p>​    CMS 收集器，实现的算法是标记-清除算法，整个过程分为：</p>
+        <p><strong>异常的一些基本知识</strong></p>
 <ul>
-<li>初始标记</li>
-<li>并发标记</li>
-<li>重新标记</li>
-<li>并发清除</li>
+<li><strong>异常的架构</strong></li>
 </ul>
-<p>其中初始标记和重新标记需要 STW</p>
-<a id="more"></a>
-<h2 id="实现过程"><a href="#实现过程" class="headerlink" title="实现过程"></a>实现过程</h2><p>​    首先初始标记阶段找出 GC Root 所能直接关联的对象，速度很快，如 Java 栈中引用的对象、方法区中静态变量应用的对象和系统词典中应用的对象并标记，找出老年代对象在 eden 区有引用关系的对象并标记，最后把这些标记的对象复制到 to，在复制过程中还要判断活跃的对象 GC 年领是否已经达到了阈值，如果已经达到阈值，就直接晋升到老年代，YGC 结束之后将 from 和 to 的引用互换。其中大对象直接晋升到老年代，避免了在 eden 区、form、to 之间的复制。在发生 YGC 前，虚拟机会检查老年代最大的连续空间是否大于新生代所有对象的总空间，如果条件成立，那么进行 YGC 是安全的，如果不成立，检查虚拟机是允许担保失败，如果允许会检查老年代最大的连续空间是否大于历次晋升到老年代对象的平均大小或者新生代对象总大小，如果大于则进行 YGC ，如果条件不成立，或者虚拟机不允许空间担保失败，则进行一次 Full GC。</p>
-<h2 id="CMS-收集器缺点"><a href="#CMS-收集器缺点" class="headerlink" title="CMS 收集器缺点"></a>CMS 收集器缺点</h2><ul>
-<li>CMS 收集器对CPU 资源非常敏感</li>
-<li>CMS 收收集器无法处理浮动垃圾，可能出现 “ Concureent Mode Failure” 失败而导致另一次 Full GC 的产生。要是 CMS 在运行期间预留的内存无法满足程序需要，就会出现一次 “ Concureent Mode Failure” ,这个时候虚拟机临时启动 Serial Old 收集器重新来进行老年代的垃圾收集，这样停顿时间就很长了。</li>
-<li>大量空间碎片，空间碎片过多的话会给分配大对象带来麻烦，即使老年代有很大的空间但是无法找到足够大的连续空间来分配当前对象，不得不提前触发一次 Full GC, 为了解决这个问题，CMS 提供了内存碎片整理的参数来设置，或者我进行几次不带碎片整理的 Full GC 之后，随后带一次碎片整理的 Full GC。</li>
+<p>　　异常的继承结构：Throwable为基类，Error和Exception继承Throwable。Error和RuntimeException及其子类成为未检查异常（unchecked），其它异常成为已检查异常（checked）。</p>
+<p><img src="/2019/10/11/异常体系/image-20191011140924190.png" alt="image-20191011140924190"></p>
+<ul>
+<li><strong>Error异常</strong></li>
 </ul>
+<p>　　Error表示程序在运行期间出现了十分严重、不可恢复的错误，在这种情况下应用程序只能中止运行，例如JAVA 虚拟机出现错误。Error是一种unchecked Exception，编译器不会检查Error是否被处理，在程序中不用捕获Error类型的异常。一般情况下，在程序中也不应该抛出Error类型的异常。</p>
+<ul>
+<li><strong>RuntimeException异常</strong></li>
+</ul>
+<p>　　Exception异常包括RuntimeException异常和其他非RuntimeException的异常。<br>　　RuntimeException 是一种Unchecked Exception，即表示编译器不会检查程序是否对RuntimeException作了处理，在程序中不必捕获RuntimException类型的异常，也不必在方法体声明抛出　RuntimeException类。RuntimeException发生的时候，表示程序中出现了编程错误，所以应该找出错误修改程序，而不是去捕获RuntimeException。</p>
+<ul>
+<li><strong>Checked Exception异常</strong></li>
+</ul>
+<p>　　Checked Exception异常，这也是在编程中使用最多的Exception，所有继承自Exception并且不是RuntimeException的异常都是checked Exception，上图中的IOException和ClassNotFoundException。JAVA 语言规定必须对checked Exception作处理，编译器会对此作检查，要么在方法体中声明抛出checked Exception，要么使用catch语句捕获checked Exception进行处理，不然不能通过编译。</p>
 
       
     </div>
@@ -364,7 +368,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/JVM/" rel="tag"><i class="fa fa-tag"></i> JVM</a>
+            <a href="/tags/Java/" rel="tag"><i class="fa fa-tag"></i> Java</a>
           
         </div>
       
@@ -377,8 +381,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/08/11/分布式事务/" rel="next" title="分布式事务">
-                <i class="fa fa-chevron-left"></i> 分布式事务
+              <a href="/2019/09/09/JDK动态代理内部实现/" rel="next" title="JDK动态代理内部实现">
+                <i class="fa fa-chevron-left"></i> JDK动态代理内部实现
               </a>
             
           </div>
@@ -386,10 +390,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/08/13/再探索引/" rel="prev" title="再探索引-索引优化">
-                再探索引-索引优化 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -441,17 +441,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -509,22 +500,6 @@
         </div>
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#CMS-收集器"><span class="nav-number">1.</span> <span class="nav-text">CMS 收集器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实现过程"><span class="nav-number">2.</span> <span class="nav-text">实现过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CMS-收集器缺点"><span class="nav-number">3.</span> <span class="nav-text">CMS 收集器缺点</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       
