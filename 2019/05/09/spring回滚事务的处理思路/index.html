@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="spring,">
 
 
 
@@ -82,14 +82,14 @@
 
 
 <meta name="description" content="我们在使用中经常使用 spring，但是我们是否真正的理解当事务发生回滚的时候spring 是怎么给我处理的吗？是否会回滚呢，现在让我们来一起看看吧。">
-<meta name="keywords" content="sdaf">
+<meta name="keywords" content="spring">
 <meta property="og:type" content="article">
 <meta property="og:title" content="spring回滚事务的处理思路">
 <meta property="og:url" content="http://yoursite.com/2019/05/09/spring回滚事务的处理思路/index.html">
 <meta property="og:site_name" content="小白君的博客">
 <meta property="og:description" content="我们在使用中经常使用 spring，但是我们是否真正的理解当事务发生回滚的时候spring 是怎么给我处理的吗？是否会回滚呢，现在让我们来一起看看吧。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-09-11T23:37:23.299Z">
+<meta property="og:updated_time" content="2019-10-11T03:56:24.475Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="spring回滚事务的处理思路">
 <meta name="twitter:description" content="我们在使用中经常使用 spring，但是我们是否真正的理解当事务发生回滚的时候spring 是怎么给我处理的吗？是否会回滚呢，现在让我们来一起看看吧。">
@@ -326,7 +326,7 @@
 <a id="more"></a>
 <h2 id="spring-try-…-catch-事务不回滚的处理思路"><a href="#spring-try-…-catch-事务不回滚的处理思路" class="headerlink" title="spring try {…} catch {} 事务不回滚的处理思路"></a>spring try {…} catch {} 事务不回滚的处理思路</h2><p>当希望在某个方法中添加事务时，我们常常在方法头上添加@Transactional注解</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@ResponseBody</span></span><br><span class="line"><span class="meta">@RequestMapping</span>(value = <span class="string">"/payment"</span>, method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)</span><br><span class="line"><span class="meta">@Transactional</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Payment <span class="title">paymentJson</span><span class="params">(@RequestBody PaymentRequestInfo entity)</span> </span>&#123;</span><br><span class="line">    <span class="comment">//method</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>容易让人忽略的是：方法上未加任何属性的 @Transactional 注解只能在抛出 RuntimeException 或者 Error 时才会触发事务的回滚，常见的 非RuntimeException 是不会触发事务的回滚的。</p>
+<p>容易让人忽略的是：默认不写<code>@Transactional(rollbackFor = Exception.class)</code>方法只能在抛出 RuntimeException 或者 Error 时才会触发事务的回滚，常见的 非RuntimeException 是不会触发事务的回滚的。</p>
 <p>如果要在抛出 非RuntimeException时也触发回滚机制，需要我们在注解上添加 rollbackFor = { Exception.class }属性。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@ResponseBody</span></span><br><span class="line"><span class="meta">@RequestMapping</span>(value = <span class="string">"/payment"</span>, method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)</span><br><span class="line"><span class="meta">@Transactional</span>(rollbackFor = &#123; Exception.class &#125;)</span><br><span class="line"><span class="function"><span class="keyword">public</span> Payment <span class="title">paymentJson</span><span class="params">(@RequestBody PaymentRequestInfo entity)</span> </span>&#123;</span><br><span class="line">    <span class="comment">//method</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>当然，上面事务回滚的前提是添加 @Transactional 注解的方法中不含有 try{…}catch{…} 异常，使得程序运行过程中出现异常能顺利抛出，从而触发事务回滚。</p>
@@ -361,6 +361,12 @@
     
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/spring/" rel="tag"><i class="fa fa-tag"></i> spring</a>
+          
+        </div>
       
 
       
@@ -460,7 +466,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">67</span>
+                  <span class="site-state-item-count">68</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
