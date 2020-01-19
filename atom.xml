@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2019-10-11T06:10:00.302Z</updated>
+  <updated>2019-10-22T13:17:09.719Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,77 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Paxos</title>
+    <link href="http://yoursite.com/2019/10/22/Paxos/"/>
+    <id>http://yoursite.com/2019/10/22/Paxos/</id>
+    <published>2019-10-22T13:13:18.000Z</published>
+    <updated>2019-10-22T13:17:09.719Z</updated>
+    
+    <content type="html"><![CDATA[<p>在分布式系统中，数据不是存储在单个节点中的，所以分布式系统面临数据的一致性问题，就比如 DNS 系统中，域名的更新一样。为了解决这个问题，出现了 paxos 算法，paxos 算法其实是一个共识算法。系统的最终一致性，不仅需要达成共识，还会取决于 client 的行为。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;在分布式系统中，数据不是存储在单个节点中的，所以分布式系统面临数据的一致性问题，就比如 DNS 系统中，域名的更新一样。为了解决这个问题，出现了 paxos 算法，paxos 算法其实是一个共识算法。系统的最终一致性，不仅需要达成共识，还会取决于 client 的行为。&lt;/
+      
+    
+    </summary>
+    
+    
+      <category term="分布式" scheme="http://yoursite.com/tags/%E5%88%86%E5%B8%83%E5%BC%8F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>TCP如何保证可靠传输</title>
+    <link href="http://yoursite.com/2019/10/12/TCP%E5%A6%82%E4%BD%95%E4%BF%9D%E8%AF%81%E5%8F%AF%E9%9D%A0%E4%BC%A0%E8%BE%93/"/>
+    <id>http://yoursite.com/2019/10/12/TCP如何保证可靠传输/</id>
+    <published>2019-10-12T09:24:13.000Z</published>
+    <updated>2019-10-12T09:25:34.783Z</updated>
+    
+    <content type="html"><![CDATA[<ol><li><p><strong>数据包校验</strong>：目的是检测数据在传输过程中的任何变化，若校验出包有错，则丢弃报文段并且不给出响应，这时 TCP 发送数据端超时后会重发数据；</p></li><li><p><strong>对失序数据包重排序</strong>：既然 TCP 报文段作为 IP 数据报来传输，而 IP 数据报的到达可能会失序，因此 TCP 报文段的到达也可能会失序。TCP 将对失序数据进行重新排序，然后才交给应用层；</p></li><li><p><strong>丢弃重复数据</strong>：对于重复数据，能够丢弃重复数据；</p></li><li><p><strong>应答机制</strong>：当 TCP 收到发自 TCP 连接另一端的数据，它将发送一个确认。这个确认不是立即发送，通常将推迟几分之一秒；</p></li><li><p><strong>超时重发</strong>：当 TCP 发出一个段后，它启动一个定时器，等待目的端确认收到这个报文段。如果不能及时收到一个确认，将重发这个报文段；</p></li><li><p><strong>流量控制</strong>：TCP 连接的每一方都有固定大小的缓冲空间。TCP 的接收端只允许另一端发送接收端缓冲区所能接纳的数据，这可以防止较快主机致使较慢主机的缓冲区溢出，这就是流量控制。TCP 使用的流量控制协议是可变大小的滑动窗口协议。</p></li></ol>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;ol&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;数据包校验&lt;/strong&gt;：目的是检测数据在传输过程中的任何变化，若校验出包有错，则丢弃报文段并且不给出响应，这时 TCP 发送数据端超时后会重发数据；&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;对失序数据包重排序&lt;/strong
+      
+    
+    </summary>
+    
+    
+      <category term="计算机网络" scheme="http://yoursite.com/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Redis内存回收：LRU算法</title>
+    <link href="http://yoursite.com/2019/10/11/Redis%E5%86%85%E5%AD%98%E5%9B%9E%E6%94%B6%EF%BC%9ALRU%E7%AE%97%E6%B3%95/"/>
+    <id>http://yoursite.com/2019/10/11/Redis内存回收：LRU算法/</id>
+    <published>2019-10-11T07:00:39.000Z</published>
+    <updated>2019-10-11T07:12:00.479Z</updated>
+    
+    <content type="html"><![CDATA[<p>Redis中采用两种算法进行内存回收，<a href="http://www.cnblogs.com/WJ5888/p/4359783.html" target="_blank" rel="noopener">引用计数算法</a> 以及LRU算法，在操作系统内存管理一节中，我们都学习过LRU算法(最近最久未使用算法),那么什么是LRU算法呢</p><p>LRU算法作为内存管理的一种有效算法,其含义是在内存有限的情况下，当内存容量不足时，为了保证程序的运行，这时就不得不淘汰内存中的一些对象，释放这些对象占用的空间，那么选择淘汰哪些对象呢？LRU算法就提供了一种策略，告诉我们选择最近一段时间内，最久未使用的对象将其淘汰，至于为什么要选择最久未使用的，可以想想，最近一段时间内使用的东西，我们是不是可能一会又要用到呢~，而很长一段时间内都没有使用过的东西，也许永远都不会再使用~</p><p>在操作系统中LRU算法淘汰的不是内存中的对象，而是页,当内存中数据不足时，通过LRU算法，选择一页(一般是4KB)将其交换到虚拟内存区(Swap区)</p><a id="more"></a><p><img src="/2019/10/11/Redis内存回收：LRU算法/image-20191011151041256.png" alt="image-20191011151041256"></p><p>假设前提，只有三块内存空间可以使用，每一块内存空间只能存放一个对象，如A、B、C…</p><p>1、最开始时，内存空间是空的，因此依次进入A、B、C是没有问题的</p><p>2、当加入D时，就出现了问题，内存空间不够了，因此根据LRU算法，内存空间中A待的时间最为久远，选择A,将其淘汰</p><p>3、当再次引用B时，内存空间中的B又处于活跃状态，而C则变成了内存空间中，近段时间最久未使用的</p><p>4、当再次向内存空间加入E时，这时内存空间又不足了，选择在内存空间中待的最久的C将其淘汰出内存，这时的内存空间存放的对象就是E-&gt;B-&gt;D</p><p>LRU算法的整体思路就是这样的</p><p>算法实现应该采用怎样的数据结构 </p><p>队列？那不就是FIFO算法嘛~，LRU算法最为精典的实现，就是HashMap+Double LinkedList，时间复杂度为O(1),具体可以参考相关代码</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Redis中采用两种算法进行内存回收，&lt;a href=&quot;http://www.cnblogs.com/WJ5888/p/4359783.html&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;引用计数算法&lt;/a&gt; 以及LRU算法，在操作系统内存管理一节中，我们都学习过LRU算法(最近最久未使用算法),那么什么是LRU算法呢&lt;/p&gt;
+&lt;p&gt;LRU算法作为内存管理的一种有效算法,其含义是在内存有限的情况下，当内存容量不足时，为了保证程序的运行，这时就不得不淘汰内存中的一些对象，释放这些对象占用的空间，那么选择淘汰哪些对象呢？LRU算法就提供了一种策略，告诉我们选择最近一段时间内，最久未使用的对象将其淘汰，至于为什么要选择最久未使用的，可以想想，最近一段时间内使用的东西，我们是不是可能一会又要用到呢~，而很长一段时间内都没有使用过的东西，也许永远都不会再使用~&lt;/p&gt;
+&lt;p&gt;在操作系统中LRU算法淘汰的不是内存中的对象，而是页,当内存中数据不足时，通过LRU算法，选择一页(一般是4KB)将其交换到虚拟内存区(Swap区)&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="Redis" scheme="http://yoursite.com/tags/Redis/"/>
+    
+  </entry>
   
   <entry>
     <title>异常体系</title>
@@ -380,94 +451,6 @@
     
     
       <category term="操作系统" scheme="http://yoursite.com/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Mybatis缓存</title>
-    <link href="http://yoursite.com/2019/08/20/Mybatis%E7%BC%93%E5%AD%98/"/>
-    <id>http://yoursite.com/2019/08/20/Mybatis缓存/</id>
-    <published>2019-08-20T08:37:26.000Z</published>
-    <updated>2019-09-11T23:37:23.169Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="一级缓存"><a href="#一级缓存" class="headerlink" title="一级缓存"></a>一级缓存</h2><p>在应用运行过程中，我们有可能在一次数据库会话中，执行多次查询条件完全相同的SQL，MyBatis提供了一级缓存的方案优化这部分场景，如果是相同的SQL语句，会优先命中一级缓存，避免直接对数据库进行查询，提高性能。具体执行过程如下图所示。</p><p><img src="http://pw5y8kqa5.bkt.clouddn.com/image-20190820165449480.png" alt></p><p>每个SqlSession中持有了Executor，每个Executor中有一个LocalCache。当用户发起查询时，MyBatis根据当前执行的语句生成<code>MappedStatement</code>，在Local Cache进行查询，如果缓存命中的话，直接返回结果给用户，如果缓存没有命中的话，查询数据库，结果写入<code>Local Cache</code>，最后返回结果给用户。具体实现类的类关系图如下图所示。</p><p><img src="http://pw5y8kqa5.bkt.clouddn.com/image-20190820170058613.png" alt="image-20190820170058613"></p><h3 id="一级缓存配置"><a href="#一级缓存配置" class="headerlink" title="一级缓存配置"></a>一级缓存配置</h3><p>我们来看看如何使用MyBatis一级缓存。开发者只需在MyBatis的配置文件中，添加如下语句，就可以使用一级缓存。共有两个选项，<code>SESSION</code>或者<code>STATEMENT</code>，默认是<code>SESSION</code>级别，即在一个MyBatis会话中执行的所有语句，都会共享这一个缓存。一种是<code>STATEMENT</code>级别，可以理解为缓存只对当前执行的这一个<code>Statement</code>有效。</p><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">setting</span> <span class="attr">name</span>=<span class="string">"localCacheScope"</span> <span class="attr">value</span>=<span class="string">"SESSION"</span>/&gt;</span></span><br></pre></td></tr></table></figure><h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><ol><li>MyBatis一级缓存的生命周期和SqlSession一致。</li><li>MyBatis一级缓存内部设计简单，只是一个没有容量限定的HashMap，在缓存的功能性上有所欠缺。</li><li>MyBatis的一级缓存最大范围是SqlSession内部，有多个SqlSession或者分布式的环境下，数据库写操作会引起脏数据，建议设定缓存级别为Statement。</li></ol><h2 id="二级缓存"><a href="#二级缓存" class="headerlink" title="二级缓存"></a>二级缓存</h2><p>在上文中提到的一级缓存中，其最大的共享范围就是一个SqlSession内部，如果多个SqlSession之间需要共享缓存，则需要使用到二级缓存。开启二级缓存后，会使用CachingExecutor装饰Executor，进入一级缓存的查询流程前，先在CachingExecutor进行二级缓存的查询，具体的工作流程如下所示。</p><p><img src="http://pw5y8kqa5.bkt.clouddn.com/image-20190820171955509.png" alt="image-20190820171955509"></p><p>二级缓存开启后，同一个namespace下的所有操作语句，都影响着同一个Cache，即二级缓存被多个SqlSession共享，是一个全局的变量。</p><p>当开启缓存后，数据的查询执行的流程就是 二级缓存 -&gt; 一级缓存 -&gt; 数据库。</p><h3 id="二级缓存配置"><a href="#二级缓存配置" class="headerlink" title="二级缓存配置"></a>二级缓存配置</h3><p>要正确的使用二级缓存，需完成如下配置的。</p><ol><li>在MyBatis的配置文件中开启二级缓存。</li></ol><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">setting</span> <span class="attr">name</span>=<span class="string">"cacheEnabled"</span> <span class="attr">value</span>=<span class="string">"true"</span>/&gt;</span></span><br></pre></td></tr></table></figure><ol><li>在MyBatis的映射XML中配置cache或者 cache-ref 。</li></ol><p>cache标签用于声明这个namespace使用二级缓存，并且可以自定义配置。</p><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">cache</span>/&gt;</span></span><br></pre></td></tr></table></figure><ul><li><code>type</code>：cache使用的类型，默认是<code>PerpetualCache</code>，这在一级缓存中提到过。</li><li><code>eviction</code>： 定义回收的策略，常见的有FIFO，LRU。</li><li><code>flushInterval</code>： 配置一定时间自动刷新缓存，单位是毫秒。</li><li><code>size</code>： 最多缓存对象的个数。</li><li><code>readOnly</code>： 是否只读，若配置可读写，则需要对应的实体类能够序列化。</li><li><code>blocking</code>： 若缓存中找不到对应的key，是否会一直blocking，直到有对应的数据进入缓存。</li></ul><p><code>cache-ref</code>代表引用别的命名空间的Cache配置，两个命名空间的操作使用的是同一个Cache。</p><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">cache-ref</span> <span class="attr">namespace</span>=<span class="string">"mapper.StudentMapper"</span>/&gt;</span></span><br></pre></td></tr></table></figure><h3 id="总结-1"><a href="#总结-1" class="headerlink" title="总结"></a>总结</h3><ol><li>MyBatis的二级缓存相对于一级缓存来说，实现了<code>SqlSession</code>之间缓存数据的共享，同时粒度更加的细，能够到<code>namespace</code>级别，通过Cache接口实现类不同的组合，对Cache的可控性也更强。</li><li>MyBatis在多表查询时，极大可能会出现脏数据，有设计上的缺陷，安全使用二级缓存的条件比较苛刻。</li><li>在分布式环境下，由于默认的MyBatis Cache实现都是基于本地的，分布式环境下必然会出现读取到脏数据，需要使用集中式缓存将MyBatis的Cache接口实现，有一定的开发成本，直接使用Redis、Memcached等分布式缓存可能成本更低，安全性也更高。</li></ol>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h2 id=&quot;一级缓存&quot;&gt;&lt;a href=&quot;#一级缓存&quot; class=&quot;headerlink&quot; title=&quot;一级缓存&quot;&gt;&lt;/a&gt;一级缓存&lt;/h2&gt;&lt;p&gt;在应用运行过程中，我们有可能在一次数据库会话中，执行多次查询条件完全相同的SQL，MyBatis提供了一级缓存的方案优化这部
-      
-    
-    </summary>
-    
-    
-      <category term="Mybatis" scheme="http://yoursite.com/tags/Mybatis/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>SpringAOP</title>
-    <link href="http://yoursite.com/2019/08/19/SpringAOP/"/>
-    <id>http://yoursite.com/2019/08/19/SpringAOP/</id>
-    <published>2019-08-19T06:46:18.000Z</published>
-    <updated>2019-09-11T23:37:23.175Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="AOP概述"><a href="#AOP概述" class="headerlink" title="AOP概述"></a>AOP概述</h2><p>AOP称为面向切面编程，那我们怎么理解面向切面编程？</p><p>我们学Java面向对象的时候，如果代码重复了怎么办啊？可以分成下面几个步骤：</p><ul><li>抽取成方法</li><li>抽取类</li></ul><p>抽取成类的方式我们称之为：<strong>纵向抽取</strong></p><ul><li>通过继承的方式实现纵向抽取</li></ul><p>但是，我们现在的办法不行：即使抽取成类还是会出现重复的代码，因为这些逻辑(开始、结束、提交事务)<strong>依附在我们业务类的方法逻辑中</strong>！</p><a id="more"></a><p><img src="http://pw5y8kqa5.bkt.clouddn.com/image-20190819150731837.png" alt="image-20190819150731837"></p><p>现在纵向抽取的方式不行了，AOP的理念：就是将<strong>分散在各个业务逻辑代码中相同的代码通过横向切割的方式</strong>抽取到一个独立的模块中！</p><p><img src="http://pw5y8kqa5.bkt.clouddn.com/image-20190819150839531.png" alt="image-20190819150839531"></p><p>上面的图也很清晰了，将重复性的逻辑代码横切出来其实很容易(我们简单可认为就是封装成一个类就好了)，但我们要将这些<strong>被我们横切出来的逻辑代码融合到业务逻辑中</strong>，来完成和之前(没抽取前)一样的功能！这就是AOP首要解决的问题了！</p><h2 id="Spring-AOP原理"><a href="#Spring-AOP原理" class="headerlink" title="Spring AOP原理"></a>Spring AOP原理</h2><p>被我们横切出来的逻辑代码融合到业务逻辑中，来完成和之前(没抽取前)一样的功能</p><p>Spring AOP构建在动态代理基础之上，因此，<strong>Spring对AOP的支持局限于方法拦截</strong>。</p><p>在Java中动态代理有<strong>两种</strong>方式：</p><ul><li><p>JDK动态代理</p></li><li><p>CGLib动态代理</p><p><img src="http://pw5y8kqa5.bkt.clouddn.com/image-20190819151005879.png" alt="image-20190819151005879"></p></li></ul><p>JDK动态代理是需要实现某个接口了，而我们类未必全部会有接口，于是CGLib代理就有了~~</p><ul><li>CGLib代理其生成的动态代理对象是目标类的子类</li><li>Spring AOP<strong>默认是使用JDK动态代理</strong>，如果代理的类<strong>没有接口则会使用CGLib代理</strong>。</li></ul><p>那么JDK代理和CGLib代理我们该用哪个呢？？在《精通Spring4.x 企业应用开发实战》给出了建议：</p><ul><li>如果是<strong>单例的我们最好使用CGLib代理</strong>，如果是多例的我们最好使用JDK代理</li></ul><p>原因：</p><ul><li>JDK在创建代理对象时的性能要高于CGLib代理，而生成代理对象的运行性能却比CGLib的低。</li><li>如果是单例的代理，推荐使用CGLib</li></ul><p>看到这里我们就应该知道什么是Spring AOP(面向切面编程)了：<strong>将相同逻辑的重复代码横向抽取出来，使用动态代理技术将这些重复代码织入到目标对象方法中，实现和原来一样的功能</strong>。</p><ul><li>这样一来，我们就在<strong>写业务时只关心业务代码</strong>，而不用关心与业务无关的代码</li></ul><h2 id="AOP的术语"><a href="#AOP的术语" class="headerlink" title="AOP的术语"></a>AOP的术语</h2><p><strong>连接点</strong>(Join point)：</p><ul><li><strong>能够被拦截的地方</strong>：Spring AOP是基于动态代理的，所以是方法拦截的。每个成员方法都可以称之为连接点</li></ul><p><strong>切点</strong>(Poincut)：</p><ul><li><strong>具体定位的连接点</strong>：上面也说了，每个方法都可以称之为连接点，我们<strong>具体定位到某一个方法就成为切点</strong>。</li></ul><p><strong>增强/通知</strong>(Advice)：</p><ul><li>表示添加到切点的一段逻辑代码，并定位连接点的方位信息。<ul><li>简单来说就定义了是干什么的，具体是在哪干</li><li>Spring AOP提供了5种Advice类型给我们：前置、后置、返回、异常、环绕给我们使用！</li></ul></li></ul><p><strong>织入</strong>(Weaving)：</p><ul><li>将<code>增强/通知</code>添加到目标类的具体连接点上的过程。</li></ul><p><strong>引入/引介</strong>(Introduction)：</p><ul><li><code>引入/引介</code>允许我们<strong>向现有的类添加新方法或属性</strong>。是一种<strong>特殊</strong>的增强！</li></ul><p><strong>切面</strong>(Aspect)：</p><ul><li>切面由切点和<code>增强/通知</code>组成，它既包括了横切逻辑的定义、也包括了连接点的定义。</li></ul><p>在《Spring 实战 (第4版)》给出的</p><p>通知/增强包含了需要用于多个应用对象的横切行为；连接点是程序执行过程中能够应用通知的所有点；切点定义了通知/增强被应用的具体位置。其中关键的是切点定义了哪些连接点会得到通知/增强。</p><p><img src="http://pw5y8kqa5.bkt.clouddn.com/image-20190819152914835.png" alt="image-20190819152914835"></p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;AOP概述&quot;&gt;&lt;a href=&quot;#AOP概述&quot; class=&quot;headerlink&quot; title=&quot;AOP概述&quot;&gt;&lt;/a&gt;AOP概述&lt;/h2&gt;&lt;p&gt;AOP称为面向切面编程，那我们怎么理解面向切面编程？&lt;/p&gt;
-&lt;p&gt;我们学Java面向对象的时候，如果代码重复了怎么办啊？可以分成下面几个步骤：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;抽取成方法&lt;/li&gt;
-&lt;li&gt;抽取类&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;抽取成类的方式我们称之为：&lt;strong&gt;纵向抽取&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;通过继承的方式实现纵向抽取&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;但是，我们现在的办法不行：即使抽取成类还是会出现重复的代码，因为这些逻辑(开始、结束、提交事务)&lt;strong&gt;依附在我们业务类的方法逻辑中&lt;/strong&gt;！&lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="Spring" scheme="http://yoursite.com/tags/Spring/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>SpringIOC</title>
-    <link href="http://yoursite.com/2019/08/18/SpringIOC/"/>
-    <id>http://yoursite.com/2019/08/18/SpringIOC/</id>
-    <published>2019-08-18T02:46:18.000Z</published>
-    <updated>2019-09-11T23:37:23.175Z</updated>
-    
-    <content type="html"><![CDATA[<blockquote><p>IoC(Inversion of Control)控制反转，包含了两个方面：一、控制。二、反转</p></blockquote><p>我们可以简单认为：</p><ul><li>控制指的是：<strong>当前对象对内部成员的控制权</strong>。</li><li>反转指的是：这种控制权<strong>不由当前对象管理</strong>了，由其他(类,第三方容器)来管理。</li></ul><p>使用IOC的好处：</p><ol><li>不用自己组装，拿来就用。</li><li>享受单例的好处，效率高，不浪费空间。</li><li>便于单元测试，方便切换mock组件。</li><li>便于进行AOP操作，对于使用者是透明的。</li><li>统一配置，便于修改</li></ol><a id="more"></a><h2 id="IOC原理"><a href="#IOC原理" class="headerlink" title="IOC原理"></a>IOC原理</h2><h3 id="IOC容器其实就是一个大工厂，它用来管理我们所有的对象以及依赖关系"><a href="#IOC容器其实就是一个大工厂，它用来管理我们所有的对象以及依赖关系" class="headerlink" title="IOC容器其实就是一个大工厂，它用来管理我们所有的对象以及依赖关系"></a>IOC容器其实就是一个大工厂，它用来管理我们所有的对象以及依赖关系</h3><ul><li>原理就是通过Java的<strong>反射技术</strong>来实现的！通过反射我们可以获取类的所有信息(成员变量、类名等等等)！</li><li>再通过配置文件(xml)或者注解来<strong>描述</strong>类与类之间的关系</li><li>我们就可以通过这些配置信息和反射技术来<strong>构建</strong>出对应的对象和依赖关系</li></ul><h3 id="Spring-IOC容器是怎么实现对象的创建和依赖的："><a href="#Spring-IOC容器是怎么实现对象的创建和依赖的：" class="headerlink" title="Spring IOC容器是怎么实现对象的创建和依赖的："></a>Spring IOC容器是怎么实现对象的创建和依赖的：</h3><ol><li>根据Bean配置信息在容器内部创建Bean定义注册表</li><li>根据注册表加载、实例化bean、建立Bean与Bean之间的依赖关系</li><li>将这些准备就绪的Bean放到Map缓存池中，等待应用程序调用</li></ol><h3 id="Spring容器-Bean工厂-可简单分成两种："><a href="#Spring容器-Bean工厂-可简单分成两种：" class="headerlink" title="Spring容器(Bean工厂)可简单分成两种："></a>Spring容器(Bean工厂)可简单分成两种：</h3><ul><li><p>BeanFactory</p></li><li><ul><li>这是最基础、面向Spring的</li></ul></li><li><p>ApplicationContext</p></li><li><ul><li>这是在BeanFactory基础之上，面向使用Spring框架的开发者。提供了一系列的功能！</li></ul></li></ul><p>几乎所有的应用场合<strong>都是</strong>使用ApplicationContext！</p><p>简要总结：</p><ul><li>BeanDefinitionReader<strong>读取Resource所指向的配置文件资源</strong>，然后解析配置文件。配置文件中每一个<code>&lt;bean&gt;</code>解析成一个<strong>BeanDefinition对象</strong>，并<strong>保存</strong>到BeanDefinitionRegistry中；</li><li>容器扫描BeanDefinitionRegistry中的BeanDefinition；调用InstantiationStrategy<strong>进行Bean实例化的工作</strong>；使用<strong>BeanWrapper完成Bean属性的设置</strong>工作；</li><li>单例Bean缓存池：Spring 在DefaultSingletonBeanRegistry类中提供了一个用于缓存单实例 Bean 的<strong>缓存器</strong>，它是一个用HashMap实现的缓存器，单实例的Bean<strong>以beanName为键保存在这个HashMap</strong>中。</li></ul><h3 id="依赖注入方式"><a href="#依赖注入方式" class="headerlink" title="依赖注入方式"></a>依赖注入方式</h3><p>依赖注入的方式有3种方式：</p><ul><li><strong>属性注入</strong>–&gt;通过<code>setter()</code>方法注入</li><li>构造函数注入</li><li>工厂方法注入</li></ul><h3 id="一个接口两个实现类，怎么在调用的时候优先调用某个实现类呢？"><a href="#一个接口两个实现类，怎么在调用的时候优先调用某个实现类呢？" class="headerlink" title="一个接口两个实现类，怎么在调用的时候优先调用某个实现类呢？"></a>一个接口两个实现类，怎么在调用的时候优先调用某个实现类呢？</h3><ul><li><p>使用<code>@Primary</code>注解设置为<strong>首选</strong>的注入Bean</p></li><li><p>使用<code>@Qualifier</code>注解设置<strong>特定名称的Bean</strong>来限定注入！</p></li><li><ul><li>也可以使用自定义的注解来标识  </li></ul></li></ul>]]></content>
-    
-    <summary type="html">
-    
-      &lt;blockquote&gt;
-&lt;p&gt;IoC(Inversion of Control)控制反转，包含了两个方面：一、控制。二、反转&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;我们可以简单认为：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;控制指的是：&lt;strong&gt;当前对象对内部成员的控制权&lt;/strong&gt;。&lt;/li&gt;
-&lt;li&gt;反转指的是：这种控制权&lt;strong&gt;不由当前对象管理&lt;/strong&gt;了，由其他(类,第三方容器)来管理。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;使用IOC的好处：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;不用自己组装，拿来就用。&lt;/li&gt;
-&lt;li&gt;享受单例的好处，效率高，不浪费空间。&lt;/li&gt;
-&lt;li&gt;便于单元测试，方便切换mock组件。&lt;/li&gt;
-&lt;li&gt;便于进行AOP操作，对于使用者是透明的。&lt;/li&gt;
-&lt;li&gt;统一配置，便于修改&lt;/li&gt;
-&lt;/ol&gt;
-    
-    </summary>
-    
-    
-      <category term="Spring" scheme="http://yoursite.com/tags/Spring/"/>
     
   </entry>
   
