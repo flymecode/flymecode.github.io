@@ -722,11 +722,11 @@
 <h2 id="源码分析"><a href="#源码分析" class="headerlink" title="源码分析"></a>源码分析</h2><ol>
 <li>Mybatis 执行 入口是 DefaultSqlSession.selectOne(）方法。我们Debug 启动 testMybatis（）方法，并在 DefaultSqlSession.selectOne()添加断点，一行行执行Mybatis 代码：</li>
 </ol>
-<p><img src="/2019/08/29/Mybatis防止Sql注入/Users/maxu/blog/source/_posts/Mybatis防止Sql注入/image-20190829202052565.png" alt="image-20190829202052565"></p>
+<p><img src="/2019/08/29/Mybatis防止Sql注入/./Mybatis防止Sql注入/image-20190829202052565.png" alt="image-20190829202052565"></p>
 <ol start="2">
 <li>一步步向下走，当走到代码： org.apache.ibatis.executor.statement.PreparedStatementHandler#query方法时，可以看到 PreparedStatement 相信大家对这个应该不会陌生，预编译Sql并通过占位符的方式放置参数，现在 我们对比一下我们在 Dao 中的 sql ： select * from ${tableName} where class_id = #{id}</li>
 </ol>
-<p><img src="/2019/08/29/Mybatis防止Sql注入/Users/maxu/blog/source/_posts/Mybatis防止Sql注入/image-20190829202206705.png" alt="image-20190829202206705"></p>
+<p><img src="/2019/08/29/Mybatis防止Sql注入/./Mybatis防止Sql注入/image-20190829202206705.png" alt="image-20190829202206705"></p>
 <ol start="3">
 <li>如图所示，我们会发现， Mybatis 已经将 sql中 ${tableName} 替换成了 tb_class ，#{id} 也已经变成了 占位符 ？，生成了 Sql ： select * from tb_class where class_id = ?。这已经是一目了然了，Mybaitis 封装了JDBC ,执行时会将我们注解 或 Mapper 中的 Sql 和参数进行处理，并交给 PreparedStatement 来执行。</li>
 </ol>
@@ -1484,10 +1484,10 @@
 </ul>
 <h3 id="原型"><a href="#原型" class="headerlink" title="原型"></a>原型</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span> <span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="number">2</span> <span class="function"><span class="keyword">int</span> <span class="title">pipe</span><span class="params">(<span class="keyword">int</span> fd[<span class="number">2</span>])</span></span>;    <span class="comment">// 返回值：若成功返回0，失败返回-1</span></span><br></pre></td></tr></table></figure>
 <p>当一个管道建立时，它会创建两个文件描述符：fd[0]为读而打开，fd[1]为写而打开。如下图：</p>
-<p><img src="/2019/08/26/进程间通信方式/image-20190826141126633.png" alt="image-20190826141126633"></p>
+<p><img src="/2019/08/26/进程间通信方式/./进程间通信方式/image-20190826141126633.png" alt="image-20190826141126633"></p>
 <p>要关闭管道只需将这两个文件描述符关闭即可。</p>
 <h3 id="举例"><a href="#举例" class="headerlink" title="举例"></a>举例</h3><p>单个进程中的管道几乎没有任何用处。所以，通常调用 pipe 的进程接着调用 fork，这样就创建了父进程与子进程之间的 IPC 通道。如下图所示：</p>
-<p><img src="/2019/08/26/进程间通信方式/Users/maxu/hexo/source/_posts/进程间通信方式/image-20190826141404697.png" alt="image-20190826141404697"></p>
+<p><img src="/2019/08/26/进程间通信方式/./进程间通信方式/image-20190826141404697.png" alt="image-20190826141404697"></p>
 <p>Fork 之后的半双工管道</p>
 <p><img src="/2019/08/26/进程间通信方式/Users/maxu/hexo/source/_posts/进程间通信方式/image-20190826141436913.png" alt="image-20190826141436913"></p>
 <p>从父进程到子进程的管道</p>

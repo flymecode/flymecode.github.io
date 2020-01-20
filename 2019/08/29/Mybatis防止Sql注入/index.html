@@ -89,13 +89,13 @@
 <meta property="og:site_name" content="小白君的博客">
 <meta property="og:description" content="Mybatsi 使用 # 防止 SQL 注入，它将所有传入的参数当作一个字符串来处理，$ 则将传入的参数拼接到 SQL 上执行，一般用于表名和字段名的参数，$ 所对应的参数应该由服务端提供，前端可以用参数选择，避免 SQL 注入的风险。  额外我们还可以通过使用存储过程防止 SQL 注入  原理为什么 # 可以防止 SQL 注入呢？让我们追踪一下源码。 12345678910public inte">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://yoursite.com/2019/08/29/Mybatis防止Sql注入/Users/maxu/blog/source/_posts/Mybatis防止Sql注入/image-20190829202052565.png">
-<meta property="og:image" content="http://yoursite.com/2019/08/29/Mybatis防止Sql注入/Users/maxu/blog/source/_posts/Mybatis防止Sql注入/image-20190829202206705.png">
-<meta property="og:updated_time" content="2019-09-11T23:37:23.173Z">
+<meta property="og:image" content="http://yoursite.com/2019/08/29/Mybatis防止Sql注入/Mybatis防止Sql注入/image-20190829202052565.png">
+<meta property="og:image" content="http://yoursite.com/2019/08/29/Mybatis防止Sql注入/Mybatis防止Sql注入/image-20190829202206705.png">
+<meta property="og:updated_time" content="2020-01-19T02:41:44.112Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Mybatis防止Sql注入">
 <meta name="twitter:description" content="Mybatsi 使用 # 防止 SQL 注入，它将所有传入的参数当作一个字符串来处理，$ 则将传入的参数拼接到 SQL 上执行，一般用于表名和字段名的参数，$ 所对应的参数应该由服务端提供，前端可以用参数选择，避免 SQL 注入的风险。  额外我们还可以通过使用存储过程防止 SQL 注入  原理为什么 # 可以防止 SQL 注入呢？让我们追踪一下源码。 12345678910public inte">
-<meta name="twitter:image" content="http://yoursite.com/2019/08/29/Mybatis防止Sql注入/Users/maxu/blog/source/_posts/Mybatis防止Sql注入/image-20190829202052565.png">
+<meta name="twitter:image" content="http://yoursite.com/2019/08/29/Mybatis防止Sql注入/Mybatis防止Sql注入/image-20190829202052565.png">
 
 
 
@@ -334,11 +334,11 @@
 <h2 id="源码分析"><a href="#源码分析" class="headerlink" title="源码分析"></a>源码分析</h2><ol>
 <li>Mybatis 执行 入口是 DefaultSqlSession.selectOne(）方法。我们Debug 启动 testMybatis（）方法，并在 DefaultSqlSession.selectOne()添加断点，一行行执行Mybatis 代码：</li>
 </ol>
-<p><img src="/2019/08/29/Mybatis防止Sql注入/Users/maxu/blog/source/_posts/Mybatis防止Sql注入/image-20190829202052565.png" alt="image-20190829202052565"></p>
+<p><img src="/2019/08/29/Mybatis防止Sql注入/./Mybatis防止Sql注入/image-20190829202052565.png" alt="image-20190829202052565"></p>
 <ol start="2">
 <li>一步步向下走，当走到代码： org.apache.ibatis.executor.statement.PreparedStatementHandler#query方法时，可以看到 PreparedStatement 相信大家对这个应该不会陌生，预编译Sql并通过占位符的方式放置参数，现在 我们对比一下我们在 Dao 中的 sql ： select * from ${tableName} where class_id = #{id}</li>
 </ol>
-<p><img src="/2019/08/29/Mybatis防止Sql注入/Users/maxu/blog/source/_posts/Mybatis防止Sql注入/image-20190829202206705.png" alt="image-20190829202206705"></p>
+<p><img src="/2019/08/29/Mybatis防止Sql注入/./Mybatis防止Sql注入/image-20190829202206705.png" alt="image-20190829202206705"></p>
 <ol start="3">
 <li>如图所示，我们会发现， Mybatis 已经将 sql中 ${tableName} 替换成了 tb_class ，#{id} 也已经变成了 占位符 ？，生成了 Sql ： select * from tb_class where class_id = ?。这已经是一目了然了，Mybaitis 封装了JDBC ,执行时会将我们注解 或 Mapper 中的 Sql 和参数进行处理，并交给 PreparedStatement 来执行。</li>
 </ol>
