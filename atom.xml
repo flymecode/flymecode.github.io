@@ -3,11 +3,11 @@
   <title>小白君的博客</title>
   
   <subtitle>凡事必先骑上虎背</subtitle>
-  <link href="/blog/atom.xml" rel="self"/>
+  <link href="/atom.xml" rel="self"/>
   
-  <link href="https://flymecode.gitee.io/blog/"/>
+  <link href="http://yoursite.com/"/>
   <updated>2019-10-22T13:17:09.719Z</updated>
-  <id>https://flymecode.gitee.io/blog/</id>
+  <id>http://yoursite.com/</id>
   
   <author>
     <name>Ma Xu</name>
@@ -18,8 +18,8 @@
   
   <entry>
     <title>Paxos</title>
-    <link href="https://flymecode.gitee.io/blog/2019/10/22/Paxos/"/>
-    <id>https://flymecode.gitee.io/blog/2019/10/22/Paxos/</id>
+    <link href="http://yoursite.com/2019/10/22/Paxos/"/>
+    <id>http://yoursite.com/2019/10/22/Paxos/</id>
     <published>2019-10-22T13:13:18.000Z</published>
     <updated>2019-10-22T13:17:09.719Z</updated>
     
@@ -35,14 +35,14 @@
     </summary>
     
     
-      <category term="分布式" scheme="https://flymecode.gitee.io/blog/tags/%E5%88%86%E5%B8%83%E5%BC%8F/"/>
+      <category term="分布式" scheme="http://yoursite.com/tags/%E5%88%86%E5%B8%83%E5%BC%8F/"/>
     
   </entry>
   
   <entry>
     <title>TCP如何保证可靠传输</title>
-    <link href="https://flymecode.gitee.io/blog/2019/10/12/TCP%E5%A6%82%E4%BD%95%E4%BF%9D%E8%AF%81%E5%8F%AF%E9%9D%A0%E4%BC%A0%E8%BE%93/"/>
-    <id>https://flymecode.gitee.io/blog/2019/10/12/TCP如何保证可靠传输/</id>
+    <link href="http://yoursite.com/2019/10/12/TCP%E5%A6%82%E4%BD%95%E4%BF%9D%E8%AF%81%E5%8F%AF%E9%9D%A0%E4%BC%A0%E8%BE%93/"/>
+    <id>http://yoursite.com/2019/10/12/TCP如何保证可靠传输/</id>
     <published>2019-10-12T09:24:13.000Z</published>
     <updated>2019-10-12T09:25:34.783Z</updated>
     
@@ -61,14 +61,14 @@
     </summary>
     
     
-      <category term="计算机网络" scheme="https://flymecode.gitee.io/blog/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"/>
+      <category term="计算机网络" scheme="http://yoursite.com/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"/>
     
   </entry>
   
   <entry>
     <title>Redis内存回收：LRU算法</title>
-    <link href="https://flymecode.gitee.io/blog/2019/10/11/Redis%E5%86%85%E5%AD%98%E5%9B%9E%E6%94%B6%EF%BC%9ALRU%E7%AE%97%E6%B3%95/"/>
-    <id>https://flymecode.gitee.io/blog/2019/10/11/Redis内存回收：LRU算法/</id>
+    <link href="http://yoursite.com/2019/10/11/Redis%E5%86%85%E5%AD%98%E5%9B%9E%E6%94%B6%EF%BC%9ALRU%E7%AE%97%E6%B3%95/"/>
+    <id>http://yoursite.com/2019/10/11/Redis内存回收：LRU算法/</id>
     <published>2019-10-11T07:00:39.000Z</published>
     <updated>2019-10-11T07:12:00.479Z</updated>
     
@@ -83,14 +83,14 @@
     </summary>
     
     
-      <category term="Redis" scheme="https://flymecode.gitee.io/blog/tags/Redis/"/>
+      <category term="Redis" scheme="http://yoursite.com/tags/Redis/"/>
     
   </entry>
   
   <entry>
     <title>异常体系</title>
-    <link href="https://flymecode.gitee.io/blog/2019/10/11/%E5%BC%82%E5%B8%B8%E4%BD%93%E7%B3%BB/"/>
-    <id>https://flymecode.gitee.io/blog/2019/10/11/异常体系/</id>
+    <link href="http://yoursite.com/2019/10/11/%E5%BC%82%E5%B8%B8%E4%BD%93%E7%B3%BB/"/>
+    <id>http://yoursite.com/2019/10/11/异常体系/</id>
     <published>2019-10-11T06:07:07.000Z</published>
     <updated>2019-10-11T06:10:00.302Z</updated>
     
@@ -110,14 +110,14 @@
     </summary>
     
     
-      <category term="Java" scheme="https://flymecode.gitee.io/blog/tags/Java/"/>
+      <category term="Java" scheme="http://yoursite.com/tags/Java/"/>
     
   </entry>
   
   <entry>
     <title>JDK动态代理内部实现</title>
-    <link href="https://flymecode.gitee.io/blog/2019/09/09/JDK%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86%E5%86%85%E9%83%A8%E5%AE%9E%E7%8E%B0/"/>
-    <id>https://flymecode.gitee.io/blog/2019/09/09/JDK动态代理内部实现/</id>
+    <link href="http://yoursite.com/2019/09/09/JDK%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86%E5%86%85%E9%83%A8%E5%AE%9E%E7%8E%B0/"/>
+    <id>http://yoursite.com/2019/09/09/JDK动态代理内部实现/</id>
     <published>2019-09-09T10:04:43.000Z</published>
     <updated>2019-10-11T03:57:20.807Z</updated>
     
@@ -134,14 +134,14 @@
     </summary>
     
     
-      <category term="Java" scheme="https://flymecode.gitee.io/blog/tags/Java/"/>
+      <category term="Java" scheme="http://yoursite.com/tags/Java/"/>
     
   </entry>
   
   <entry>
     <title>HTTP状态码</title>
-    <link href="https://flymecode.gitee.io/blog/2019/09/05/HTTP%E7%8A%B6%E6%80%81%E7%A0%81/"/>
-    <id>https://flymecode.gitee.io/blog/2019/09/05/HTTP状态码/</id>
+    <link href="http://yoursite.com/2019/09/05/HTTP%E7%8A%B6%E6%80%81%E7%A0%81/"/>
+    <id>http://yoursite.com/2019/09/05/HTTP状态码/</id>
     <published>2019-09-05T09:46:39.000Z</published>
     <updated>2019-09-11T23:37:23.135Z</updated>
     
@@ -157,14 +157,14 @@
     </summary>
     
     
-      <category term="http" scheme="https://flymecode.gitee.io/blog/tags/http/"/>
+      <category term="http" scheme="http://yoursite.com/tags/http/"/>
     
   </entry>
   
   <entry>
     <title>InnoDB与MyISAM的区别</title>
-    <link href="https://flymecode.gitee.io/blog/2019/09/02/InnoDB%E4%B8%8EMyISAM%E7%9A%84%E5%8C%BA%E5%88%AB/"/>
-    <id>https://flymecode.gitee.io/blog/2019/09/02/InnoDB与MyISAM的区别/</id>
+    <link href="http://yoursite.com/2019/09/02/InnoDB%E4%B8%8EMyISAM%E7%9A%84%E5%8C%BA%E5%88%AB/"/>
+    <id>http://yoursite.com/2019/09/02/InnoDB与MyISAM的区别/</id>
     <published>2019-09-02T08:29:48.000Z</published>
     <updated>2019-09-11T23:37:23.137Z</updated>
     
@@ -182,14 +182,14 @@
     </summary>
     
     
-      <category term="mysql" scheme="https://flymecode.gitee.io/blog/tags/mysql/"/>
+      <category term="mysql" scheme="http://yoursite.com/tags/mysql/"/>
     
   </entry>
   
   <entry>
     <title>字典</title>
-    <link href="https://flymecode.gitee.io/blog/2019/09/02/%E5%AD%97%E5%85%B8/"/>
-    <id>https://flymecode.gitee.io/blog/2019/09/02/字典/</id>
+    <link href="http://yoursite.com/2019/09/02/%E5%AD%97%E5%85%B8/"/>
+    <id>http://yoursite.com/2019/09/02/字典/</id>
     <published>2019-09-02T05:15:15.000Z</published>
     <updated>2019-09-11T23:37:23.302Z</updated>
     
@@ -206,14 +206,14 @@
     </summary>
     
     
-      <category term="redis" scheme="https://flymecode.gitee.io/blog/tags/redis/"/>
+      <category term="redis" scheme="http://yoursite.com/tags/redis/"/>
     
   </entry>
   
   <entry>
     <title>Kafka消费者</title>
-    <link href="https://flymecode.gitee.io/blog/2019/08/31/Kafka%E6%B6%88%E8%B4%B9%E8%80%85/"/>
-    <id>https://flymecode.gitee.io/blog/2019/08/31/Kafka消费者/</id>
+    <link href="http://yoursite.com/2019/08/31/Kafka%E6%B6%88%E8%B4%B9%E8%80%85/"/>
+    <id>http://yoursite.com/2019/08/31/Kafka消费者/</id>
     <published>2019-08-31T09:43:56.000Z</published>
     <updated>2019-09-11T23:37:23.150Z</updated>
     
@@ -229,14 +229,14 @@
     </summary>
     
     
-      <category term="Kafka" scheme="https://flymecode.gitee.io/blog/tags/Kafka/"/>
+      <category term="Kafka" scheme="http://yoursite.com/tags/Kafka/"/>
     
   </entry>
   
   <entry>
     <title>Kafka概述</title>
-    <link href="https://flymecode.gitee.io/blog/2019/08/31/Kafka%E6%A6%82%E8%BF%B0/"/>
-    <id>https://flymecode.gitee.io/blog/2019/08/31/Kafka概述/</id>
+    <link href="http://yoursite.com/2019/08/31/Kafka%E6%A6%82%E8%BF%B0/"/>
+    <id>http://yoursite.com/2019/08/31/Kafka概述/</id>
     <published>2019-08-31T07:15:19.000Z</published>
     <updated>2019-09-11T23:37:23.143Z</updated>
     
@@ -252,14 +252,14 @@
     </summary>
     
     
-      <category term="Kafka" scheme="https://flymecode.gitee.io/blog/tags/Kafka/"/>
+      <category term="Kafka" scheme="http://yoursite.com/tags/Kafka/"/>
     
   </entry>
   
   <entry>
     <title>抽象类和接口的区别</title>
-    <link href="https://flymecode.gitee.io/blog/2019/08/30/%E6%8A%BD%E8%B1%A1%E7%B1%BB%E5%92%8C%E6%8E%A5%E5%8F%A3%E7%9A%84%E5%8C%BA%E5%88%AB/"/>
-    <id>https://flymecode.gitee.io/blog/2019/08/30/抽象类和接口的区别/</id>
+    <link href="http://yoursite.com/2019/08/30/%E6%8A%BD%E8%B1%A1%E7%B1%BB%E5%92%8C%E6%8E%A5%E5%8F%A3%E7%9A%84%E5%8C%BA%E5%88%AB/"/>
+    <id>http://yoursite.com/2019/08/30/抽象类和接口的区别/</id>
     <published>2019-08-30T09:07:28.000Z</published>
     <updated>2019-09-11T23:37:23.321Z</updated>
     
@@ -277,14 +277,14 @@
     </summary>
     
     
-      <category term="Java" scheme="https://flymecode.gitee.io/blog/tags/Java/"/>
+      <category term="Java" scheme="http://yoursite.com/tags/Java/"/>
     
   </entry>
   
   <entry>
     <title>字符串在JVM存储位置</title>
-    <link href="https://flymecode.gitee.io/blog/2019/08/30/%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%9C%A8JVM%E5%AD%98%E5%82%A8%E4%BD%8D%E7%BD%AE/"/>
-    <id>https://flymecode.gitee.io/blog/2019/08/30/字符串在JVM存储位置/</id>
+    <link href="http://yoursite.com/2019/08/30/%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%9C%A8JVM%E5%AD%98%E5%82%A8%E4%BD%8D%E7%BD%AE/"/>
+    <id>http://yoursite.com/2019/08/30/字符串在JVM存储位置/</id>
     <published>2019-08-30T06:28:36.000Z</published>
     <updated>2019-09-11T23:37:23.317Z</updated>
     
@@ -306,14 +306,14 @@
     </summary>
     
     
-      <category term="JVM" scheme="https://flymecode.gitee.io/blog/tags/JVM/"/>
+      <category term="JVM" scheme="http://yoursite.com/tags/JVM/"/>
     
   </entry>
   
   <entry>
     <title>Redis主从复制过程</title>
-    <link href="https://flymecode.gitee.io/blog/2019/08/29/Redis%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6%E8%BF%87%E7%A8%8B/"/>
-    <id>https://flymecode.gitee.io/blog/2019/08/29/Redis主从复制过程/</id>
+    <link href="http://yoursite.com/2019/08/29/Redis%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6%E8%BF%87%E7%A8%8B/"/>
+    <id>http://yoursite.com/2019/08/29/Redis主从复制过程/</id>
     <published>2019-08-29T10:54:06.000Z</published>
     <updated>2019-09-11T23:37:23.173Z</updated>
     
@@ -326,8 +326,8 @@
   
   <entry>
     <title>Mybatis防止Sql注入</title>
-    <link href="https://flymecode.gitee.io/blog/2019/08/29/Mybatis%E9%98%B2%E6%AD%A2Sql%E6%B3%A8%E5%85%A5/"/>
-    <id>https://flymecode.gitee.io/blog/2019/08/29/Mybatis防止Sql注入/</id>
+    <link href="http://yoursite.com/2019/08/29/Mybatis%E9%98%B2%E6%AD%A2Sql%E6%B3%A8%E5%85%A5/"/>
+    <id>http://yoursite.com/2019/08/29/Mybatis防止Sql注入/</id>
     <published>2019-08-29T10:52:34.000Z</published>
     <updated>2020-01-19T02:41:44.112Z</updated>
     
@@ -343,14 +343,14 @@
     </summary>
     
     
-      <category term="Mybatis" scheme="https://flymecode.gitee.io/blog/tags/Mybatis/"/>
+      <category term="Mybatis" scheme="http://yoursite.com/tags/Mybatis/"/>
     
   </entry>
   
   <entry>
     <title>$与#</title>
-    <link href="https://flymecode.gitee.io/blog/2019/08/29/%E4%B8%8E/"/>
-    <id>https://flymecode.gitee.io/blog/2019/08/29/与/</id>
+    <link href="http://yoursite.com/2019/08/29/%E4%B8%8E/"/>
+    <id>http://yoursite.com/2019/08/29/与/</id>
     <published>2019-08-29T10:51:51.000Z</published>
     <updated>2019-09-11T23:37:23.301Z</updated>
     
@@ -363,8 +363,8 @@
   
   <entry>
     <title>操作系统内存管理</title>
-    <link href="https://flymecode.gitee.io/blog/2019/08/29/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/"/>
-    <id>https://flymecode.gitee.io/blog/2019/08/29/操作系统内存管理/</id>
+    <link href="http://yoursite.com/2019/08/29/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/"/>
+    <id>http://yoursite.com/2019/08/29/操作系统内存管理/</id>
     <published>2019-08-29T10:51:15.000Z</published>
     <updated>2019-09-11T23:37:23.320Z</updated>
     
@@ -377,8 +377,8 @@
   
   <entry>
     <title>Java线程与操作系统线程的关系</title>
-    <link href="https://flymecode.gitee.io/blog/2019/08/29/Java%E7%BA%BF%E7%A8%8B%E4%B8%8E%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%85%B3%E7%B3%BB/"/>
-    <id>https://flymecode.gitee.io/blog/2019/08/29/Java线程与操作系统线程的关系/</id>
+    <link href="http://yoursite.com/2019/08/29/Java%E7%BA%BF%E7%A8%8B%E4%B8%8E%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%85%B3%E7%B3%BB/"/>
+    <id>http://yoursite.com/2019/08/29/Java线程与操作系统线程的关系/</id>
     <published>2019-08-28T16:02:13.000Z</published>
     <updated>2019-09-11T23:37:23.140Z</updated>
     
@@ -395,14 +395,14 @@
     </summary>
     
     
-      <category term="操作系统" scheme="https://flymecode.gitee.io/blog/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
+      <category term="操作系统" scheme="http://yoursite.com/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
     
   </entry>
   
   <entry>
     <title>orderby工作流程</title>
-    <link href="https://flymecode.gitee.io/blog/2019/08/27/orderby%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B/"/>
-    <id>https://flymecode.gitee.io/blog/2019/08/27/orderby工作流程/</id>
+    <link href="http://yoursite.com/2019/08/27/orderby%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B/"/>
+    <id>http://yoursite.com/2019/08/27/orderby工作流程/</id>
     <published>2019-08-27T08:10:24.000Z</published>
     <updated>2019-09-11T23:37:23.295Z</updated>
     
@@ -411,14 +411,14 @@
     </summary>
     
     
-      <category term="mysql" scheme="https://flymecode.gitee.io/blog/tags/mysql/"/>
+      <category term="mysql" scheme="http://yoursite.com/tags/mysql/"/>
     
   </entry>
   
   <entry>
     <title>唯一索引和普通索引</title>
-    <link href="https://flymecode.gitee.io/blog/2019/08/27/%E5%94%AF%E4%B8%80%E7%B4%A2%E5%BC%95%E5%92%8C%E6%99%AE%E9%80%9A%E7%B4%A2%E5%BC%95/"/>
-    <id>https://flymecode.gitee.io/blog/2019/08/27/唯一索引和普通索引/</id>
+    <link href="http://yoursite.com/2019/08/27/%E5%94%AF%E4%B8%80%E7%B4%A2%E5%BC%95%E5%92%8C%E6%99%AE%E9%80%9A%E7%B4%A2%E5%BC%95/"/>
+    <id>http://yoursite.com/2019/08/27/唯一索引和普通索引/</id>
     <published>2019-08-27T07:41:38.000Z</published>
     <updated>2019-09-11T23:37:23.320Z</updated>
     
@@ -427,14 +427,14 @@
     </summary>
     
     
-      <category term="mysql" scheme="https://flymecode.gitee.io/blog/tags/mysql/"/>
+      <category term="mysql" scheme="http://yoursite.com/tags/mysql/"/>
     
   </entry>
   
   <entry>
     <title>进程间通信方式</title>
-    <link href="https://flymecode.gitee.io/blog/2019/08/26/%E8%BF%9B%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1%E6%96%B9%E5%BC%8F/"/>
-    <id>https://flymecode.gitee.io/blog/2019/08/26/进程间通信方式/</id>
+    <link href="http://yoursite.com/2019/08/26/%E8%BF%9B%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1%E6%96%B9%E5%BC%8F/"/>
+    <id>http://yoursite.com/2019/08/26/进程间通信方式/</id>
     <published>2019-08-26T04:04:51.000Z</published>
     <updated>2020-01-19T02:42:40.729Z</updated>
     
@@ -450,7 +450,7 @@
     </summary>
     
     
-      <category term="操作系统" scheme="https://flymecode.gitee.io/blog/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
+      <category term="操作系统" scheme="http://yoursite.com/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
     
   </entry>
   
